@@ -5,5 +5,8 @@
 - Siripoom Kusonsong (64130500079)
 - Banlearit Siriboon (64130500105)
 
-## Schedule
-- Daily Scrum: TUE, WED, THU, SAT, SUN 21:00
+## Comunication Channel
+- [Discord](https://discord.gg/8jjSWbwsDd)
+
+## Meeting Schedule
+- Daily Scrum: TUE, WED, THU, SAT, SUN at 21:00
