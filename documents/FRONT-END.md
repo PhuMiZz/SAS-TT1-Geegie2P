@@ -1,1 +1,1 @@
-# Front-End Documentation
+# Front-end Documentation
