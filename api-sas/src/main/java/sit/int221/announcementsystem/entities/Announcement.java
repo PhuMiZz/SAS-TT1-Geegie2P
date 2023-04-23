@@ -26,10 +26,10 @@ public class Announcement {
     private Integer category;
 
     @Column(name = "publishDate", nullable = true)
-    private String publishDate;
+    private Timestamp publishDate;
 
     @Column(name = "closeDate", nullable = true)
-    private String closeDate;
+    private Timestamp closeDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
