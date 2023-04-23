@@ -1,4 +1,4 @@
-package com.example.apisas;
+package sit.int221.announcementsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
