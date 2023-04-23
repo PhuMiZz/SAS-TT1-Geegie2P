@@ -1,9 +1,6 @@
 package sit.int221.announcementsystem.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +10,7 @@ import lombok.Setter;
 @Table(name = "announcements")
 public class Announcement {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "announcementId", nullable = true)
     private Integer id;
 
@@ -23,7 +21,7 @@ public class Announcement {
     private String description;
 
     @Column(name = "announcementCategory", nullable = false)
-    private String category;
+    private Integer category;
 
     @Column(name = "publishDate", nullable = true)
     private String publishDate;
@@ -32,5 +30,11 @@ public class Announcement {
     private String closeDate;
 
     @Column(name = "announcementDisplay", nullable = true)
-    private String display;
+    private DisplayStatus display;
+
+    public enum DisplayStatus {
+        Y,
+        N
+    }
 }
+
