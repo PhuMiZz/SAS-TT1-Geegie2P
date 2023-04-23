@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiSasApplication {
+public class AnnouncementSystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiSasApplication.class, args);
+        SpringApplication.run(AnnouncementSystemApplication.class, args);
     }
 
 }
