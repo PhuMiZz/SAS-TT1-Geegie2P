@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @Entity
@@ -29,6 +31,7 @@ public class Announcement {
     @Column(name = "closeDate", nullable = true)
     private String closeDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
     private DisplayStatus display;
 
