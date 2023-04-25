@@ -17,5 +17,5 @@ public class AnnouncementsViewDto {
 
     @JsonIgnore
     private CategoryDto category;
-    
+
 }

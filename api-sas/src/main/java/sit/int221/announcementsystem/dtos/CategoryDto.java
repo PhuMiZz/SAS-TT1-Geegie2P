@@ -8,7 +8,7 @@ public class CategoryDto {
     private int id;
     private String categoryName;
 
-    public String getCategoryName(){
+    public String getAnnouncementCategory(){
         return categoryName;
     }
 }
