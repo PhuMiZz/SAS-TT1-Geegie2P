@@ -17,19 +17,20 @@ public class Announcement {
     private Integer id;
 
     @Column(name = "announcementTitle", nullable = false )
-    private String title;
+    private String announcementTitle;
 
     @Column(name = "announcementDescription", nullable = false)
-    private String description;
+    private String announcementDescription;
 
-    @Column(name = "announcementCategory", nullable = false)
-    private Integer category;
+    @ManyToOne
+    @JoinColumn(name = "announcementCategory")
+    private Category category;
 
     @Column(name = "publishDate", nullable = true)
-    private Timestamp publishDate;
+    private String publishDate;
 
     @Column(name = "closeDate", nullable = true)
-    private Timestamp closeDate;
+    private String closeDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
