@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sit.int221.announcementsystem.dtos.AnnouncementDetailDto;
 import sit.int221.announcementsystem.dtos.AnnouncementsViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.services.AnnouncementService;
@@ -29,7 +30,7 @@ public class AnnouncementController {
     }
 
     @GetMapping("/announcements/{id}")
-    public Announcement getAnnouncementDetail(@PathVariable Integer id){
-        return service.getAnnouncementDetail(id);
+    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id){
+        return modelMapper.map(service.getAnnouncementDetail(id), AnnouncementDetailDto.class);
     }
 }
