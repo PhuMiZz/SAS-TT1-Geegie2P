@@ -1,5 +1,5 @@
 <script setup>
-import ModalTemplate from '../../templates/ModalTemplate.vue';
+import OverlayTemplate from '../../templates/OverlayTemplate.vue';
 
 defineEmits(['hideModal']);
 const props = defineProps({
@@ -17,8 +17,8 @@ const props = defineProps({
 
 <template>
   <Teleport to="body">
-    <ModalTemplate :showModal="isOpen" @hideModal="$emit('hideModal')">
-    </ModalTemplate>
+    <OverlayTemplate :showModal="isOpen" @hideModal="$emit('hideModal')">
+    </OverlayTemplate>
   </Teleport>
 </template>
 
