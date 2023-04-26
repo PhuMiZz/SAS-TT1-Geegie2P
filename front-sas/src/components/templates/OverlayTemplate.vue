@@ -17,7 +17,7 @@ defineEmits(['hideModal']);
         @click.self="$emit('hideModal')"
       >
         <div class="flex flex-col w-[60%] h-3/6" style="max-width: 900px">
-          <div class="bg-[#E87B92] shadow-xl w-[80%] h-[20%] rounded-t-xl">
+          <div class="bg-[#E87B92] shadow-xl w-[80%] h-[15%] rounded-t-xl">
             <slot name="header"></slot>
           </div>
           <div
