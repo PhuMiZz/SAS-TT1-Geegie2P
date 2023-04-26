@@ -17,6 +17,7 @@ import sit.int221.announcementsystem.utils.ListMapper;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:5173")
