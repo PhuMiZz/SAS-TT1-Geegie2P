@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <nav class="bg-pink-400 border-gray-200">
+  <nav class="bg-[#E87B92] border-gray-200">
     <div
       class="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4"
     >

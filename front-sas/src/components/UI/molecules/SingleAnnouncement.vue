@@ -14,7 +14,7 @@ const props = defineProps({
     class="flex items-center justify-evenly bg-gray-100 w-full h-28 my-2 rounded-xl"
   >
     <div
-      class="flex items-center justify-center w-1/5 h-full bg-pink-400 rounded-l-xl"
+      class="flex items-center justify-center w-1/5 h-full bg-[#E87B92] rounded-l-xl"
     >
       <h1 class="text-3xl">{{ announcementItem.id }}</h1>
     </div>
