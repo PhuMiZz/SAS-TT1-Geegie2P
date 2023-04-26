@@ -4,6 +4,7 @@ import PageTemplate from '../templates/PageTemplate.vue';
 import NavigationBar from '../UI/organisms/NavigationBar.vue';
 import AnnouncementService from '../../lib/AnnouncementService';
 import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
 
 const announcementService = new AnnouncementService();
 
@@ -18,6 +19,7 @@ onMounted(async () => {
 <template>
   <PageTemplate>
     <NavigationBar />
+    <AnnouncementTitle/>
     <AnnouncementList :announcement-list="allAnnouncement" />
   </PageTemplate>
 </template>

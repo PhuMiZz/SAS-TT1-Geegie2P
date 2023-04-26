@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import SingleAnnouncement from "../molecules/SingleAnnouncement.vue";
 const props = defineProps({
   announcementList: {
