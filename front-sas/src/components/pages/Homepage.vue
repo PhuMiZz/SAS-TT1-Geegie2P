@@ -3,20 +3,22 @@ import { onMounted, ref } from 'vue';
 import PageTemplate from '../templates/PageTemplate.vue';
 import NavigationBar from '../UI/organisms/NavigationBar.vue';
 import AnnouncementService from '../../lib/AnnouncementService';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
 
 const announcementService = new AnnouncementService();
 
-const allAnnounce = ref({});
+const allAnnouncement = ref({});
 
 onMounted(async () => {
-  allAnnounce.value = await announcementService.getAllAnnouncement();
-  console.log(allAnnounce.value);
+  allAnnouncement.value = await announcementService.getAllAnnouncement();
+  console.log(allAnnouncement.value);
 });
 </script>
 
 <template>
   <PageTemplate>
     <NavigationBar />
+    <AnnouncementList :announcement-list="allAnnouncement" />
   </PageTemplate>
 </template>
 
