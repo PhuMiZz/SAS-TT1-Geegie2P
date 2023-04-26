@@ -1,16 +1,24 @@
 <script setup>
-import ModalTemplate from "../../templates/ModalTemplate.vue";
+import ModalTemplate from '../../templates/ModalTemplate.vue';
+
+defineEmits(['hideModal']);
 const props = defineProps({
-  announcementDetail: {
-    type: Object,
+  announcementId: {
+    type: Number,
     required: true,
+  },
+  isOpen: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 </script>
 
 <template>
   <Teleport to="body">
-    <ModalTemplate :showModal="isOpen"> </ModalTemplate>
+    <ModalTemplate :showModal="isOpen" @hideModal="$emit('hideModal')">
+    </ModalTemplate>
   </Teleport>
 </template>
 

@@ -7,7 +7,6 @@ const props = defineProps({
     required: true,
   },
 });
-defineEmits(["announcementDetail", "showModal"]);
 </script>
 
 <template>
@@ -18,8 +17,7 @@ defineEmits(["announcementDetail", "showModal"]);
   >
     <SingleAnnouncement
       :announcement-item="announcement"
-      @announcement-detail="announcementDetail"
-      @showModal="showModal"
+
     />
   </div>
 </template>
