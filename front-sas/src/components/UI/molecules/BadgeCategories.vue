@@ -14,7 +14,7 @@ const props = defineProps({
 <template>
   <span
     :class="[textColor, bgColor]"
-    class="w-fit h-fit text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full"
+    class="w-fit h-fit text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full truncate"
     ><slot></slot
   ></span>
 </template>
