@@ -1,7 +1,7 @@
-<script setup></script>
+<script setup>
+import Homepage from './components/pages/Homepage.vue';
+</script>
 
-<template>
-  <div class="font-bold text-3xl text-red-400">Hello Tailwind</div>
-</template>
+<template><Homepage /></template>
 
 <style scoped></style>
