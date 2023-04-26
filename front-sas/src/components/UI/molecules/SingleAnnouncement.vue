@@ -7,6 +7,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const onClickDetail = () => {
+  console.log(props.announcementItem.id);
+};
 </script>
 
 <template>
@@ -34,7 +38,7 @@ const props = defineProps({
       {{ announcementItem.closeDate }}
     </div>
     <div class="text-xl text-center w-1/4">{{ announcementItem.display }}</div>
-    <button class="flex justify-center w-1/4">
+    <button class="flex justify-center w-1/4" @click="onClickDetail">
       <DetailIcon />
     </button>
   </div>
