@@ -16,13 +16,15 @@ defineEmits(['hideModal']);
         class="absolute top-0 left-0 w-screen h-screen bg-gray-900/50 flex flex-col items-center justify-center z-[999]"
         @click.self="$emit('hideModal')"
       >
-        <div class="flex flex-col w-[60%] h-2/5" style="max-width: 700px">
-          <div class="bg-[#E87B92] shadow-xl w-[70%] h-[15%] rounded-t-xl">
-            <slot />
+        <div class="flex flex-col w-[60%] h-3/6" style="max-width: 900px">
+          <div class="bg-[#E87B92] shadow-xl w-[80%] h-[20%] rounded-t-xl">
+            <slot name="header"></slot>
           </div>
           <div
-            class="bg-white shadow-xl w-[100%] h-full rounded-b-xl rounded-tr-xl"
-          ></div>
+            class="flex flex-col bg-white shadow-xl w-[100%] h-full rounded-b-xl rounded-tr-xl"
+          >
+            <slot></slot>
+          </div>
         </div>
       </div>
     </Transition>

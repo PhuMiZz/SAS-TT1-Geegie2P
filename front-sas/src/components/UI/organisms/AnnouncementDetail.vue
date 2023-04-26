@@ -1,7 +1,13 @@
 <script setup>
+import { ref, watchEffect } from 'vue';
 import OverlayTemplate from '../../templates/OverlayTemplate.vue';
+import DeleteIcon from '../atoms/DeleteIcon.vue';
+import CloseIcon from '../atoms/CloseIcon.vue';
+import EditIcon from '../atoms/EditIcon.vue';
+import TextDescription from '../molecules/TextDescription.vue';
+import AnnouncementService from '../../../lib/AnnouncementService';
 
-defineEmits(['hideModal']);
+const emits = defineEmits(['hideModal']);
 const props = defineProps({
   announcementId: {
     type: Number,
@@ -13,11 +19,80 @@ const props = defineProps({
     default: false,
   },
 });
+
+const announcementService = new AnnouncementService();
+
+const announcementDetail = ref([]);
+const onClickCloseButton = () => {
+  emits('hideModal');
+};
+watchEffect(async () => {
+  announcementDetail.value = await announcementService.getAnnouncementDetail(
+    props.announcementId
+  );
+});
 </script>
 
 <template>
   <Teleport to="body">
-    <OverlayTemplate :showModal="isOpen" @hideModal="$emit('hideModal')">
+    <OverlayTemplate :showModal="isOpen" @hideModal="onClickCloseButton">
+      <template #header>
+        <div class="flex h-full px-5">
+          <div class="w-full text-center text-xl self-center">
+            {{ announcementDetail.announcementTitle }}
+          </div>
+          <button>
+            <EditIcon />
+          </button>
+        </div>
+      </template>
+      <template #default>
+        <button
+          class="w-fit h-fit self-end px-5 pt-5"
+          @click="onClickCloseButton"
+        >
+          <CloseIcon />
+        </button>
+        <div class="flex flex-col h-full justify-between px-5 pb-5">
+          <!-- Category -->
+          <TextDescription>
+            <template #header>Category</template>
+            <template #default>{{
+              announcementDetail.category.announcementCategory
+            }}</template>
+          </TextDescription>
+          <!-- Description -->
+          <TextDescription>
+            <template #header>Description</template>
+            <template #default>
+              {{ announcementDetail.announcementDescription }}
+            </template>
+          </TextDescription>
+          <!-- Publish Date -->
+          <TextDescription>
+            <template #header>Publish Date</template>
+            <template #default>{{ announcementDetail.publishDate }}</template>
+          </TextDescription>
+          <!-- Close Date -->
+          <TextDescription>
+            <template #header>Close Date</template>
+            <template #default>{{ announcementDetail.closeDate }}</template>
+          </TextDescription>
+          <!-- Display & DeleteBtn -->
+          <div class="flex justify-end h-[13%]">
+            <TextDescription>
+              <template #header>Display</template>
+              <template #default>{{ announcementDetail.display }}</template>
+            </TextDescription>
+            <button
+              class="flex flex-row items-center gap-3 bg-[#FF5F6D] w-1/5 h-full justify-center text-center rounded-lg"
+            >
+              <DeleteIcon />
+              <h1>Delete</h1>
+            </button>
+          </div>
+        </div>
+      </template>
     </OverlayTemplate>
   </Teleport>
 </template>
