@@ -58,7 +58,7 @@ watchEffect(() => {
     <div class="flex w-2/3 p-5">
       {{ announcementItem.announcementTitle }}
     </div>
-    <div class="flex w-1/3 text-center">
+    <div class="flex w-2/4 text-center">
       <BadgeCategories
         :bg-color="badgeCategoryColor.bgColor"
         :text-color="badgeCategoryColor.textColor"
@@ -72,7 +72,7 @@ watchEffect(() => {
     <div class="flex text-center w-2/3 text-[#737373]">
       {{ announcementItem.closeDate }}
     </div>
-    <div class="flex text-center w-1/4 text-[#737373]">
+    <div class="flex justify-center w-1/4 text-[#737373]">
       {{ announcementItem.display }}
     </div>
     <button class="flex justify-center w-1/4" @click="onClickDetail">
