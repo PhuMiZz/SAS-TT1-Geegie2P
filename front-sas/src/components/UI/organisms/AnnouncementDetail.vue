@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import OverlayTemplate from '../../templates/OverlayTemplate.vue';
-import DeleteIcon from '../atoms/DeleteIcon.vue';
-import CloseIcon from '../atoms/CloseIcon.vue';
-import EditIcon from '../atoms/EditIcon.vue';
-import TextDescription from '../molecules/TextDescription.vue';
-import AnnouncementService from '../../../lib/AnnouncementService';
+import { ref, watchEffect } from "vue";
+import OverlayTemplate from "../../templates/OverlayTemplate.vue";
+import DeleteIcon from "../atoms/DeleteIcon.vue";
+import CloseIcon from "../atoms/CloseIcon.vue";
+import EditIcon from "../atoms/EditIcon.vue";
+import TextDescription from "../molecules/TextDescription.vue";
+import AnnouncementService from "../../../lib/AnnouncementService";
 
-const emits = defineEmits(['hideModal']);
+const emits = defineEmits(["hideModal"]);
 const props = defineProps({
   announcementId: {
     type: Number,
@@ -24,7 +24,7 @@ const announcementService = new AnnouncementService();
 
 const announcementDetail = ref([]);
 const onClickCloseButton = () => {
-  emits('hideModal');
+  emits("hideModal");
 };
 watchEffect(async () => {
   announcementDetail.value = await announcementService.getAnnouncementDetail(
@@ -71,24 +71,28 @@ watchEffect(async () => {
           <!-- Publish Date -->
           <TextDescription>
             <template #header>Publish Date</template>
-            <template #default>{{ announcementDetail.publishDate }}</template>
+            <template #default>{{
+              announcementDetail.publishDate ?? "-"
+            }}</template>
           </TextDescription>
           <!-- Close Date -->
           <TextDescription>
             <template #header>Close Date</template>
-            <template #default>{{ announcementDetail.closeDate }}</template>
+            <template #default>{{
+              announcementDetail.closeDate ?? "-"
+            }}</template>
           </TextDescription>
           <!-- Display & DeleteBtn -->
-          <div class="flex justify-end h-[13%]">
-            <TextDescription>
-              <template #header>Display</template>
-              <template #default>{{ announcementDetail.display }}</template>
-            </TextDescription>
-            <button
-              class="flex flex-row items-center gap-3 bg-[#FF5F6D] w-1/5 h-full justify-center text-center rounded-lg"
-            >
-              <DeleteIcon />
-              <h1>Delete</h1>
+          <TextDescription>
+            <template #header>Display</template>
+            <template #default>{{ announcementDetail.display }}</template>
+          </TextDescription>
+          <div class="flex justify-end">
+            <button class="bg-[#FF5F6D] rounded-lg px-5 py-2">
+              <div class="flex gap-2 items-center">
+                <DeleteIcon />
+                Delete
+              </div>
             </button>
           </div>
         </div>

@@ -64,10 +64,10 @@ watchEffect(() => {
     </template>
 
     <template v-slot:publishDate>
-      {{ announcementItem.publishDate }}
+      {{ announcementItem.publishDate ?? "-" }}
     </template>
     <template v-slot:closeDate>
-      {{ announcementItem.closeDate }}
+      {{ announcementItem.closeDate ?? "-" }}
     </template>
     <template v-slot:display>
       {{ announcementItem.display }}

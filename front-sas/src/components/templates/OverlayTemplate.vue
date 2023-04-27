@@ -5,7 +5,7 @@ const props = defineProps({
     required: true,
   },
 });
-defineEmits(['hideModal']);
+defineEmits(["hideModal"]);
 </script>
 
 <template>
@@ -16,7 +16,7 @@ defineEmits(['hideModal']);
         class="absolute top-0 left-0 w-screen h-screen bg-gray-900/50 flex flex-col items-center justify-center z-[999]"
         @click.self="$emit('hideModal')"
       >
-        <div class="flex flex-col w-[60%] h-3/6" style="max-width: 900px">
+        <div class="flex flex-col w-[60%] h-4/6" style="max-width: 900px">
           <div class="bg-[#E87B92] shadow-xl w-[80%] h-[15%] rounded-t-xl">
             <slot name="header"></slot>
           </div>
