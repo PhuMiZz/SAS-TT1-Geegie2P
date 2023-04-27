@@ -17,12 +17,10 @@ onMounted(async () => {
 </script>
 
 <template>
+  <NavigationBar />
   <PageTemplate>
-    <NavigationBar />
-    <div class="grid grid-rows-2">
-      <AnnouncementTitle />
-      <AnnouncementList :announcement-list="allAnnouncement" />
-    </div>
+    <AnnouncementTitle />
+    <AnnouncementList :announcement-list="allAnnouncement" />
   </PageTemplate>
 </template>
 
