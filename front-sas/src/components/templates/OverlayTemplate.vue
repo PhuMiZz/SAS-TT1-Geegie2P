@@ -16,8 +16,12 @@ defineEmits(['hideModal']);
         class="fixed top-0 left-0 w-full h-full bg-gray-900/50 flex flex-col items-center justify-center z-[999]"
         @click.self="$emit('hideModal')"
       >
-        <div class="flex flex-col w-[60%] h-3/6" style="max-width: 900px">
-          <div class="bg-[#E87B92] shadow-xl w-[80%] h-[15%] rounded-t-xl">
+        <div
+          class="flex flex-col w-full h-4/6 px-3 xl:p-0 md:h-3/6 md:max-w-[900px]"
+        >
+          <div
+            class="bg-[#E87B92] shadow-xl w-[80%] h-[15%] md:h-[12%] rounded-t-xl"
+          >
             <slot name="header"></slot>
           </div>
           <div
