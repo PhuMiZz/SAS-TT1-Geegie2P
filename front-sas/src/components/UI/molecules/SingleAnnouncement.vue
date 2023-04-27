@@ -11,6 +11,12 @@ const props = defineProps({
   },
 });
 
+console.log(
+  props.announcementItem.publishDate === null
+    ? "-"
+    : props.announcementItem.publishDate.toLocaleString()
+);
+
 const badgeCategoryColor = reactive({
   textColor: "",
   bgColor: "",
@@ -64,10 +70,18 @@ watchEffect(() => {
     </template>
 
     <template v-slot:publishDate>
-      {{ announcementItem.publishDate ?? "-" }}
+      {{
+        announcementItem.publishDate === null
+          ? "-"
+          : announcementItem.publishDate.replace("T", " ")
+      }}
     </template>
     <template v-slot:closeDate>
-      {{ announcementItem.closeDate ?? "-" }}
+      {{
+        announcementItem.closeDate === null
+          ? "-"
+          : announcementItem.closeDate.replace("T", " ")
+      }}
     </template>
     <template v-slot:display>
       {{ announcementItem.display }}
