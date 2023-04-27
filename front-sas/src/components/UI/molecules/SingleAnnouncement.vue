@@ -4,6 +4,10 @@ import DetailIcon from '../atoms/DetailIcon.vue';
 import AnnouncementDetail from '../organisms/AnnouncementDetail.vue';
 import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
 import { onMounted, reactive, ref, watchEffect } from 'vue';
+import {
+  getLocaleDateTime,
+  formatDateTime,
+} from '../../../lib/DateTimeManagement.js';
 const props = defineProps({
   announcementItem: {
     type: Object,
@@ -67,11 +71,19 @@ watchEffect(() => {
 
     <template v-slot:publishDate>
       <div class="text-[#737373] w-28 md:hidden block">Publish Date</div>
-      {{ announcementItem.publishDate ?? '-' }}
+      {{
+        announcementItem.publishDate === null
+          ? '-'
+          : formatDateTime(getLocaleDateTime(announcementItem.publishDate))
+      }}
     </template>
     <template v-slot:closeDate>
       <div class="text-[#737373] w-28 md:hidden block">Close Date</div>
-      {{ announcementItem.closeDate ?? '-' }}
+      {{
+        announcementItem.closeDate === null
+          ? '-'
+          : formatDateTime(getLocaleDateTime(announcementItem.closeDate))
+      }}
     </template>
     <template v-slot:display>
       <div class="text-[#737373] w-28 md:hidden block">Display</div>

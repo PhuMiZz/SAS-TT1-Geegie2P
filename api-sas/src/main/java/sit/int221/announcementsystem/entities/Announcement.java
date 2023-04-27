@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -27,10 +30,10 @@ public class Announcement {
     private Category category;
 
     @Column(name = "publishDate", nullable = true)
-    private String publishDate;
+    private Instant publishDate;
 
     @Column(name = "closeDate", nullable = true)
-    private String closeDate;
+    private Instant closeDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
