@@ -14,10 +14,7 @@ const props = defineProps({
     :key="announcement.id"
     :id="announcement.id"
   >
-    <SingleAnnouncement
-      :announcement-item="announcement"
-
-    />
+    <SingleAnnouncement :announcement-item="announcement" />
   </div>
 </template>
 
