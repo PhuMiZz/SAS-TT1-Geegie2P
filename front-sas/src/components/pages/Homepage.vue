@@ -35,7 +35,7 @@ watchEffect(async () => {
       No Announcement
     </div>
     <div v-else>
-      <AnnouncementTemplate header="true">
+      <AnnouncementTemplate :header="true">
         <template v-slot:title>Title</template>
         <template v-slot:category>Category</template>
         <template v-slot:publishDate>Publish Date</template>

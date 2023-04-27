@@ -11,7 +11,7 @@ const props = defineProps({
   <div
     class="flex"
     :class="
-      header
+      props.header
         ? 'text-[#737373]'
         : 'items-center justify-evenly bg-gray-100 w-full h-24 my-2 rounded-xl'
     "
@@ -23,15 +23,15 @@ const props = defineProps({
     </div>
     <div class="flex w-2/3 px-5"><slot name="title"></slot></div>
     <div class="flex w-2/4"><slot name="category"></slot></div>
-    <div class="flex w-2/3" :class="header ? '' : 'text-[#737373]'">
+    <div class="flex w-2/3" :class="props.header ? '' : 'text-[#737373]'">
       <slot name="publishDate"></slot>
     </div>
-    <div class="flex w-2/3" :class="header ? '' : 'text-[#737373]'">
+    <div class="flex w-2/3" :class="props.header ? '' : 'text-[#737373]'">
       <slot name="closeDate"></slot>
     </div>
     <div
       class="flex w-1/4 justify-center"
-      :class="header ? '' : 'text-[#737373]'"
+      :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="display"></slot>
     </div>

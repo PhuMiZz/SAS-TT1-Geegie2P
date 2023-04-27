@@ -77,13 +77,12 @@ watchEffect(() => {
         <DetailIcon />
       </button>
     </template>
-
-    <AnnouncementDetail
-      :announcement-id="Number(announcementItem.id)"
-      :is-open="showModal"
-      @hide-modal="showModal = false"
-    />
   </AnnouncementTemplate>
+  <AnnouncementDetail
+    :announcement-id="Number(announcementItem.id)"
+    :is-open="showModal"
+    @hide-modal="showModal = false"
+  />
 </template>
 
 <style scoped></style>
