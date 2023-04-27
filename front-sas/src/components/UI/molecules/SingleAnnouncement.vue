@@ -4,18 +4,16 @@ import DetailIcon from "../atoms/DetailIcon.vue";
 import AnnouncementDetail from "../organisms/AnnouncementDetail.vue";
 import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { onMounted, reactive, ref, watchEffect } from "vue";
+import {
+  getLocaleDateTime,
+  formatDateTime,
+} from "../../../lib/DateTimeManagement.js";
 const props = defineProps({
   announcementItem: {
     type: Object,
     required: true,
   },
 });
-
-console.log(
-  props.announcementItem.publishDate === null
-    ? "-"
-    : props.announcementItem.publishDate.toLocaleString()
-);
 
 const badgeCategoryColor = reactive({
   textColor: "",
@@ -73,14 +71,14 @@ watchEffect(() => {
       {{
         announcementItem.publishDate === null
           ? "-"
-          : announcementItem.publishDate.replace("T", " ")
+          : formatDateTime(getLocaleDateTime(announcementItem.publishDate))
       }}
     </template>
     <template v-slot:closeDate>
       {{
         announcementItem.closeDate === null
           ? "-"
-          : announcementItem.closeDate.replace("T", " ")
+          : formatDateTime(getLocaleDateTime(announcementItem.closeDate))
       }}
     </template>
     <template v-slot:display>
