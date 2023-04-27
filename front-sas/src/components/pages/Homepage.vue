@@ -5,6 +5,7 @@ import NavigationBar from "../UI/organisms/NavigationBar.vue";
 import AnnouncementService from "../../lib/AnnouncementService";
 import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
+import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
 
 const announcementService = new AnnouncementService();
 
@@ -34,16 +35,14 @@ watchEffect(async () => {
       No Announcement
     </div>
     <div v-else>
-      <div class="flex text-[#737373]">
-        <div class="flex w-1/5"></div>
-        <div class="flex w-2/3 px-5">Title</div>
-        <div class="flex w-2/4">Category</div>
-
-        <div class="flex w-2/3">Publish Date</div>
-        <div class="flex w-2/3">Close Date</div>
-        <div class="flex w-1/4 justify-center">Display</div>
-        <div class="flex w-1/4 justify-center">Detail</div>
-      </div>
+      <AnnouncementTemplate header="true">
+        <template v-slot:title>Title</template>
+        <template v-slot:category>Category</template>
+        <template v-slot:publishDate>Publish Date</template>
+        <template v-slot:closeDate>Close Date</template>
+        <template v-slot:display>Display</template>
+        <template v-slot:detail>Detail</template>
+      </AnnouncementTemplate>
       <AnnouncementList :announcement-list="allAnnouncement" />
     </div>
   </PageTemplate>

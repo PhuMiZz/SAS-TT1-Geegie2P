@@ -2,6 +2,7 @@
 import BadgeCategories from "./BadgeCategories.vue";
 import DetailIcon from "../atoms/DetailIcon.vue";
 import AnnouncementDetail from "../organisms/AnnouncementDetail.vue";
+import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { onMounted, reactive, ref, watchEffect } from "vue";
 const props = defineProps({
   announcementItem: {
@@ -47,44 +48,42 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div
-    class="flex items-center justify-evenly bg-gray-100 w-full h-24 my-2 rounded-xl"
-  >
-    <div
-      class="flex items-center justify-center w-1/5 h-full bg-[#E87B92] rounded-l-xl"
-    >
-      <h1 class="text-xl">{{ announcementItem.id }}</h1>
-    </div>
-    <div class="flex w-2/3 p-5">
+  <AnnouncementTemplate>
+    <template v-slot:announcementNo>
+      {{ announcementItem.id }}
+    </template>
+    <template v-slot:title>
       {{ announcementItem.announcementTitle }}
-    </div>
-    <div class="flex w-2/4 text-center">
+    </template>
+    <template v-slot:category>
       <BadgeCategories
         :bg-color="badgeCategoryColor.bgColor"
         :text-color="badgeCategoryColor.textColor"
         >{{ announcementItem.category.announcementCategory }}</BadgeCategories
       >
-    </div>
+    </template>
 
-    <div class="flex text-center w-2/3 text-[#737373]">
+    <template v-slot:publishDate>
       {{ announcementItem.publishDate }}
-    </div>
-    <div class="flex text-center w-2/3 text-[#737373]">
+    </template>
+    <template v-slot:closeDate>
       {{ announcementItem.closeDate }}
-    </div>
-    <div class="flex justify-center w-1/4 text-[#737373]">
+    </template>
+    <template v-slot:display>
       {{ announcementItem.display }}
-    </div>
-    <button class="flex justify-center w-1/4" @click="onClickDetail">
-      <DetailIcon />
-    </button>
+    </template>
+    <template v-slot:detail>
+      <button @click="onClickDetail">
+        <DetailIcon />
+      </button>
+    </template>
 
     <AnnouncementDetail
       :announcement-id="Number(announcementItem.id)"
       :is-open="showModal"
       @hide-modal="showModal = false"
     />
-  </div>
+  </AnnouncementTemplate>
 </template>
 
 <style scoped></style>
