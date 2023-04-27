@@ -6,9 +6,9 @@ import UserIcon from "@/components/UI/atoms/UserIcon.vue";
 </script>
 
 <template>
-  <nav class="bg-[#F5F5F5] border-gray-200">
+  <nav class="sticky top-0 w-full bg-[#F5F5F5] border-gray-200">
     <div
-      class="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4"
+      class="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4 "
     >
       <!-- Add Logo & Name -->
       <a href="" class="flex items-center ml-10">
