@@ -1,9 +1,9 @@
 <script setup>
-import HomeIcon from '@/components/UI/atoms/HomeIcon.vue';
-import UserViewIcon from '@/components/UI/atoms/UserViewIcon.vue';
-import AboutUsIcon from '@/components/UI/atoms/AboutUsIcon.vue';
-import UserIcon from '@/components/UI/atoms/UserIcon.vue';
-import { ref } from 'vue';
+import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
+import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
+import UserIcon from "@/components/UI/atoms/UserIcon.vue";
+import { ref } from "vue";
 
 const isOpenMenu = ref(false);
 const onClickMenuHandler = () => {
@@ -30,15 +30,15 @@ const onClickMenuHandler = () => {
         class="hidden xl:flex items-center justify-center space-x-16"
         id="navbar-default"
       >
-        <div class="flex items-center">
+        <div class="flex items-center text-xl">
           <HomeIcon class="mr-3.5" />
           <button>Home</button>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center text-xl">
           <UserViewIcon class="mr-3.5" />
           <button>User View</button>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center text-xl">
           <AboutUsIcon class="mr-3.5" />
           <button>About Us</button>
         </div>

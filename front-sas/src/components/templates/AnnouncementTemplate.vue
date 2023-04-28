@@ -17,30 +17,32 @@ const props = defineProps({
     "
   >
     <div
-      class="flex w-full md:w-1/5 items-center justify-center h-full bg-[#E87B92] rounded-t-xl md:rounded-none md:rounded-l-xl text-xl"
+      class="flex w-full md:w-1/5 items-center justify-center h-full bg-[#E87B92] rounded-t-xl md:rounded-none md:rounded-l-xl text-2xl"
     >
       <slot name="announcementNo"></slot>
     </div>
-    <div class="flex w-full pt-3 px-3 md:p-0 md:w-2/3 md:justify-center">
+    <div
+      class="flex w-full pt-3 px-3 md:p-0 md:w-2/3 md:justify-center text-xl"
+    >
       <slot name="title"></slot>
     </div>
-    <div class="flex w-full px-3 md:p-0 md:w-2/4 md:justify-center">
+    <div class="flex w-full px-3 md:p-0 md:w-2/4 md:justify-center text-xl">
       <slot name="category"></slot>
     </div>
     <div
-      class="flex w-full px-3 md:p-0 md:w-2/3 md:justify-center"
+      class="flex w-full px-3 md:p-0 md:w-2/3 md:justify-center text-xl"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="publishDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 md:p-0 md:w-2/3 md:justify-center"
+      class="flex w-full px-3 md:p-0 md:w-2/3 md:justify-center text-xl"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="closeDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 md:p-0 md:w-1/4 md:justify-center"
+      class="flex w-full px-3 md:p-0 md:w-1/4 md:justify-center text-xl"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="display"></slot>
