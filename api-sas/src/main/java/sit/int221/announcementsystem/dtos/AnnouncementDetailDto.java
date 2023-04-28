@@ -9,12 +9,13 @@ import java.time.Instant;
 @Getter
 @Setter
 public class AnnouncementDetailDto {
+    private int id;
     private String announcementTitle;
     private String announcementDescription;
-//    @JsonIgnore
-//    private CategoryDto category;
+    private int categoryId;
     private String announcementCategory;
     private Instant publishDate;
     private Instant closeDate;
     private String announcementDisplay;
+
 }

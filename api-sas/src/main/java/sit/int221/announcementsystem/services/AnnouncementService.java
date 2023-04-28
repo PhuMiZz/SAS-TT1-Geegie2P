@@ -23,7 +23,7 @@ public class AnnouncementService {
 
     public Announcement getAnnouncementDetail(int announcementId){
         return announcementRepository.findById(announcementId).orElseThrow(
-                () -> new ItemNotFoundException("Announcement ID: " + announcementId + " does not exist!.")
+                () -> new ItemNotFoundException("Announcement id: " + announcementId + " does not exist!.")
         );
     }
 
