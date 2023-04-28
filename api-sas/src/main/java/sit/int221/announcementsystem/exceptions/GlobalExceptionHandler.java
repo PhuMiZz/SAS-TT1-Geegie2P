@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return new ResponseEntity<>(errorResponse, status);
     }
-    @ExceptionHandler(NumberFormatException.class)
+    @ExceptionHandler(InvalidAnnouncementIdException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleInvalidAnnouncementId(InvalidAnnouncementIdException exception, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;

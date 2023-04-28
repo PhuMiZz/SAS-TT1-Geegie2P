@@ -12,7 +12,7 @@ public class AnnouncementDetailDto {
     private int id;
     private String announcementTitle;
     private String announcementDescription;
-    private int categoryId;
+//    private int categoryId;
     private String announcementCategory;
     private Instant publishDate;
     private Instant closeDate;
