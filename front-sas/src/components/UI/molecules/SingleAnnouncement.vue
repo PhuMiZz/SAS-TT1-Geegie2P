@@ -1,10 +1,11 @@
 <script setup>
 import BadgeCategories from "./BadgeCategories.vue";
 import DetailIcon from "../atoms/DetailIcon.vue";
-import AnnouncementDetail from "../organisms/AnnouncementDetail.vue";
+// import AnnouncementDetail from "@/components/pages/AnnouncementDetail.vue";
 import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { onMounted, reactive, ref, watchEffect } from "vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   announcementItem: {
@@ -19,9 +20,12 @@ const badgeCategoryColor = reactive({
 });
 const showModal = ref(false);
 
-const onClickDetail = () => {
-  showModal.value = true;
+const router = useRouter();
+const getAnnouncementDetail = (id) => {
+  // showModal.value = true;
+  router.push({ name: "AnnouncementDetail", params: { id } });
 };
+
 watchEffect(() => {
   const categoryId = props.announcementItem.category.categoryId;
   switch (categoryId) {
@@ -88,16 +92,16 @@ watchEffect(() => {
       {{ announcementItem.display }}
     </template>
     <template v-slot:detail>
-      <button @click="onClickDetail">
+      <button @click="getAnnouncementDetail(announcementItem.id)">
         <DetailIcon />
       </button>
     </template>
   </AnnouncementTemplate>
-  <AnnouncementDetail
+  <!-- <AnnouncementDetail
     :announcement-id="Number(announcementItem.id)"
     :is-open="showModal"
     @hide-modal="showModal = false"
-  />
+  /> -->
 </template>
 
 <style scoped></style>

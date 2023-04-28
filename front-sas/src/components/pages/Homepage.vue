@@ -25,7 +25,6 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <NavigationBar />
   <PageTemplate>
     <AnnouncementTitle />
     <div

@@ -1,7 +1,10 @@
 <script setup>
-import Homepage from './components/pages/Homepage.vue';
+import NavigationBar from "./components/UI/organisms/NavigationBar.vue";
 </script>
 
-<template><Homepage /></template>
+<template>
+  <NavigationBar />
+  <RouterView />
+</template>
 
 <style scoped></style>
