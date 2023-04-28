@@ -1,11 +1,11 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
-import PageTemplate from "../templates/PageTemplate.vue";
-import NavigationBar from "../UI/organisms/NavigationBar.vue";
-import AnnouncementService from "../../lib/AnnouncementService";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
-import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
+import { onMounted, ref, watch, watchEffect } from 'vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import NavigationBar from '../UI/organisms/NavigationBar.vue';
+import AnnouncementService from '../../lib/AnnouncementService';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
+import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
 
 const announcementService = new AnnouncementService();
 
@@ -34,7 +34,7 @@ watchEffect(async () => {
       No Announcement
     </div>
     <div v-else>
-      <AnnouncementTemplate :header="true" class="hidden md:flex">
+      <AnnouncementTemplate :header="true" class="hidden xl:flex">
         <template #title>Title</template>
         <template #category>Category</template>
         <template #publishDate>Publish Date</template>
