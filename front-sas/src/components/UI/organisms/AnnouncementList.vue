@@ -1,5 +1,5 @@
 <script setup>
-import SingleAnnouncement from "../molecules/SingleAnnouncement.vue";
+import SingleAnnouncement from '../molecules/SingleAnnouncement.vue';
 const props = defineProps({
   announcementList: {
     type: Object,
@@ -10,11 +10,11 @@ const props = defineProps({
 
 <template>
   <div
-    v-for="announcement in announcementList"
+    v-for="(announcement, index) in announcementList"
     :key="announcement.id"
     :id="announcement.id"
   >
-    <SingleAnnouncement :announcement-item="announcement" />
+    <SingleAnnouncement :index="index" :announcement-item="announcement" />
   </div>
 </template>
 

@@ -12,6 +12,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  index: {
+    type: Number,
+    required: false,
+  },
 });
 
 // const badgeCategoryColor = reactive({
@@ -55,7 +59,7 @@ const getAnnouncementDetail = (id) => {
 <template>
   <AnnouncementTemplate>
     <template v-slot:announcementNo>
-      {{ announcementItem.id }}
+      {{ index + 1 }}
     </template>
     <template v-slot:title>
       <div class="text-[#737373] w-28 xl:hidden block">Title</div>
@@ -63,8 +67,8 @@ const getAnnouncementDetail = (id) => {
     </template>
     <template v-slot:category>
       <div class="text-[#737373] w-28 xl:hidden block">Category</div>
-      <BadgeCategories :category-id="announcementItem.category.categoryId">{{
-        announcementItem.category.announcementCategory
+      <BadgeCategories>{{
+        announcementItem.announcementCategory
       }}</BadgeCategories>
     </template>
 

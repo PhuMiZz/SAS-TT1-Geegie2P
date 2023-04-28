@@ -32,9 +32,9 @@ watchEffect(async () => {
   announcementDetail.value = await announcementService.getAnnouncementDetail(
     props.announcementId
   );
-  console.log(announcementDetail.value);
-  categoryName.value = announcementDetail.value.category.announcementCategory;
-  categoryId.value = announcementDetail.value.category.categoryId;
+
+  // categoryName.value = announcementDetail.value.category.announcementCategory;
+  // categoryId.value = announcementDetail.value.category.categoryId;
 });
 </script>
 
@@ -76,8 +76,8 @@ watchEffect(async () => {
       <div class="w-full md:w-3/5 xl:w-2/5 h-full p-5 rounded-xl bg-[#E5E5E5]">
         <TextDescription>
           <template #header>Category</template>
-          <BadgeCategories :category-id="categoryId">{{
-            categoryName
+          <BadgeCategories>{{
+            announcementDetail.announcementCategory
           }}</BadgeCategories>
         </TextDescription>
 

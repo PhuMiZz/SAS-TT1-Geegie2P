@@ -43,6 +43,9 @@ watchEffect(() => {
       badgeCategoryColor.textColor = 'text-yellow-800';
       // console.log('ฝึกงาน');
       break;
+    default:
+      badgeCategoryColor.bgColor = 'bg-gray-400';
+      badgeCategoryColor.textColor = 'text-black';
   }
 });
 </script>
