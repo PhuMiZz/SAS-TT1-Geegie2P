@@ -56,10 +56,32 @@ watchEffect(async () => {
         <div>{{ announcementDetail.announcementDescription }}</div>
       </div>
     </div>
-    <div bg-[#E5E5E5]>
+    <div class="bg-[#E5E5E5] w-1/2">
       <TextDescription>
         <template #header>Category</template>
-        <!-- <template #default>{{announcementDetail.}}</template> -->
+        <template #default>{{
+          announcementDetail.category.announcementCategory
+        }}</template>
+      </TextDescription>
+      <TextDescription>
+        <template #header>Publish Date</template>
+        <template #default>{{
+          announcementDetail.publishDate === null
+            ? "-"
+            : getLocaleDateTime(announcementDetail.publishDate)
+        }}</template>
+      </TextDescription>
+      <TextDescription>
+        <template #header>Close Date</template>
+        <template #default>{{
+          announcementDetail.closeDate === null
+            ? "-"
+            : getLocaleDateTime(announcementDetail.closeDate)
+        }}</template>
+      </TextDescription>
+      <TextDescription>
+        <template #header>Display</template>
+        <template #default>{{ announcementDetail.display }}</template>
       </TextDescription>
     </div>
   </div>
