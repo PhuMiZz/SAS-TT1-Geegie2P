@@ -12,7 +12,7 @@ const props = defineProps({
     <select
       :id="input"
       :name="input"
-      class="bg-[#FAFAFA] p-3 h-12 rounded-sm w-36"
+      class="bg-[#FAFAFA] p-3 h-12 rounded-lg w-36"
     >
       <option v-for="(item, index) in input" :key="index" :value="item">
         {{ item }}
