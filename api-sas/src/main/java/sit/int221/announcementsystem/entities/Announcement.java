@@ -37,7 +37,7 @@ public class Announcement {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
-    private DisplayStatus display;
+    private DisplayStatus announcementDisplay;
 
     public enum DisplayStatus {
         Y,

@@ -13,9 +13,7 @@ public class AnnouncementsViewDto {
     private String announcementTitle;
     private String publishDate;
     private String closeDate;
-    private String display;
-
-    @JsonIgnore
-    private CategoryDto category;
+    private String announcementDisplay;
+    private String announcementCategory;
 
 }
