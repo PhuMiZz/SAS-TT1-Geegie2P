@@ -22,8 +22,7 @@ const showModal = ref(false);
 
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  // showModal.value = true;
-  router.push({ name: "AnnouncementDetail", params: { id } });
+  router.push({ name: "DetailPage", params: { id } });
 };
 
 watchEffect(() => {
@@ -97,11 +96,6 @@ watchEffect(() => {
       </button>
     </template>
   </AnnouncementTemplate>
-  <!-- <AnnouncementDetail
-    :announcement-id="Number(announcementItem.id)"
-    :is-open="showModal"
-    @hide-modal="showModal = false"
-  /> -->
 </template>
 
 <style scoped></style>

@@ -3,6 +3,7 @@ import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
 import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
 import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
 import UserIcon from "@/components/UI/atoms/UserIcon.vue";
+import { RouterLink } from "vue-router";
 import { ref } from "vue";
 
 const isOpenMenu = ref(false);
@@ -30,18 +31,20 @@ const onClickMenuHandler = () => {
         class="hidden xl:flex items-center justify-center space-x-16"
         id="navbar-default"
       >
-        <div class="flex items-center text-xl">
-          <HomeIcon class="mr-3.5" />
-          <button>Home</button>
-        </div>
-        <div class="flex items-center text-xl">
+        <RouterLink to="/home">
+          <button class="flex items-center text-xl">
+            <HomeIcon class="mr-3.5" />
+            Home
+          </button>
+        </RouterLink>
+
+        <button class="flex items-center text-xl">
           <UserViewIcon class="mr-3.5" />
-          <button>User View</button>
-        </div>
-        <div class="flex items-center text-xl">
-          <AboutUsIcon class="mr-3.5" />
-          <button>About Us</button>
-        </div>
+          User View
+        </button>
+        <button class="flex items-center text-xl">
+          <AboutUsIcon class="mr-3.5" /> About Us
+        </button>
       </div>
 
       <div class="w-[10%] flex justify-center">

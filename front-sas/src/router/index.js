@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Homepage from "@/components/pages/Homepage.vue";
-import AnnouncementDetail from "@/components/pages/AnnouncementDetail.vue";
+import DetailPage from "@/components/pages/DetailPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,8 +12,8 @@ const router = createRouter({
     },
     {
       path: "/announcements/:id",
-      name: "AnnouncementDetail",
-      component: AnnouncementDetail,
+      name: "DetailPage",
+      component: DetailPage,
     },
   ],
 });
