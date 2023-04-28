@@ -13,8 +13,6 @@ const props = defineProps({
   },
 });
 
-console.log(getLocaleDateTime(props.announcementItem.publishDate));
-
 const badgeCategoryColor = reactive({
   textColor: "",
   bgColor: "",

@@ -3,22 +3,33 @@ package sit.int221.announcementsystem.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sit.int221.announcementsystem.entities.Announcement;
+import sit.int221.announcementsystem.entities.Category;
 import sit.int221.announcementsystem.exceptions.ItemNotFoundException;
 import sit.int221.announcementsystem.repositories.AnnouncementRepository;
+import sit.int221.announcementsystem.repositories.CategoryRepository;
 
 import java.util.List;
 
 @Service
 public class AnnouncementService {
     @Autowired
-    private AnnouncementRepository repository;
+    private AnnouncementRepository announcementRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     public List<Announcement> getAnnouncements(){
-        return repository.findAll();
+        return announcementRepository.findAll();
     }
 
     public Announcement getAnnouncementDetail(int announcementId){
-        return repository.findById(announcementId).orElseThrow(
-                () -> new ItemNotFoundException("Announcement ID: " + announcementId + " do not exist!.")
+        return announcementRepository.findById(announcementId).orElseThrow(
+                () -> new ItemNotFoundException("Announcement ID: " + announcementId + " does not exist!.")
         );
+    }
+
+    public List<Announcement> getAnnouncementByCategory(int categoryId){
+        Category category = categoryRepository.findById(categoryId).orElseThrow(
+                () -> new ItemNotFoundException("Category ID: " + categoryId + " does not exist!.")
+        );
+        return announcementRepository.getAnnouncementsByCategory(category);
     }
 }

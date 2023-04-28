@@ -1,11 +1,11 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
-import PageTemplate from '../templates/PageTemplate.vue';
-import NavigationBar from '../UI/organisms/NavigationBar.vue';
-import AnnouncementService from '../../lib/AnnouncementService';
-import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
-import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
-import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
+import { onMounted, ref, watch, watchEffect } from "vue";
+import PageTemplate from "../templates/PageTemplate.vue";
+import NavigationBar from "../UI/organisms/NavigationBar.vue";
+import AnnouncementService from "../../lib/AnnouncementService";
+import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
+import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
+import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
 
 const announcementService = new AnnouncementService();
 
@@ -36,12 +36,12 @@ watchEffect(async () => {
     </div>
     <div v-else>
       <AnnouncementTemplate :header="true" class="hidden md:flex">
-        <template v-slot:title>Title</template>
-        <template v-slot:category>Category</template>
-        <template v-slot:publishDate>Publish Date</template>
-        <template v-slot:closeDate>Close Date</template>
-        <template v-slot:display>Display</template>
-        <template v-slot:detail>Detail</template>
+        <template #title>Title</template>
+        <template #category>Category</template>
+        <template #publishDate>Publish Date</template>
+        <template #closeDate>Close Date</template>
+        <template #display>Display</template>
+        <template #detail>Detail</template>
       </AnnouncementTemplate>
       <AnnouncementList :announcement-list="allAnnouncement" />
     </div>
