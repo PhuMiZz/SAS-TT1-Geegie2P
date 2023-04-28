@@ -6,6 +6,7 @@ import CloseIcon from "../atoms/CloseIcon.vue";
 import EditIcon from "../atoms/EditIcon.vue";
 import TextDescription from "../molecules/TextDescription.vue";
 import AnnouncementService from "../../../lib/AnnouncementService";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 
 const emits = defineEmits(["hideModal"]);
 const props = defineProps({
@@ -72,14 +73,18 @@ watchEffect(async () => {
           <TextDescription>
             <template #header>Publish Date</template>
             <template #default>{{
-              announcementDetail.publishDate ?? "-"
+              announcementDetail.publishDate === null
+                ? "-"
+                : getLocaleDateTime(announcementDetail.publishDate)
             }}</template>
           </TextDescription>
           <!-- Close Date -->
           <TextDescription>
             <template #header>Close Date</template>
             <template #default>{{
-              announcementDetail.closeDate ?? "-"
+              announcementDetail.closeDate === null
+                ? "-"
+                : getLocaleDateTime(announcementDetail.closeDate)
             }}</template>
           </TextDescription>
           <!-- Display & DeleteBtn -->
