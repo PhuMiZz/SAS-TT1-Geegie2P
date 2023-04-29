@@ -51,7 +51,7 @@ const props = defineProps({
       <slot name="display"></slot>
     </div>
     <div
-      class="flex w-full pr-3 pb-3 gap-10 justify-end xl:gap-0 xl:p-0 xl:w-1/4 xl:justify-center"
+      class="flex text-xl w-full pr-3 pb-3 gap-10 justify-end xl:gap-0 xl:p-0 xl:w-1/4 xl:justify-center"
     >
       <slot name="detail"></slot>
     </div>
