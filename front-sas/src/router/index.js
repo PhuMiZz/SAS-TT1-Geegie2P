@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Homepage from "@/components/pages/Homepage.vue";
 import DetailPage from "@/components/pages/DetailPage.vue";
-import AlertOverlay from "@/components/UI/organisms/AlertOverlay.vue";
+import PageNotFound from "@/components/pages/PageNotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,8 +22,8 @@ const router = createRouter({
     },
     {
       path: "/:pathMatch(.*)*",
-      name: "NotFoundPage",
-      component: AlertOverlay,
+      name: "PageNotFound",
+      component: PageNotFound,
     },
   ],
 });
