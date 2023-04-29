@@ -66,7 +66,7 @@ const getAnnouncementDetail = (id) => {
     </template>
     <template v-slot:category>
       <div class="text-[#737373] w-28 xl:hidden block">Category</div>
-      <BadgeCategories>{{
+      <BadgeCategories :category="announcementItem.announcementCategory">{{
         announcementItem.announcementCategory
       }}</BadgeCategories>
     </template>

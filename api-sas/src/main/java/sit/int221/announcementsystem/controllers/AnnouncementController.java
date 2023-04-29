@@ -55,4 +55,9 @@ public class AnnouncementController {
         return categoryService.getCategories();
     }
 
+    @GetMapping("/categories/find/{categoryName}")
+    public Integer findCategoryIdByName (@PathVariable String categoryName){
+        return categoryService.FindCategoryByName(categoryName);
+    }
+
 }

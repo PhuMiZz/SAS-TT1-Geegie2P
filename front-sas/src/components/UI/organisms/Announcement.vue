@@ -22,8 +22,8 @@ const props = defineProps({
   },
 });
 
-const categoryName = ref("");
-const categoryId = ref(null);
+// const categoryName = ref("");
+// const categoryId = ref(null);
 const announcementService = new AnnouncementService();
 
 const announcementDetail = ref([]);
@@ -76,9 +76,10 @@ watchEffect(async () => {
       <div class="w-full md:w-3/5 xl:w-2/5 h-full p-5 rounded-xl bg-[#E5E5E5]">
         <TextDescription>
           <template #header>Category</template>
-          <BadgeCategories>{{
-            announcementDetail.announcementCategory
-          }}</BadgeCategories>
+          <BadgeCategories
+            :category="announcementDetail.announcementCategory"
+            >{{ announcementDetail.announcementCategory }}</BadgeCategories
+          >
         </TextDescription>
 
         <TextDescription>
