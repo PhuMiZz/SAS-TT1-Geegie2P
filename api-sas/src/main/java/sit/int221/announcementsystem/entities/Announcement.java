@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -30,10 +31,10 @@ public class Announcement {
     private Category category;
 
     @Column(name = "publishDate", nullable = true)
-    private Instant publishDate;
+    private ZonedDateTime publishDate;
 
     @Column(name = "closeDate", nullable = true)
-    private Instant closeDate;
+    private ZonedDateTime closeDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
