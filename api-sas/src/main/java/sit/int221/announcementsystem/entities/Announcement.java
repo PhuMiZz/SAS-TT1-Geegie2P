@@ -1,11 +1,14 @@
 package sit.int221.announcementsystem.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -13,24 +16,33 @@ import lombok.Setter;
 @Table(name = "announcements")
 public class Announcement {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "announcementId", nullable = true)
     private Integer id;
 
     @Column(name = "announcementTitle", nullable = false )
-    private String title;
+    private String announcementTitle;
 
     @Column(name = "announcementDescription", nullable = false)
-    private String description;
+    private String announcementDescription;
 
-    @Column(name = "announcementCategory", nullable = false)
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "announcementCategory")
+    private Category category;
 
     @Column(name = "publishDate", nullable = true)
-    private String publishDate;
+    private ZonedDateTime publishDate;
 
     @Column(name = "closeDate", nullable = true)
-    private String closeDate;
+    private ZonedDateTime closeDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "announcementDisplay", nullable = true)
-    private String display;
+    private DisplayStatus announcementDisplay;
+
+    public enum DisplayStatus {
+        Y,
+        N
+    }
 }
+
