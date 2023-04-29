@@ -1,11 +1,11 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
-import PageTemplate from "../templates/PageTemplate.vue";
-import NavigationBar from "../UI/organisms/NavigationBar.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
-import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
+import { onMounted, ref, watch, watchEffect } from 'vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import NavigationBar from '../UI/organisms/NavigationBar.vue';
+import AnnouncementService from '@/lib/AnnouncementService';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
+import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
 
 const announcementService = new AnnouncementService();
 
@@ -14,7 +14,6 @@ const isAnnouncementEmpty = ref(false);
 
 watchEffect(async () => {
   allAnnouncement.value = await announcementService.getAllAnnouncement();
-  console.log(allAnnouncement.value);
 
   if (Object.keys(allAnnouncement.value).length === 0) {
     isAnnouncementEmpty.value = true;

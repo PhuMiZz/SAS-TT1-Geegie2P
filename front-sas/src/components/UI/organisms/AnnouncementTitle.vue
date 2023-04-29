@@ -1,14 +1,13 @@
 <script setup>
-import AddIcon from "../atoms/AddIcon.vue";
-import Dropdown from "../molecules/Dropdown.vue";
-import CategoryIcon from "../atoms/CategoryIcon.vue";
-import SortIcon from "../atoms/SortIcon.vue";
-import InputTemplate from "../../templates/InputTemplate.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-import { ref, watchEffect } from "vue";
+import AddIcon from '../atoms/AddIcon.vue';
+import Dropdown from '../molecules/DropDown.vue';
+import CategoryIcon from '../atoms/CategoryIcon.vue';
+import SortIcon from '../atoms/SortIcon.vue';
+import InputTemplate from '../../templates/InputTemplate.vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
+import { ref, watchEffect } from 'vue';
 
 const announcementService = new AnnouncementService();
-
 const categories = ref([]);
 
 watchEffect(async () => {
@@ -17,12 +16,12 @@ watchEffect(async () => {
 });
 
 const sort = [
-  "ID",
-  "Title",
-  "Category",
-  "Publish Date",
-  "Close Date",
-  "Display",
+  'ID',
+  'Title',
+  'Category',
+  'Publish Date',
+  'Close Date',
+  'Display',
 ];
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

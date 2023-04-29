@@ -1,10 +1,10 @@
 <script setup>
-import BadgeCategories from "./BadgeCategories.vue";
-import DetailIcon from "../atoms/DetailIcon.vue";
-import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import { onMounted, reactive, ref, watchEffect } from "vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
+import BadgeCategories from './BadgeCategories.vue';
+import DetailIcon from '../atoms/DetailIcon.vue';
+import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
+import { onMounted, reactive, ref, watchEffect } from 'vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   announcementItem: {
@@ -17,42 +17,10 @@ const props = defineProps({
   },
 });
 
-// const badgeCategoryColor = reactive({
-//   textColor: '',
-//   bgColor: '',
-// });
-// const showModal = ref(false);
-
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: "DetailPage", params: { id: id } });
+  router.push({ name: 'DetailPage', params: { id: id } });
 };
-
-// watchEffect(() => {
-//   const categoryId = props.announcementItem.category.categoryId;
-//   switch (categoryId) {
-//     case 1:
-//       badgeCategoryColor.bgColor = 'bg-green-300';
-//       badgeCategoryColor.textColor = 'text-[#145941]';
-//       // console.log('ทั่วไป');
-//       break;
-//     case 2:
-//       badgeCategoryColor.bgColor = 'bg-[#55CAF5]';
-//       badgeCategoryColor.textColor = 'text-[#244F5F]';
-//       // console.log('ทุนการศึกษา');
-//       break;
-//     case 3:
-//       badgeCategoryColor.bgColor = 'bg-[#FF9DA8]';
-//       badgeCategoryColor.textColor = 'text-[#8D212D]';
-//       // console.log('หางาน');
-//       break;
-//     case 4:
-//       badgeCategoryColor.bgColor = 'bg-yellow-300';
-//       badgeCategoryColor.textColor = 'text-yellow-800';
-//       // console.log('ฝึกงาน');
-//       break;
-//   }
-// });
 </script>
 
 <template>
@@ -75,7 +43,7 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Publish Date</div>
       {{
         announcementItem.publishDate === null
-          ? "-"
+          ? '-'
           : getLocaleDateTime(announcementItem.publishDate)
       }}
     </template>
@@ -83,7 +51,7 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Close Date</div>
       {{
         announcementItem.closeDate === null
-          ? "-"
+          ? '-'
           : getLocaleDateTime(announcementItem.closeDate)
       }}
     </template>
