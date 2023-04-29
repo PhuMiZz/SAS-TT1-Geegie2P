@@ -29,7 +29,7 @@ watchEffect(async () => {
     <AnnouncementTitle />
     <div
       v-if="isAnnouncementEmpty"
-      class="text-[#737373] w-full h-64 flex items-center justify-center"
+      class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
     >
       No Announcement
     </div>
