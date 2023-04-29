@@ -12,7 +12,7 @@ import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 const emits = defineEmits(["hideModal"]);
 const props = defineProps({
   announcementId: {
-    type: String,
+    type: Number,
     required: true,
   },
   isOpen: {
