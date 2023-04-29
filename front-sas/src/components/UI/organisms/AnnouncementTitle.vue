@@ -1,6 +1,6 @@
 <script setup>
 import AddIcon from '../atoms/AddIcon.vue';
-import Dropdown from '../molecules/DropDown.vue';
+import Dropdown from '../molecules/Dropdown.vue';
 import CategoryIcon from '../atoms/CategoryIcon.vue';
 import SortIcon from '../atoms/SortIcon.vue';
 import InputTemplate from '../../templates/InputTemplate.vue';
@@ -42,8 +42,10 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         </div>
       </div>
     </div>
-    <div class="h-3/5 flex flex-col">
-      <div class="flex gap-x-3 items-center justify-around flex-wrap">
+    <div class="h-3/5 flex flex-col items-center justify-between md:flex-row">
+      <div
+        class="flex items-center flex-wrap justify-center md:justify-start xl:gap-10"
+      >
         <InputTemplate>
           <CategoryIcon />
           Category:
@@ -54,14 +56,14 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
           Category:
           <Dropdown :input="sort" />
         </InputTemplate>
-        <div class="flex h-full items-center">
-          <button class="bg-[#E87B92] p-2 xl:p-3 rounded-md h-full truncate">
-            <div class="flex gap-1 items-center text-[#00000] text-xl">
-              <AddIcon />
-              Add Announcement
-            </div>
-          </button>
-        </div>
+      </div>
+      <div class="flex h-full xl:h-3/5 items-center">
+        <button class="bg-[#E87B92] p-2 rounded-md h-full truncate">
+          <div class="flex gap-1 items-center text-[#00000] text-xl">
+            <AddIcon />
+            Add Announcement
+          </div>
+        </button>
       </div>
     </div>
   </div>
