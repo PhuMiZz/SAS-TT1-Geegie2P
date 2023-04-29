@@ -32,6 +32,7 @@ VALUES ('ทั่วไป'),
        ('หางาน'),
        ('ฝึกงาน');
 
+
 INSERT INTO announcements(ANNOUNCEMENTTITLE, ANNOUNCEMENTDESCRIPTION, ANNOUNCEMENTCATEGORY, PUBLISHDATE, CLOSEDATE,
                           ANNOUNCEMENTDISPLAY)
 VALUES ('บริษัท เน็ตเซอร์พลัส จำกัด รับสมัครงาน 2 ตำแหน่ง', 'บริษัท เน็ตเซอร์พลัส จำกัด เปิดรับสมัครงาน 2 ตำแหน่ง Application Support และ Customer Support',3,null,null,'N'),
