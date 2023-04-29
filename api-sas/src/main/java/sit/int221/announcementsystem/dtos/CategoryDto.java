@@ -1,5 +1,6 @@
 package sit.int221.announcementsystem.dtos;
 
+
 import lombok.Setter;
 
 @Setter
