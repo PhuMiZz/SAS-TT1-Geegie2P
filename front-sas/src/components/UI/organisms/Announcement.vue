@@ -1,18 +1,18 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import DeleteIcon from "../atoms/DeleteIcon.vue";
-import EditIcon from "../atoms/EditIcon.vue";
-import BackIcon from "../atoms/BackIcon.vue";
-import TextDescription from "../molecules/TextDescription.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
-import BadgeCategories from "../molecules/BadgeCategories.vue";
-import PageTemplate from "../../templates/PageTemplate.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { ref, watchEffect } from 'vue';
+import DeleteIcon from '../atoms/DeleteIcon.vue';
+import EditIcon from '../atoms/EditIcon.vue';
+import BackIcon from '../atoms/BackIcon.vue';
+import TextDescription from '../molecules/TextDescription.vue';
+import AnnouncementService from '../../../lib/AnnouncementService';
+import BadgeCategories from '../molecules/BadgeCategories.vue';
+import PageTemplate from '../../templates/PageTemplate.vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
 
-const emits = defineEmits(["hideModal"]);
+const emits = defineEmits(['hideModal']);
 const props = defineProps({
-  announcementId: {
-    type: Number,
+  announcementDetail: {
+    type: Object,
     required: true,
   },
   isOpen: {
@@ -20,21 +20,6 @@ const props = defineProps({
     required: false,
     default: false,
   },
-});
-
-// const categoryName = ref("");
-// const categoryId = ref(null);
-const announcementService = new AnnouncementService();
-
-const announcementDetail = ref([]);
-
-watchEffect(async () => {
-  announcementDetail.value = await announcementService.getAnnouncementDetail(
-    props.announcementId
-  );
-
-  // categoryName.value = announcementDetail.value.category.announcementCategory;
-  // categoryId.value = announcementDetail.value.category.categoryId;
 });
 </script>
 
@@ -86,7 +71,7 @@ watchEffect(async () => {
           <template #header>Publish Date</template>
           {{
             announcementDetail.publishDate === null
-              ? "-"
+              ? '-'
               : getLocaleDateTime(announcementDetail.publishDate)
           }}
         </TextDescription>
@@ -95,7 +80,7 @@ watchEffect(async () => {
           <template #header>Close Date</template>
           {{
             announcementDetail.closeDate === null
-              ? "-"
+              ? '-'
               : getLocaleDateTime(announcementDetail.closeDate)
           }}
         </TextDescription>
