@@ -13,13 +13,11 @@
       </div>
     </div>
 
-    <router-link to="/">
-      <button
-        class="mt-5 bg-[#BD3455] text-[#FAFAFA] text-xl rounded-lg w-36 p-5"
-      >
-        Go Home
-      </button>
-    </router-link>
+    <button
+      class="mt-5 bg-[#BD3455] text-[#FAFAFA] text-xl rounded-lg w-36 p-5"
+    >
+      <router-link to="/"> Go Home </router-link>
+    </button>
   </div>
 </template>
 

@@ -15,7 +15,7 @@
       >
     </div>
     <button class="text-slate-100 bg-red-800 px-3 lg:rounded-full">
-      Go Home
+      <router-link to="/"> Go Home </router-link>
     </button>
   </div>
 </template>
