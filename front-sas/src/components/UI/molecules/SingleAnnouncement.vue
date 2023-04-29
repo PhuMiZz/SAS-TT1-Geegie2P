@@ -1,11 +1,11 @@
 <script setup>
-import BadgeCategories from './BadgeCategories.vue';
-import DetailIcon from '../atoms/DetailIcon.vue';
+import BadgeCategories from "./BadgeCategories.vue";
+import DetailIcon from "../atoms/DetailIcon.vue";
 // import AnnouncementDetail from "@/components/pages/AnnouncementDetail.vue";
-import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
-import { onMounted, reactive, ref, watchEffect } from 'vue';
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
-import { useRouter } from 'vue-router';
+import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
+import { onMounted, reactive, ref, watchEffect } from "vue";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   announcementItem: {
@@ -26,7 +26,7 @@ const showModal = ref(false);
 
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: 'DetailPage', params: { id: id } });
+  router.push({ name: "DetailPage", params: { id: id } });
 };
 
 // watchEffect(() => {
@@ -76,7 +76,7 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Publish Date</div>
       {{
         announcementItem.publishDate === null
-          ? '-'
+          ? "-"
           : getLocaleDateTime(announcementItem.publishDate)
       }}
     </template>
@@ -84,13 +84,13 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Close Date</div>
       {{
         announcementItem.closeDate === null
-          ? '-'
+          ? "-"
           : getLocaleDateTime(announcementItem.closeDate)
       }}
     </template>
     <template v-slot:display>
       <div class="text-[#737373] w-28 xl:hidden block">Display</div>
-      {{ announcementItem.display }}
+      {{ announcementItem.announcementDisplay }}
     </template>
     <template v-slot:detail>
       <button @click="getAnnouncementDetail(announcementItem.id)">
