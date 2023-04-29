@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import sit.int221.announcementsystem.dtos.AnnouncementsViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
+import sit.int221.announcementsystem.entities.Category;
 import sit.int221.announcementsystem.exceptions.InvalidAnnouncementIdException;
 import sit.int221.announcementsystem.services.AnnouncementService;
+import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
 
 import java.util.List;
@@ -24,14 +26,16 @@ import java.util.List;
 @CrossOrigin("http://localhost:5173")
 public class AnnouncementController {
     @Autowired
-    private AnnouncementService service;
+    private AnnouncementService announcementService;
+    @Autowired
+    private CategoryService categoryService;
     @Autowired
     private ListMapper listMapper;
     @Autowired
     private ModelMapper modelMapper;
     @GetMapping("/announcements")
     public List<AnnouncementsViewDto> getAnnouncements(){
-        List<Announcement> announcements = service.getAnnouncements();
+        List<Announcement> announcements = announcementService.getAnnouncements();
         return listMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper);
     }
 
@@ -39,9 +43,16 @@ public class AnnouncementController {
     public AnnouncementDetailDto getAnnouncementDetail(@PathVariable String id) {
         try {
             int announcementId = Integer.parseInt(id);
-            return modelMapper.map(service.getAnnouncementDetail(announcementId), AnnouncementDetailDto.class);
+            return modelMapper.map(announcementService.getAnnouncementDetail(announcementId), AnnouncementDetailDto.class);
         } catch (NumberFormatException ex) {
             throw new InvalidAnnouncementIdException("Invalid announcement ID: " + id);
         }
     }
+
+    // Category
+    @GetMapping("/categories")
+    public List<Category> getCategories(){
+        return categoryService.getCategories();
+    }
+
 }

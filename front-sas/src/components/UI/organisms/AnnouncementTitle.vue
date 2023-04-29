@@ -1,13 +1,29 @@
 <script setup>
-import AddIcon from '../atoms/AddIcon.vue';
-import DropDown from '../molecules/DropDown.vue';
-import CategoryIcon from '../atoms/CategoryIcon.vue';
-import SortIcon from '../atoms/SortIcon.vue';
-import InputTemplate from '../../templates/InputTemplate.vue';
+import AddIcon from "../atoms/AddIcon.vue";
+import Dropdown from "../molecules/Dropdown.vue";
+import CategoryIcon from "../atoms/CategoryIcon.vue";
+import SortIcon from "../atoms/SortIcon.vue";
+import InputTemplate from "../../templates/InputTemplate.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import { ref, watchEffect } from "vue";
 
-//mockup data
-const categories = ['ทั้งหมด', 'ทั่วไป', 'ทุนการศึกษา', 'หางาน', 'ฝึกงาน'];
-const sort = ['Title', 'Category', 'Publish Date', 'Close Date', 'Display'];
+const announcementService = new AnnouncementService();
+
+const categories = ref([]);
+
+watchEffect(async () => {
+  const allCategory = await announcementService.getAllCategory();
+  categories.value = allCategory.map((e) => e.categoryName);
+});
+
+const sort = [
+  "ID",
+  "Title",
+  "Category",
+  "Publish Date",
+  "Close Date",
+  "Display",
+];
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 </script>
@@ -32,12 +48,12 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         <InputTemplate>
           <CategoryIcon />
           Category:
-          <DropDown :input="categories" />
+          <Dropdown :input="categories" />
         </InputTemplate>
         <InputTemplate>
           <SortIcon />
           Category:
-          <DropDown :input="sort" />
+          <Dropdown :input="sort" />
         </InputTemplate>
         <div class="flex h-full items-center">
           <button class="bg-[#E87B92] p-2 xl:p-3 rounded-md h-full truncate">

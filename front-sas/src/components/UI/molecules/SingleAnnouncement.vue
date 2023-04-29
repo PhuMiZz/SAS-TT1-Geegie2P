@@ -1,7 +1,6 @@
 <script setup>
 import BadgeCategories from "./BadgeCategories.vue";
 import DetailIcon from "../atoms/DetailIcon.vue";
-// import AnnouncementDetail from "@/components/pages/AnnouncementDetail.vue";
 import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { onMounted, reactive, ref, watchEffect } from "vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
@@ -22,7 +21,7 @@ const props = defineProps({
 //   textColor: '',
 //   bgColor: '',
 // });
-const showModal = ref(false);
+// const showModal = ref(false);
 
 const router = useRouter();
 const getAnnouncementDetail = (id) => {

@@ -13,7 +13,7 @@ import java.util.List;
 public class CategoryService {
     @Autowired
     private CategoryRepository repository;
-    public List<Category> getCategory(){
+    public List<Category> getCategories(){
         return repository.findAll();
     }
 }
