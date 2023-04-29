@@ -1,7 +1,9 @@
 <script setup></script>
 
 <template>
-  <div class="bg-red-900 text-center py-4 lg:px-4 flex gap-x-3 justify-center">
+  <div
+    class="bg-red-900 text-center py-4 lg:px-4 flex gap-x-3 justify-center rounded-full"
+  >
     <div
       class="p-2 bg-red-800 items-center text-slate-100 leading-none lg:rounded-full flex lg:inline-flex"
       role="alert"
@@ -15,7 +17,7 @@
       >
     </div>
     <button class="text-slate-100 bg-red-800 px-3 lg:rounded-full">
-      <router-link to="/"> Go Home </router-link>
+      <router-link to="/"> OK </router-link>
     </button>
   </div>
 </template>

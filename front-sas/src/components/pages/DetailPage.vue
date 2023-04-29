@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import Announcement from "../UI/organisms/Announcement.vue";
 import AnnouncementService from "@/lib/AnnouncementService";
 import AlertOverlay from "../UI/organisms/AlertOverlay.vue";
+import OverlayTemplate from "../templates/OverlayTemplate.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -20,7 +21,9 @@ watchEffect(async () => {
 
 <template>
   <Announcement :announcementId="announcementId" v-if="foundAnnouncement" />
-  <AlertOverlay v-else />
+  <OverlayTemplate v-else :showModal="true">
+    <AlertOverlay />
+  </OverlayTemplate>
 </template>
 
 <style scoped></style>
