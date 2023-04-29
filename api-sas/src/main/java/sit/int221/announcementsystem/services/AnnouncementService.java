@@ -18,7 +18,7 @@ public class AnnouncementService {
     @Autowired
     private CategoryRepository categoryRepository;
     public List<Announcement> getAnnouncements(){
-        return announcementRepository.findAll(Sort.by(Sort.Direction.DESC, "publishDate","closeDate"));
+        return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc();
     }
 
     public Announcement getAnnouncementDetail(int announcementId){
