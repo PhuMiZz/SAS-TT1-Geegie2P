@@ -21,7 +21,7 @@ watchEffect(async () => {
 
 <template>
   <Announcement :announcementId="announcementId" v-if="foundAnnouncement" />
-  <OverlayTemplate v-else :showModal="true">
+  <OverlayTemplate v-else :showModal="!foundAnnouncement">
     <AlertOverlay />
   </OverlayTemplate>
 </template>

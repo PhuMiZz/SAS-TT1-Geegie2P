@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Homepage from "@/components/pages/Homepage.vue";
 import DetailPage from "@/components/pages/DetailPage.vue";
 import PageNotFound from "@/components/pages/PageNotFound.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+
+const announcementService = new AnnouncementService();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
