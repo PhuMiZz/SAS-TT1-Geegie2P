@@ -1,10 +1,10 @@
 <script setup>
-import HomeIcon from '@/components/UI/atoms/HomeIcon.vue';
-import UserViewIcon from '@/components/UI/atoms/UserViewIcon.vue';
-import AboutUsIcon from '@/components/UI/atoms/AboutUsIcon.vue';
-import UserIcon from '@/components/UI/atoms/UserIcon.vue';
-import { RouterLink } from 'vue-router';
-import { ref } from 'vue';
+import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
+import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
+import UserIcon from "@/components/UI/atoms/UserIcon.vue";
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
 const isOpenMenu = ref(false);
 const onClickMenuHandler = () => {
@@ -20,12 +20,15 @@ const onClickMenuHandler = () => {
       class="max-w-screen flex flex-wrap items-center xl:justify-between mx-auto p-4"
     >
       <!-- Add Logo & Name -->
-      <a href="" class="flex items-center ml-10 grow xl:grow-0">
+      <RouterLink
+        to="/admin/announcements"
+        class="flex items-center ml-10 grow xl:grow-0"
+      >
         <span
           class="self-center text-2xl font-semibold whitespace-nowrap text-[#E87B92]"
           >Geegie2P</span
         >
-      </a>
+      </RouterLink>
 
       <div
         class="hidden xl:flex items-center justify-center space-x-16"
