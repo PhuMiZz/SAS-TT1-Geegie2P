@@ -1,15 +1,14 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import DeleteIcon from '../atoms/DeleteIcon.vue';
-import EditIcon from '../atoms/EditIcon.vue';
-import BackIcon from '../atoms/BackIcon.vue';
-import TextDescription from '../molecules/TextDescription.vue';
-import AnnouncementService from '../../../lib/AnnouncementService';
-import BadgeCategories from '../molecules/BadgeCategories.vue';
-import PageTemplate from '../../templates/PageTemplate.vue';
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { ref, watchEffect } from "vue";
+import DeleteIcon from "../atoms/DeleteIcon.vue";
+import EditIcon from "../atoms/EditIcon.vue";
+import BackIcon from "../atoms/BackIcon.vue";
+import TextDescription from "../molecules/TextDescription.vue";
+import AnnouncementService from "../../../lib/AnnouncementService";
+import BadgeCategories from "../molecules/BadgeCategories.vue";
+import PageTemplate from "../../templates/PageTemplate.vue";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 
-const emits = defineEmits(['hideModal']);
 const props = defineProps({
   announcementDetail: {
     type: Object,
@@ -71,7 +70,7 @@ const props = defineProps({
           <template #header>Publish Date</template>
           {{
             announcementDetail.publishDate === null
-              ? '-'
+              ? "-"
               : getLocaleDateTime(announcementDetail.publishDate)
           }}
         </TextDescription>
@@ -80,7 +79,7 @@ const props = defineProps({
           <template #header>Close Date</template>
           {{
             announcementDetail.closeDate === null
-              ? '-'
+              ? "-"
               : getLocaleDateTime(announcementDetail.closeDate)
           }}
         </TextDescription>
