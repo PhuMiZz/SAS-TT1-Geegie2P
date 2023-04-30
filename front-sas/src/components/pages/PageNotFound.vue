@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="h-screen w-full flex flex-col justify-center items-center">
+  <div class="h-96 w-full flex flex-col justify-center items-center my-40">
     <div class="flex flex-col justify-center items-center">
       <h1 class="text-9xl font-extrabold text-[#E87B92] tracking-widest">
         404

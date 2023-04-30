@@ -11,15 +11,15 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: "/admin/announcements",
+      redirect: "/admin/announcement",
     },
     {
-      path: "/admin/announcements",
+      path: "/admin/announcement",
       name: "Announcements",
       component: Homepage,
     },
     {
-      path: "/admin/announcements/:id",
+      path: "/admin/announcement/:id",
       name: "DetailPage",
       component: DetailPage,
     },

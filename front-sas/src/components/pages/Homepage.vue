@@ -1,29 +1,35 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
-import PageTemplate from '../templates/PageTemplate.vue';
-import NavigationBar from '../UI/organisms/NavigationBar.vue';
-import AnnouncementService from '@/lib/AnnouncementService';
-import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
-import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
-import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
+import { onMounted, ref, watch, watchEffect } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
+import PageTemplate from "../templates/PageTemplate.vue";
+import NavigationBar from "../UI/organisms/NavigationBar.vue";
+import AnnouncementService from "@/lib/AnnouncementService";
+import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
+import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
+import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
 
 const announcementService = new AnnouncementService();
 
 const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
+const isLoading = ref(true);
 
 watchEffect(async () => {
+  isLoading.value = true;
   allAnnouncement.value = await announcementService.getAllAnnouncement();
   if (Object.keys(allAnnouncement.value).length === 0) {
     isAnnouncementEmpty.value = true;
   } else {
     isAnnouncementEmpty.value = false;
   }
+  isLoading.value = false;
 });
 </script>
 
 <template>
-  <PageTemplate>
+  <LoadingPage v-if="isLoading" />
+  <PageTemplate v-else>
     <AnnouncementTitle />
     <div
       v-if="isAnnouncementEmpty"
