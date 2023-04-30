@@ -28,7 +28,7 @@ const props = defineProps({
     <div class="flex w-full h-12 text-xl gap-5">
       <RouterLink to="/admin/announcement">
         <button
-          class="flex bg-[#E87B92] item-center w-full h-full p-3 rounded-t-lg"
+          class="ann-button flex bg-[#E87B92] item-center w-full h-full p-3 rounded-t-lg"
         >
           <BackIcon />
         </button>
@@ -46,27 +46,30 @@ const props = defineProps({
       </button>
     </div>
     <div
-      class="bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-96"
+      class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-96"
     >
       <div class="w-full h-full flex flex-col gap-y-5 md:w-3/5">
-        <div class="text-3xl">
+        <div class="ann-title text-3xl">
           {{ announcementDetail.announcementTitle }}
         </div>
         <div>
           <div class="text-[#E87B92]">Description</div>
-          <div>{{ announcementDetail.announcementDescription }}</div>
+          <div class="ann-description">
+            {{ announcementDetail.announcementDescription }}
+          </div>
         </div>
       </div>
       <div class="w-full md:w-3/5 xl:w-2/5 h-full p-5 rounded-xl bg-[#E5E5E5]">
         <TextDescription>
           <template #header>Category</template>
           <BadgeCategories
+            class="ann-category"
             :category="announcementDetail.announcementCategory"
             >{{ announcementDetail.announcementCategory }}</BadgeCategories
           >
         </TextDescription>
 
-        <TextDescription>
+        <TextDescription class="ann-publish-date">
           <template #header>Publish Date</template>
           {{
             announcementDetail.publishDate === null
@@ -75,7 +78,7 @@ const props = defineProps({
           }}
         </TextDescription>
 
-        <TextDescription>
+        <TextDescription class="ann-close-date">
           <template #header>Close Date</template>
           {{
             announcementDetail.closeDate === null
@@ -84,7 +87,7 @@ const props = defineProps({
           }}
         </TextDescription>
 
-        <TextDescription>
+        <TextDescription class="ann-display">
           <template #header>Display</template>
           {{ announcementDetail.announcementDisplay }}
         </TextDescription>
