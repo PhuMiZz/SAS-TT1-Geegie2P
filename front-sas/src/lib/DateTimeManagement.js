@@ -6,9 +6,11 @@ function getLocaleDateTime(dateTime) {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
   };
-  return date.toLocaleString("en-GB", option);
+  const userLocale = navigator.language || "en-US";
+  return new Intl.DateTimeFormat(userLocale, option).format(date);
 }
 
 export { getLocaleDateTime };
+
+
