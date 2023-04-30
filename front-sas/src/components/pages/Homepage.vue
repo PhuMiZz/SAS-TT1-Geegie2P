@@ -1,13 +1,13 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
-import PageTemplate from "../templates/PageTemplate.vue";
-import NavigationBar from "../UI/organisms/NavigationBar.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
-import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
+import PageTemplate from '../templates/PageTemplate.vue';
+import NavigationBar from '../UI/organisms/NavigationBar.vue';
+import AnnouncementService from '@/lib/AnnouncementService';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
+import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
 
 const announcementService = new AnnouncementService();
 
