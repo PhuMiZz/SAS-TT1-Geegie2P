@@ -1,11 +1,11 @@
 <script setup>
-import AddIcon from '../atoms/AddIcon.vue';
-import Dropdown from '../molecules/Dropdown.vue';
-import CategoryIcon from '../atoms/CategoryIcon.vue';
-import SortIcon from '../atoms/SortIcon.vue';
-import InputTemplate from '../../templates/InputTemplate.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
-import { ref, watchEffect } from 'vue';
+import AddIcon from "../atoms/AddIcon.vue";
+import Dropdown from "../molecules/Dropdown.vue";
+import CategoryIcon from "../atoms/CategoryIcon.vue";
+import SortIcon from "../atoms/SortIcon.vue";
+import InputTemplate from "../../templates/InputTemplate.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import { ref, watchEffect } from "vue";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
@@ -16,12 +16,12 @@ watchEffect(async () => {
 });
 
 const sort = [
-  'ID',
-  'Title',
-  'Category',
-  'Publish Date',
-  'Close Date',
-  'Display',
+  "ID",
+  "Title",
+  "Category",
+  "Publish Date",
+  "Close Date",
+  "Display",
 ];
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -35,7 +35,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       <!-- Header -->
       <div>
         <div class="text-[#00000] text-3xl text-center md:text-left">
-          SIT Announcement System
+          SIT Announcement System (SAS)
         </div>
         <div class="text-[#737373] text-xl text-center md:text-left">
           Timezone: {{ timezone }}

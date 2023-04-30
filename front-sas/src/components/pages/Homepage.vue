@@ -1,13 +1,13 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
-import { onBeforeRouteLeave } from 'vue-router';
-import PageTemplate from '../templates/PageTemplate.vue';
-import NavigationBar from '../UI/organisms/NavigationBar.vue';
-import AnnouncementService from '@/lib/AnnouncementService';
-import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
-import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
-import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import { onMounted, ref, watch, watchEffect } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
+import PageTemplate from "../templates/PageTemplate.vue";
+import NavigationBar from "../UI/organisms/NavigationBar.vue";
+import AnnouncementService from "@/lib/AnnouncementService";
+import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
+import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
+import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
 
 const announcementService = new AnnouncementService();
 
@@ -35,7 +35,7 @@ watchEffect(async () => {
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
     >
-      No Announcement
+      No Announcements
     </div>
     <div v-else>
       <AnnouncementTemplate :header="true" class="hidden xl:flex">
