@@ -21,7 +21,7 @@ const onClickMenuHandler = () => {
     >
       <!-- Add Logo & Name -->
       <RouterLink
-        to="/admin/announcements"
+        to="/admin/announcement"
         class="flex items-center ml-10 grow xl:grow-0"
       >
         <span
@@ -34,7 +34,7 @@ const onClickMenuHandler = () => {
         class="hidden xl:flex items-center justify-center space-x-16"
         id="navbar-default"
       >
-        <RouterLink to="/admin/announcements">
+        <RouterLink to="/admin/announcement">
           <button class="flex items-center text-xl">
             <HomeIcon class="mr-3.5" />
             Home

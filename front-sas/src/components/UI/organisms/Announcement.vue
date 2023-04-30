@@ -26,7 +26,7 @@ const props = defineProps({
   <!-- Button -->
   <PageTemplate class="my-10">
     <div class="flex w-full h-12 text-xl gap-5">
-      <RouterLink to="/admin/announcements">
+      <RouterLink to="/admin/announcement">
         <button
           class="flex bg-[#E87B92] item-center w-full h-full p-3 rounded-t-lg"
         >
