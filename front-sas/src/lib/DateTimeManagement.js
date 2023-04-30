@@ -8,7 +8,7 @@ function getLocaleDateTime(dateTime) {
     minute: "2-digit",
     hour12: false,
   };
-  return date.toLocaleString("en-US", option);
+  return date.toLocaleString("en-GB", option);
 }
 
 export { getLocaleDateTime };
