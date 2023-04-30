@@ -5,7 +5,7 @@
     <div role="status" class="scale-150">
       <svg
         aria-hidden="true"
-        class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-[#BD3455]"
+        class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-500 fill-[#E87B92]"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@
       </svg>
       <span class="sr-only">Loading...</span>
     </div>
-    <div class="dark:text-gray-600 scale-150 text-2xl">Loading...</div>
+    <div class="text-[#737373] scale-150 text-2xl">Loading...</div>
   </div>
 </template>
 
