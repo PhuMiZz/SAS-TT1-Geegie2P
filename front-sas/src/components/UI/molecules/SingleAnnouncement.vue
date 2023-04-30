@@ -1,10 +1,10 @@
 <script setup>
-import BadgeCategories from './BadgeCategories.vue';
-import DetailIcon from '../atoms/DetailIcon.vue';
-import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
-import { onMounted, reactive, ref, watchEffect } from 'vue';
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
-import { useRouter } from 'vue-router';
+import BadgeCategories from "./BadgeCategories.vue";
+import DetailIcon from "../atoms/DetailIcon.vue";
+import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
+import { onMounted, reactive, ref, watchEffect } from "vue";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+// import { useRouter } from "vue-router";
 
 const props = defineProps({
   announcementItem: {
@@ -17,10 +17,10 @@ const props = defineProps({
   },
 });
 
-const router = useRouter();
-const getAnnouncementDetail = (id) => {
-  router.push({ name: 'DetailPage', params: { id: id } });
-};
+// const router = useRouter();
+// const getAnnouncementDetail = (id) => {
+//   router.push({ name: "DetailPage", params: { id: id } });
+// };
 </script>
 
 <template>
@@ -43,7 +43,7 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Publish Date</div>
       {{
         announcementItem.publishDate === null
-          ? '-'
+          ? "-"
           : getLocaleDateTime(announcementItem.publishDate)
       }}
     </template>
@@ -51,7 +51,7 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Close Date</div>
       {{
         announcementItem.closeDate === null
-          ? '-'
+          ? "-"
           : getLocaleDateTime(announcementItem.closeDate)
       }}
     </template>
@@ -60,7 +60,7 @@ const getAnnouncementDetail = (id) => {
       {{ announcementItem.announcementDisplay }}
     </template>
     <template v-slot:detail>
-      <button @click="getAnnouncementDetail(announcementItem.id)">
+      <button @click="$emit('onClickDetail', announcementItem.id)">
         <DetailIcon />
       </button>
     </template>

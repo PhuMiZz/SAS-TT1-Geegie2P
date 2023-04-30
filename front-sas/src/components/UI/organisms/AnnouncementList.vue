@@ -1,11 +1,12 @@
 <script setup>
-import SingleAnnouncement from '../molecules/SingleAnnouncement.vue';
+import SingleAnnouncement from "../molecules/SingleAnnouncement.vue";
 const props = defineProps({
   announcementList: {
     type: Object,
     required: true,
   },
 });
+defineEmits(["onClickDetail"]);
 </script>
 
 <template>
@@ -14,7 +15,11 @@ const props = defineProps({
     :key="announcement.id"
     :id="announcement.id"
   >
-    <SingleAnnouncement :index="index" :announcement-item="announcement" />
+    <SingleAnnouncement
+      :index="index"
+      :announcement-item="announcement"
+      :onClickDetail="$emit('onClickDetail')"
+    />
   </div>
 </template>
 
