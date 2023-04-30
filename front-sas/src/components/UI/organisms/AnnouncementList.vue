@@ -6,7 +6,6 @@ const props = defineProps({
     required: true,
   },
 });
-defineEmits(["onClickDetail"]);
 </script>
 
 <template>
@@ -15,11 +14,7 @@ defineEmits(["onClickDetail"]);
     :key="announcement.id"
     :id="announcement.id"
   >
-    <SingleAnnouncement
-      :index="index"
-      :announcement-item="announcement"
-      :onClickDetail="$emit('onClickDetail')"
-    />
+    <SingleAnnouncement :index="index" :announcement-item="announcement" />
   </div>
 </template>
 

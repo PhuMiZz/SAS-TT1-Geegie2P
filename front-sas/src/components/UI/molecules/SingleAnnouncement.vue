@@ -2,9 +2,8 @@
 import BadgeCategories from "./BadgeCategories.vue";
 import DetailIcon from "../atoms/DetailIcon.vue";
 import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import { onMounted, reactive, ref, watchEffect } from "vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   announcementItem: {
@@ -17,10 +16,10 @@ const props = defineProps({
   },
 });
 
-// const router = useRouter();
-// const getAnnouncementDetail = (id) => {
-//   router.push({ name: "DetailPage", params: { id: id } });
-// };
+const router = useRouter();
+const getAnnouncementDetail = (id) => {
+  router.push({ name: "DetailPage", params: { id: id } });
+};
 </script>
 
 <template>
@@ -60,7 +59,7 @@ const props = defineProps({
       {{ announcementItem.announcementDisplay }}
     </template>
     <template v-slot:detail>
-      <button @click="$emit('onClickDetail', announcementItem.id)">
+      <button @click="getAnnouncementDetail(announcementItem.id)">
         <DetailIcon />
       </button>
     </template>

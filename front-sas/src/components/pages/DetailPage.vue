@@ -10,17 +10,31 @@ const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
 const announcementId = Number(params.id);
-const announcementDetail = ref([]);
+const foundAnnouncement = ref(false);
+const announcementDetail = ref({});
 
 watchEffect(async () => {
-  announcementDetail.value = await announcementService.getAnnouncementDetail(
-    announcementId
-  );
+  const announcements = await announcementService.getAllAnnouncement();
+  const allAnnouncementId = announcements.map((e) => e.id);
+  foundAnnouncement.value = allAnnouncementId.some((e) => e === announcementId);
+  console.log(foundAnnouncement.value);
+  if (foundAnnouncement.value) {
+    announcementDetail.value = await announcementService.getAnnouncementDetail(
+      announcementId
+    );
+    console.log(announcementDetail.value);
+  }
 });
 </script>
 
 <template>
-  <Announcement :announcementDetail="announcementDetail" />
+  <Announcement
+    :announcementDetail="announcementDetail"
+    v-if="foundAnnouncement"
+  />
+  <OverlayTemplate v-else :showModal="!foundAnnouncement">
+    <AlertOverlay />
+  </OverlayTemplate>
 </template>
 
 <style scoped></style>
