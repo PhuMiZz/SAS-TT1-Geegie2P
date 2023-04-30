@@ -20,12 +20,10 @@ watchEffect(async () => {
   const announcements = await announcementService.getAllAnnouncement();
   const allAnnouncementId = announcements.map((e) => e.id);
   foundAnnouncement.value = allAnnouncementId.some((e) => e === announcementId);
-  console.log(foundAnnouncement.value);
   if (foundAnnouncement.value) {
     announcementDetail.value = await announcementService.getAnnouncementDetail(
       announcementId
     );
-    console.log(announcementDetail.value);
   }
   isLoading.value = false;
 });
