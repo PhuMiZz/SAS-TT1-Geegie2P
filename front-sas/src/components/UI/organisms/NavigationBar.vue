@@ -1,10 +1,10 @@
 <script setup>
-import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
-import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
-import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
-import UserIcon from "@/components/UI/atoms/UserIcon.vue";
-import { RouterLink } from "vue-router";
-import { ref } from "vue";
+import HomeIcon from '@/components/UI/atoms/HomeIcon.vue';
+import UserViewIcon from '@/components/UI/atoms/UserViewIcon.vue';
+import AboutUsIcon from '@/components/UI/atoms/AboutUsIcon.vue';
+import UserIcon from '@/components/UI/atoms/UserIcon.vue';
+import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
 
 const isOpenMenu = ref(false);
 const onClickMenuHandler = () => {
@@ -80,10 +80,13 @@ const onClickMenuHandler = () => {
       class="w-full absolute flex z-50 bg-[#F5F5F5] xl:hidden flex-col items-center pb-3 gap-3"
       v-if="isOpenMenu"
     >
-      <div class="flex items-center gap-2">
-        <HomeIcon class="w-10" />
-        <button class="w-20">Home</button>
-      </div>
+      <RouterLink to="/admin/announcement">
+        <div class="flex items-center gap-2">
+          <HomeIcon class="w-10" />
+          <button class="w-20">Home</button>
+        </div>
+      </RouterLink>
+
       <div class="flex items-center gap-2">
         <UserViewIcon class="w-10" />
         <button class="w-20">User View</button>
