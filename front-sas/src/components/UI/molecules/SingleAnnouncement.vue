@@ -70,6 +70,7 @@ const getAnnouncementDetail = (id) => {
         @click="getAnnouncementDetail(announcementItem.id)"
       >
         <DetailIcon />
+        <p class="hidden">view</p>
       </button>
     </template>
   </AnnouncementTemplate>

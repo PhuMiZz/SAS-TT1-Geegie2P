@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import DeleteIcon from "../atoms/DeleteIcon.vue";
-import EditIcon from "../atoms/EditIcon.vue";
-import BackIcon from "../atoms/BackIcon.vue";
-import TextDescription from "../molecules/TextDescription.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
-import BadgeCategories from "../molecules/BadgeCategories.vue";
-import PageTemplate from "../../templates/PageTemplate.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { ref, watchEffect } from 'vue';
+import DeleteIcon from '../atoms/DeleteIcon.vue';
+import EditIcon from '../atoms/EditIcon.vue';
+import BackIcon from '../atoms/BackIcon.vue';
+import TextDescription from '../molecules/TextDescription.vue';
+import AnnouncementService from '../../../lib/AnnouncementService';
+import BadgeCategories from '../molecules/BadgeCategories.vue';
+import PageTemplate from '../../templates/PageTemplate.vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
 
 const props = defineProps({
   announcementDetail: {
@@ -30,6 +30,7 @@ const props = defineProps({
         <button
           class="ann-button flex bg-[#E87B92] item-center w-full h-full p-3 rounded-t-lg"
         >
+          <p class="hidden">Back</p>
           <BackIcon />
         </button>
       </RouterLink>
@@ -73,7 +74,7 @@ const props = defineProps({
           <template #header>Publish Date</template>
           {{
             announcementDetail.publishDate === null
-              ? "-"
+              ? '-'
               : getLocaleDateTime(announcementDetail.publishDate)
           }}
         </TextDescription>
@@ -82,7 +83,7 @@ const props = defineProps({
           <template #header>Close Date</template>
           {{
             announcementDetail.closeDate === null
-              ? "-"
+              ? '-'
               : getLocaleDateTime(announcementDetail.closeDate)
           }}
         </TextDescription>
