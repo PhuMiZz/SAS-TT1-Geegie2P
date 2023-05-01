@@ -7,10 +7,8 @@ function getLocaleDateTime(dateTime) {
     hour: "2-digit",
     minute: "2-digit",
   };
-  const userLocale = navigator.language || "en-US";
+  const userLocale = navigator.language || "en-GB";
   return new Intl.DateTimeFormat(userLocale, option).format(date);
 }
 
 export { getLocaleDateTime };
-
-

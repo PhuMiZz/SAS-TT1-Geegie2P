@@ -25,6 +25,8 @@ CREATE TABLE announcements
             ON UPDATE NO ACTION
 );
 
+truncate table announcements;
+
 -- Insert default categories into categories table
 INSERT INTO `categories` (`categoryName`)
 VALUES ('ทั่วไป'),
