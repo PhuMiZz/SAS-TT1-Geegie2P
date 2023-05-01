@@ -10,7 +10,7 @@ import LoadingPage from '../UI/organisms/LoadingPage.vue';
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
-const announcementId = Number(params.id);
+const announcementId = params.id;
 const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
