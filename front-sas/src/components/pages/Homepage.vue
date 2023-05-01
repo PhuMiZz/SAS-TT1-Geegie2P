@@ -35,7 +35,7 @@ watchEffect(async () => {
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
     >
-      No Announcements
+      No Announcement
     </div>
     <div v-else>
       <AnnouncementTemplate :header="true" class="hidden xl:flex">
