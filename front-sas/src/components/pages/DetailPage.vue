@@ -25,7 +25,8 @@ watchEffect(async () => {
   );
   if (announcementDetail.value) {
     isLoading.value = false;
-  } else isLoading.value = false;
+  }
+  isLoading.value = false;
 });
 </script>
 
