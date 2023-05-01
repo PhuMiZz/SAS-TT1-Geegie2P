@@ -1,3 +1,4 @@
+
 describe("TC-VIEW-ANNOUNCEMENT-EMPTY-1", () => {
   beforeEach(() => cy.visit("/admin/announcement"));
 
@@ -5,7 +6,6 @@ describe("TC-VIEW-ANNOUNCEMENT-EMPTY-1", () => {
     cy.contains("SAS");
     cy.contains("Timezone");
   });
-
   it("should not have any announcement", () => {
     cy.wait(200);
     cy.get(".ann-item").should("have.length", 0);

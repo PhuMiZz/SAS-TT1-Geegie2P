@@ -21,7 +21,7 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else {
-        return Promise.reject(response.statusText);
+        return Promise.reject(response.statusText), false;
       }
     } catch (error) {
       console.error(`ERROR FETCHING DETAIL: ${error.message}`);
