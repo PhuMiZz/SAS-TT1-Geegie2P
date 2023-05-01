@@ -20,8 +20,10 @@ class AnnouncementService {
       );
       if (response.ok) {
         return await response.json();
+      } else if (response.status === 404 || response.status === 400) {
+        return false;
       } else {
-        return Promise.reject(response.statusText), false;
+        return Promise.reject(response.statusText);
       }
     } catch (error) {
       console.error(`ERROR FETCHING DETAIL: ${error.message}`);
