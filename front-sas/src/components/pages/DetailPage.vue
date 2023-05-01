@@ -1,11 +1,11 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import Announcement from "../UI/organisms/Announcement.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
-import AlertOverlay from "../UI/organisms/AlertOverlay.vue";
-import OverlayTemplate from "../templates/OverlayTemplate.vue";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import Announcement from '../UI/organisms/Announcement.vue';
+import AnnouncementService from '@/lib/AnnouncementService';
+import AlertOverlay from '../UI/organisms/AlertOverlay.vue';
+import OverlayTemplate from '../templates/OverlayTemplate.vue';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -20,12 +20,12 @@ watchEffect(async () => {
   const announcements = await announcementService.getAllAnnouncement();
   const allAnnouncementId = announcements.map((e) => e.id);
   foundAnnouncement.value = allAnnouncementId.some((e) => e === announcementId);
-  if (foundAnnouncement.value) {
-    announcementDetail.value = await announcementService.getAnnouncementDetail(
-      announcementId
-    );
-  }
-  isLoading.value = false;
+  announcementDetail.value = await announcementService.getAnnouncementDetail(
+    announcementId
+  );
+  if (announcementDetail.value) {
+    isLoading.value = false;
+  } else isLoading.value = false;
 });
 </script>
 
@@ -33,9 +33,9 @@ watchEffect(async () => {
   <LoadingPage v-if="isLoading" />
   <Announcement
     :announcementDetail="announcementDetail"
-    v-else-if="foundAnnouncement && !isLoading"
+    v-else-if="announcementDetail && !isLoading"
   />
-  <OverlayTemplate v-else :showModal="!foundAnnouncement">
+  <OverlayTemplate v-else :showModal="!announcementDetail">
     <AlertOverlay />
   </OverlayTemplate>
 </template>
