@@ -1,4 +1,3 @@
-
 describe("TC-VIEW-ANNOUNCEMENT-EMPTY-1", () => {
   beforeEach(() => cy.visit("/admin/announcement"));
 
