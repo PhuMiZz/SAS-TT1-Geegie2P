@@ -36,9 +36,9 @@ watchEffect(async () => {
     :announcementDetail="announcementDetail"
     v-else-if="announcementDetail && !isLoading"
   />
-  <OverlayTemplate v-else :showModal="!announcementDetail">
+  <!-- <OverlayTemplate v-else :showModal="!announcementDetail">
     <AlertOverlay />
-  </OverlayTemplate>
+  </OverlayTemplate> -->
 </template>
 
 <style scoped></style>
