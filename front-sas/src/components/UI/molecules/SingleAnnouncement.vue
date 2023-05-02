@@ -24,15 +24,15 @@ const getAnnouncementDetail = (id) => {
 
 <template>
   <AnnouncementTemplate>
-    <template v-slot:announcementNo>
+    <template #announcementNo>
       {{ index + 1 }}
     </template>
-    <template v-slot:title>
-      <div class="text-[#737373] w-28 xl:hidden block">Title</div>
+    <template #title>
+      <div class="text-[#737373] xl:hidden block">Title</div>
       <p class="ann-title">{{ announcementItem.announcementTitle }}</p>
     </template>
-    <template v-slot:category>
-      <div class="text-[#737373] w-28 xl:hidden block">Category</div>
+    <template #category>
+      <div class="text-[#737373] xl:hidden block">Category</div>
       <BadgeCategories :category="announcementItem.announcementCategory">
         <p class="ann-category">
           {{ announcementItem.announcementCategory }}
@@ -40,8 +40,8 @@ const getAnnouncementDetail = (id) => {
       >
     </template>
 
-    <template v-slot:publishDate>
-      <div class="text-[#737373] w-28 xl:hidden block">Publish Date</div>
+    <template #publishDate>
+      <div class="text-[#737373] xl:hidden block">Publish Date</div>
       <p class="ann-publish-date">
         {{
           announcementItem.publishDate === null
@@ -50,8 +50,8 @@ const getAnnouncementDetail = (id) => {
         }}
       </p>
     </template>
-    <template v-slot:closeDate>
-      <div class="text-[#737373] w-28 xl:hidden block">Close Date</div>
+    <template #closeDate>
+      <div class="text-[#737373] xl:hidden block">Close Date</div>
       <p class="ann-close-date">
         {{
           announcementItem.closeDate === null
@@ -60,11 +60,11 @@ const getAnnouncementDetail = (id) => {
         }}
       </p>
     </template>
-    <template v-slot:display>
-      <div class="text-[#737373] w-28 xl:hidden block">Display</div>
+    <template #display>
+      <div class="text-[#737373] xl:hidden block">Display</div>
       <p class="ann-display">{{ announcementItem.announcementDisplay }}</p>
     </template>
-    <template v-slot:action>
+    <template #action>
       <button
         class="ann-button"
         @click="getAnnouncementDetail(announcementItem.id)"
@@ -74,7 +74,6 @@ const getAnnouncementDetail = (id) => {
         >
           View
         </div>
-        <p class="hidden">View</p>
       </button>
       <button class="ann-button" @click="">
         <div
@@ -82,7 +81,6 @@ const getAnnouncementDetail = (id) => {
         >
           Delete
         </div>
-        <p class="hidden">view</p>
       </button>
     </template>
   </AnnouncementTemplate>
