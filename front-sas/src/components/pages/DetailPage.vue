@@ -10,7 +10,7 @@ import LoadingPage from '../UI/organisms/LoadingPage.vue';
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
-const announcementId = Number(params.id);
+const announcementId = params.id;
 const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
@@ -36,9 +36,10 @@ watchEffect(async () => {
     :announcementDetail="announcementDetail"
     v-else-if="announcementDetail && !isLoading"
   />
-  <OverlayTemplate v-else :showModal="!announcementDetail">
+  
+  <!-- <OverlayTemplate v-else :showModal="!announcementDetail">
     <AlertOverlay />
-  </OverlayTemplate>
+  </OverlayTemplate> -->
 </template>
 
 <style scoped></style>
