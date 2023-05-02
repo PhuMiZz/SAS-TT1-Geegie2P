@@ -32,9 +32,10 @@ public class Announcement {
     @Column(name = "closeDate", nullable = true)
     private ZonedDateTime closeDate;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(name = "announcementDisplay", nullable = true)
-    private DisplayStatus announcementDisplay;
+    @Enumerated(EnumType.STRING)
+    private DisplayStatus announcementDisplay ;
 
     public enum DisplayStatus {
         Y,
