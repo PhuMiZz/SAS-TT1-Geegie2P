@@ -20,7 +20,12 @@ const router = createRouter({
     {
       path: "/admin/announcement/add",
       name: "CreateAnnouncement",
-      component: () => import("@/components/pages/CreatePage.vue"),
+      component: () => import("@/components/pages/CreateUpdatePage.vue"),
+    },
+    {
+      path: "/admin/announcement/:id/edit",
+      name: "UpdateAnnouncement",
+      component: () => import("@/components/pages/CreateUpdatePage.vue"),
     },
     {
       path: "/:pathMatch(.*)*",

@@ -7,12 +7,13 @@ import AnnouncementCard from "../templates/AnnouncementCard.vue";
 import TextDescription from "../UI/molecules/TextDescription.vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
+import PageTemplate from "../templates/PageTemplate.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
 const announcementId = params.id;
-const foundAnnouncement = ref(false);
+// const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
 
@@ -29,56 +30,58 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <LoadingPage v-if="isLoading" />
-  <AnnouncementCard v-else>
-    <template #title
-      ><div class="ann-title text-3xl">
-        {{ announcementDetail.announcementTitle }}
-      </div></template
-    >
-    <template #description>
-      <div class="text-[#336699]">Description</div>
-      <div class="ann-description">
-        {{ announcementDetail.announcementDescription }}
-      </div>
-    </template>
-    <template #detail>
-      <TextDescription>
-        <template #header>Category</template>
-        <BadgeCategories
-          class="ann-category"
-          :category="announcementDetail.announcementCategory"
-          >{{ announcementDetail.announcementCategory }}</BadgeCategories
-        >
-      </TextDescription>
+  <PageTemplate class="my-10">
+    <LoadingPage v-if="isLoading" />
+    <AnnouncementCard v-else :announcementId="Number(announcementId)">
+      <template #title
+        ><div class="ann-title text-3xl">
+          {{ announcementDetail.announcementTitle }}
+        </div></template
+      >
+      <template #description>
+        <div class="text-[#336699]">Description</div>
+        <div class="ann-description">
+          {{ announcementDetail.announcementDescription }}
+        </div>
+      </template>
+      <template #detail>
+        <TextDescription>
+          <template #header>Category</template>
+          <BadgeCategories
+            class="ann-category"
+            :category="announcementDetail.announcementCategory"
+            >{{ announcementDetail.announcementCategory }}</BadgeCategories
+          >
+        </TextDescription>
 
-      <TextDescription class="ann-publish-date">
-        <template #header>Publish Date</template>
-        {{
-          announcementDetail.publishDate === null
-            ? "-"
-            : getLocaleDateTime(announcementDetail.publishDate)
-        }}
-      </TextDescription>
+        <TextDescription class="ann-publish-date">
+          <template #header>Publish Date</template>
+          {{
+            announcementDetail.publishDate === null
+              ? "-"
+              : getLocaleDateTime(announcementDetail.publishDate)
+          }}
+        </TextDescription>
 
-      <TextDescription class="ann-close-date">
-        <template #header>Close Date</template>
-        {{
-          announcementDetail.closeDate === null
-            ? "-"
-            : getLocaleDateTime(announcementDetail.closeDate)
-        }}
-      </TextDescription>
+        <TextDescription class="ann-close-date">
+          <template #header>Close Date</template>
+          {{
+            announcementDetail.closeDate === null
+              ? "-"
+              : getLocaleDateTime(announcementDetail.closeDate)
+          }}
+        </TextDescription>
 
-      <TextDescription class="ann-display">
-        <template #header>Display</template>
-        {{ announcementDetail.announcementDisplay }}
-      </TextDescription>
-    </template>
-  </AnnouncementCard>
-  <!-- <OverlayTemplate v-else :showModal="!announcementDetail">
+        <TextDescription class="ann-display">
+          <template #header>Display</template>
+          {{ announcementDetail.announcementDisplay }}
+        </TextDescription>
+      </template>
+    </AnnouncementCard>
+    <!-- <OverlayTemplate v-else :showModal="!announcementDetail">
     <AlertOverlay />
   </OverlayTemplate> -->
+  </PageTemplate>
 </template>
 
 <style scoped></style>
