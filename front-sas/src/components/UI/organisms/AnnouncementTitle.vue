@@ -6,6 +6,7 @@ import SortIcon from '../atoms/SortIcon.vue';
 import InputTemplate from '../../templates/InputTemplate.vue';
 import AnnouncementService from '@/lib/AnnouncementService.js';
 import { ref, watchEffect } from 'vue';
+import router from "@/router";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
@@ -25,6 +26,9 @@ const sort = [
 ];
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const createAnnouncement = () => {
+    router.push({name: 'CreateAnnouncement'})
+}
 </script>
 
 <template>
@@ -58,7 +62,9 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         </InputTemplate>
       </div>
       <div class="flex h-full xl:h-3/5 items-center">
-        <button class="bg-[#E87B92] p-2 rounded-md h-full truncate">
+        <button
+                @click="createAnnouncement"
+                class="ann-button bg-[#E87B92] p-2 rounded-md h-full truncate">
           <div class="flex gap-1 items-center text-[#00000] text-xl">
             <AddIcon />
             Add Announcement

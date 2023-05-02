@@ -18,11 +18,7 @@ const isLoading = ref(true);
 watchEffect(async () => {
   isLoading.value = true;
   allAnnouncement.value = await announcementService.getAllAnnouncement();
-  if (Object.keys(allAnnouncement.value).length === 0) {
-    isAnnouncementEmpty.value = true;
-  } else {
-    isAnnouncementEmpty.value = false;
-  }
+  isAnnouncementEmpty.value = Object.keys(allAnnouncement.value).length === 0;
   isLoading.value = false;
 });
 </script>
@@ -44,7 +40,7 @@ watchEffect(async () => {
         <template #publishDate>Publish Date</template>
         <template #closeDate>Close Date</template>
         <template #display>Display</template>
-        <template #detail>Detail</template>
+        <template #action>Action</template>
       </AnnouncementTemplate>
       <AnnouncementList :announcement-list="allAnnouncement" />
     </div>
