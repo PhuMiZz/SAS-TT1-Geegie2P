@@ -64,14 +64,24 @@ const getAnnouncementDetail = (id) => {
       <div class="text-[#737373] w-28 xl:hidden block">Display</div>
       <p class="ann-display">{{ announcementItem.announcementDisplay }}</p>
     </template>
-    <template v-slot:detail>
+    <template v-slot:action>
       <button
         class="ann-button"
         @click="getAnnouncementDetail(announcementItem.id)"
       >
-        <DetailIcon />
-        <p class="hidden">view</p>
+          <div class="bg-gray-400 text-white active:bg-gray-600 font-bold text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+              View
+          </div>
+        <p class="hidden">View</p>
       </button>
+        <button class="ann-button"
+        @click="getAnnouncementDetail(announcementItem.id)"
+        >
+            <div class="bg-gray-400 text-white active:bg-gray-600 font-bold text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                Delete
+            </div>
+            <p class="hidden">view</p>
+        </button>
     </template>
   </AnnouncementTemplate>
 </template>

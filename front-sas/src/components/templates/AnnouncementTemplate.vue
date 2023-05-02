@@ -53,8 +53,9 @@ const props = defineProps({
     </div>
     <div
       class="flex text-xl w-full pr-3 pb-3 gap-10 justify-end xl:gap-0 xl:p-0 xl:w-1/4 xl:justify-center"
+      :class="props.header ? '' : 'text-[#737373]'"
     >
-      <slot name="detail"></slot>
+      <slot name="action"></slot>
     </div>
   </div>
 </template>
