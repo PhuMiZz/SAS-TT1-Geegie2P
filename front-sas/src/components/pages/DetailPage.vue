@@ -1,11 +1,12 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import Announcement from '../UI/organisms/Announcement.vue';
-import AnnouncementService from '@/lib/AnnouncementService';
-import AlertOverlay from '../UI/organisms/AlertOverlay.vue';
-import OverlayTemplate from '../templates/OverlayTemplate.vue';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import AnnouncementService from "@/lib/AnnouncementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementCard from "../templates/AnnouncementCard.vue";
+import TextDescription from "../UI/molecules/TextDescription.vue";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -17,9 +18,6 @@ const isLoading = ref(true);
 
 watchEffect(async () => {
   isLoading.value = true;
-  const announcements = await announcementService.getAllAnnouncement();
-  const allAnnouncementId = announcements.map((e) => e.id);
-  foundAnnouncement.value = allAnnouncementId.some((e) => e === announcementId);
   announcementDetail.value = await announcementService.getAnnouncementDetail(
     announcementId
   );
@@ -32,11 +30,52 @@ watchEffect(async () => {
 
 <template>
   <LoadingPage v-if="isLoading" />
-  <Announcement
-    :announcementDetail="announcementDetail"
-    v-else-if="announcementDetail && !isLoading"
-  />
-  
+  <AnnouncementCard v-else>
+    <template #title
+      ><div class="ann-title text-3xl">
+        {{ announcementDetail.announcementTitle }}
+      </div></template
+    >
+    <template #description>
+      <div class="text-[#336699]">Description</div>
+      <div class="ann-description">
+        {{ announcementDetail.announcementDescription }}
+      </div>
+    </template>
+    <template #detail>
+      <TextDescription>
+        <template #header>Category</template>
+        <BadgeCategories
+          class="ann-category"
+          :category="announcementDetail.announcementCategory"
+          >{{ announcementDetail.announcementCategory }}</BadgeCategories
+        >
+      </TextDescription>
+
+      <TextDescription class="ann-publish-date">
+        <template #header>Publish Date</template>
+        {{
+          announcementDetail.publishDate === null
+            ? "-"
+            : getLocaleDateTime(announcementDetail.publishDate)
+        }}
+      </TextDescription>
+
+      <TextDescription class="ann-close-date">
+        <template #header>Close Date</template>
+        {{
+          announcementDetail.closeDate === null
+            ? "-"
+            : getLocaleDateTime(announcementDetail.closeDate)
+        }}
+      </TextDescription>
+
+      <TextDescription class="ann-display">
+        <template #header>Display</template>
+        {{ announcementDetail.announcementDisplay }}
+      </TextDescription>
+    </template>
+  </AnnouncementCard>
   <!-- <OverlayTemplate v-else :showModal="!announcementDetail">
     <AlertOverlay />
   </OverlayTemplate> -->
