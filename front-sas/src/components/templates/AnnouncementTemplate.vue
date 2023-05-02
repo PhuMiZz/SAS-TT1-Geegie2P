@@ -13,30 +13,33 @@ const props = defineProps({
     :class="props.header ? 'text-[#737373] ' : 'bg-gray-100 rounded-xl h-full'"
   >
     <div
-      :class="props.header ? 'bg-transparent' : 'bg-[#336699] text-white'"
-      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-1/5 xl:rounded-none xl:rounded-l-xl text-2xl"
+      :class="
+        props.header
+          ? 'bg-transparent text-xl'
+          : 'bg-[#336699] text-white text-2xl'
+      "
+      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-1/5 xl:rounded-none xl:rounded-l-xl"
     >
       <slot name="announcementNo"></slot>
     </div>
     <div
-      :class="props.header ? 'justify-center' : 'justify-start'"
-      class="flex w-full basis-full pt-3 px-3 gap-10 xl:gap-0 xl:p-0 xl:w-1/3 text-xl"
+      class="flex w-full basis-full pt-3 px-3 gap-10 xl:gap-0 xl:p-0 xl:w-1/3 text-xl xl:justify-start"
     >
       <slot name="title"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 justify-start"
     >
       <slot name="category"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-center"
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-start"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="publishDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-center"
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-start"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="closeDate"></slot>

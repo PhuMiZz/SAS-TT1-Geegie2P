@@ -35,7 +35,6 @@ watchEffect(async () => {
     </div>
     <div v-else>
       <AnnouncementTemplate :header="true" class="hidden xl:flex">
-        <template #announcementNo>No.</template>
         <template #title>Title</template>
         <template #category>Category</template>
         <template #publishDate>Publish Date</template>
