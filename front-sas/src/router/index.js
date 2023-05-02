@@ -24,7 +24,7 @@ const router = createRouter({
     },
     {
       path: "/admin/announcement/:id/edit",
-      name: "CreateAnnouncement",
+      name: "UpdateAnnouncement",
       component: () => import("@/components/pages/CreateUpdatePage.vue"),
     },
     {

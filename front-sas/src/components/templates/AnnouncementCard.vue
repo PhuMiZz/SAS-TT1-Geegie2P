@@ -2,13 +2,22 @@
 import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
 import EditIcon from "../UI/atoms/EditIcon.vue";
 import BackIcon from "../UI/atoms/BackIcon.vue";
+import router from "../../router";
 
 const props = defineProps({
   viewComponent: {
     type: Boolean,
     default: true,
   },
+  announcementId: {
+    type: Number,
+    required: false,
+  },
 });
+
+const editAnnouncement = () => {
+  router.push({ name: "UpdateAnnouncement" });
+};
 </script>
 
 <template>
@@ -24,6 +33,7 @@ const props = defineProps({
     </RouterLink>
 
     <button
+      @click="editAnnouncement()"
       :class="viewComponent ? '' : 'hidden'"
       class="flex gap-2 bg-[#F59E0B] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
     >

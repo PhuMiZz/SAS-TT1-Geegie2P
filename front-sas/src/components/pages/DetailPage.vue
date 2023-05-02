@@ -13,7 +13,7 @@ const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
 const announcementId = params.id;
-const foundAnnouncement = ref(false);
+// const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
 
@@ -32,7 +32,7 @@ watchEffect(async () => {
 <template>
   <PageTemplate class="my-10">
     <LoadingPage v-if="isLoading" />
-    <AnnouncementCard v-else>
+    <AnnouncementCard v-else :announcementId="Number(announcementId)">
       <template #title
         ><div class="ann-title text-3xl">
           {{ announcementDetail.announcementTitle }}

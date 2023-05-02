@@ -5,14 +5,15 @@ import Dropdown from "../UI/molecules/Dropdown.vue";
 import AnnouncementService from "@/lib/AnnouncementService.js";
 import { watchEffect, ref } from "vue";
 import PageTemplate from "../templates/PageTemplate.vue";
+import { useRoute } from "vue-router";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
+const route = useRoute();
 
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   categories.value = categories.value.map((e) => e.categoryName);
-  console.log(categories.value);
 });
 </script>
 
@@ -92,8 +93,14 @@ watchEffect(async () => {
       <button class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded">
         Cancel
       </button>
-      <button class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded">
+      <button
+        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded"
+        v-if="route.name !== 'UpdateAnnouncement'"
+      >
         Submit
+      </button>
+      <button class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded" v-else>
+        Edit
       </button>
     </div>
   </PageTemplate>
