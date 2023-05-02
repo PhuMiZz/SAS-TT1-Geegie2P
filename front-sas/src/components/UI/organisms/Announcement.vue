@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import DeleteIcon from '../atoms/DeleteIcon.vue';
-import EditIcon from '../atoms/EditIcon.vue';
-import BackIcon from '../atoms/BackIcon.vue';
-import TextDescription from '../molecules/TextDescription.vue';
-import AnnouncementService from '../../../lib/AnnouncementService';
-import BadgeCategories from '../molecules/BadgeCategories.vue';
-import PageTemplate from '../../templates/PageTemplate.vue';
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { ref, watchEffect } from "vue";
+import DeleteIcon from "../atoms/DeleteIcon.vue";
+import EditIcon from "../atoms/EditIcon.vue";
+import BackIcon from "../atoms/BackIcon.vue";
+import TextDescription from "../molecules/TextDescription.vue";
+import AnnouncementService from "../../../lib/AnnouncementService";
+import BadgeCategories from "../molecules/BadgeCategories.vue";
+import PageTemplate from "../../templates/PageTemplate.vue";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 
 const props = defineProps({
   announcementDetail: {
@@ -28,20 +28,20 @@ const props = defineProps({
     <div class="flex w-full h-12 text-xl gap-5">
       <RouterLink to="/admin/announcement">
         <button
-          class="ann-button flex bg-[#E87B92] item-center w-full h-full p-3 rounded-t-lg"
+          class="ann-button flex bg-[#336699] item-center w-full h-full p-3 rounded-t-lg"
         >
-          <p class="hidden">Back</p>
           <BackIcon />
+          <p class="hidden">Back</p>
         </button>
       </RouterLink>
 
       <button
-        class="flex gap-2 bg-[#FFC371] items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
+        class="flex gap-2 bg-[#F59E0B] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
       >
         <EditIcon /> Edit
       </button>
       <button
-        class="flex gap-2 bg-[#FF5F6D] items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
+        class="flex gap-2 bg-[#EF4444] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
       >
         <DeleteIcon /> Delete
       </button>
@@ -54,7 +54,7 @@ const props = defineProps({
           {{ announcementDetail.announcementTitle }}
         </div>
         <div>
-          <div class="text-[#E87B92]">Description</div>
+          <div class="text-[#336699]">Description</div>
           <div class="ann-description">
             {{ announcementDetail.announcementDescription }}
           </div>
@@ -74,7 +74,7 @@ const props = defineProps({
           <template #header>Publish Date</template>
           {{
             announcementDetail.publishDate === null
-              ? '-'
+              ? "-"
               : getLocaleDateTime(announcementDetail.publishDate)
           }}
         </TextDescription>
@@ -83,7 +83,7 @@ const props = defineProps({
           <template #header>Close Date</template>
           {{
             announcementDetail.closeDate === null
-              ? '-'
+              ? "-"
               : getLocaleDateTime(announcementDetail.closeDate)
           }}
         </TextDescription>

@@ -1,10 +1,10 @@
 <script setup>
-import HomeIcon from '@/components/UI/atoms/HomeIcon.vue';
-import UserViewIcon from '@/components/UI/atoms/UserViewIcon.vue';
-import AboutUsIcon from '@/components/UI/atoms/AboutUsIcon.vue';
-import UserIcon from '@/components/UI/atoms/UserIcon.vue';
-import { RouterLink } from 'vue-router';
-import { ref } from 'vue';
+import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
+import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
+import UserIcon from "@/components/UI/atoms/UserIcon.vue";
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
 const isOpenMenu = ref(false);
 const onClickMenuHandler = () => {
@@ -25,7 +25,7 @@ const onClickMenuHandler = () => {
         class="flex items-center ml-10 grow xl:grow-0"
       >
         <span
-          class="self-center text-2xl font-semibold whitespace-nowrap text-[#E87B92]"
+          class="self-center text-2xl font-semibold whitespace-nowrap text-[#336699]"
           >Geegie2P</span
         >
       </RouterLink>

@@ -17,7 +17,7 @@ const props = defineProps({
     "
   >
     <div
-      :class="props.header ? 'bg-transparent' : 'bg-[#E87B92]  '"
+      :class="props.header ? 'bg-transparent' : 'bg-[#336699] text-white'"
       class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-1/5 xl:rounded-none xl:rounded-l-xl text-2xl"
     >
       <slot name="announcementNo"></slot>

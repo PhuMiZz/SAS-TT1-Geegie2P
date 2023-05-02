@@ -1,9 +1,9 @@
 <script setup>
-import BadgeCategories from './BadgeCategories.vue';
-import DetailIcon from '../atoms/DetailIcon.vue';
-import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
-import { useRouter } from 'vue-router';
+import BadgeCategories from "./BadgeCategories.vue";
+import DetailIcon from "../atoms/DetailIcon.vue";
+import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   announcementItem: {
@@ -18,7 +18,7 @@ const props = defineProps({
 
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: 'DetailPage', params: { id: id } });
+  router.push({ name: "DetailPage", params: { id: id } });
 };
 </script>
 
@@ -45,7 +45,7 @@ const getAnnouncementDetail = (id) => {
       <p class="ann-publish-date">
         {{
           announcementItem.publishDate === null
-            ? '-'
+            ? "-"
             : getLocaleDateTime(announcementItem.publishDate)
         }}
       </p>
@@ -55,7 +55,7 @@ const getAnnouncementDetail = (id) => {
       <p class="ann-close-date">
         {{
           announcementItem.closeDate === null
-            ? '-'
+            ? "-"
             : getLocaleDateTime(announcementItem.closeDate)
         }}
       </p>
@@ -69,19 +69,21 @@ const getAnnouncementDetail = (id) => {
         class="ann-button"
         @click="getAnnouncementDetail(announcementItem.id)"
       >
-          <div class="bg-gray-400 text-white active:bg-gray-600 font-bold text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-              View
-          </div>
+        <div
+          class="bg-[#336699] text-white active:bg-[#23476b] font text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        >
+          View
+        </div>
         <p class="hidden">View</p>
       </button>
-        <button class="ann-button"
-        @click="getAnnouncementDetail(announcementItem.id)"
+      <button class="ann-button" @click="">
+        <div
+          class="bg-[#EF4444] text-white active:bg-[#B91C1C] text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         >
-            <div class="bg-gray-400 text-white active:bg-gray-600 font-bold text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                Delete
-            </div>
-            <p class="hidden">view</p>
-        </button>
+          Delete
+        </div>
+        <p class="hidden">view</p>
+      </button>
     </template>
   </AnnouncementTemplate>
 </template>
