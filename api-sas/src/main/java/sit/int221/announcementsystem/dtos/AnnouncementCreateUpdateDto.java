@@ -1,13 +1,11 @@
 package sit.int221.announcementsystem.dtos;
 
-import jakarta.persistence.Column;
 import lombok.Data;
-import sit.int221.announcementsystem.entities.Announcement;
 
 import java.time.ZonedDateTime;
 
 @Data
-public class AnnouncementCreateDto {
+public class AnnouncementCreateUpdateDto {
     private int id;
     private String announcementTitle;
     private String announcementDescription;

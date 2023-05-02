@@ -5,11 +5,12 @@ import lombok.Data;
 import java.time.ZonedDateTime;
 
 @Data
-public class AnnouncementCreateViewDto {
+public class AnnouncementCreateUpdateViewDto {
     private int id;
     private String announcementTitle;
+    private String announcementDescription;
+
     private String announcementCategory;
-     private String announcementDescription;
 
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;

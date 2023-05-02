@@ -2,13 +2,13 @@ package sit.int221.announcementsystem.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sit.int221.announcementsystem.dtos.AnnouncementCreateDto;
-import sit.int221.announcementsystem.dtos.AnnouncementCreateViewDto;
+import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
+import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateViewDto;
 import sit.int221.announcementsystem.dtos.AnnouncementDetailDto;
 
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +37,9 @@ public class AnnouncementController {
     private ListMapper listMapper;
     @Autowired
     private ModelMapper modelMapper;
+
     @GetMapping("/announcements")
-    public List<AnnouncementsViewDto> getAnnouncements(){
+    public List<AnnouncementsViewDto> getAnnouncements() {
         List<Announcement> announcements = announcementService.getAnnouncements();
         return listMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper);
     }
@@ -64,24 +65,35 @@ public class AnnouncementController {
 //    }
 
     @PostMapping("/announcements")
-    public AnnouncementCreateViewDto createAnnouncement(@RequestBody AnnouncementCreateDto newAnnouncement){
-        try {
-            return announcementService.createAnnouncement(newAnnouncement);
-        } catch (Exception e) {
-            throw new BadRequest("Error creating announcement");
-        }
-
+    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
+        return announcementService.createAnnouncement(newAnnouncement);
     }
 
+    @DeleteMapping("/announcements/{id}")
+    public void deleteAnnouncement(@PathVariable Integer id) {
+            announcementService.DeleteAnnouncement(id);
+    }
+    @PutMapping("/announcements/{id}")
+    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){
+        try {
+            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
+            return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
+        } catch (DataIntegrityViolationException e){
+            throw new BadRequest("Not Found");
+        }
+    }
     // Category
     @GetMapping("/categories")
-    public List<Category> getCategories(){
+    public List<Category> getCategories() {
         return categoryService.getCategories();
     }
 
     @GetMapping("/categories/find/{categoryName}")
-    public Integer findCategoryIdByName (@PathVariable String categoryName){
-        return categoryService.FindCategoryByName(categoryName);
+    public Integer findCategoryIdByName(@PathVariable String categoryName) {
+            return categoryService.FindCategoryByName(categoryName);
+
+
     }
+
 
 }
