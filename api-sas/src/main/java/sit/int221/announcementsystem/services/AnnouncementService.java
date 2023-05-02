@@ -42,6 +42,9 @@ public class AnnouncementService {
 
     public AnnouncementCreateViewDto createAnnouncement(AnnouncementCreateDto newAnnouncement) {
         Announcement announcement = modelMapper.map(newAnnouncement, Announcement.class);
+        if (announcement.getAnnouncementDisplay() == null) {
+            announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
+        }
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateViewDto.class);
     }
 }

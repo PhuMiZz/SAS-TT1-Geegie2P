@@ -70,7 +70,7 @@ public class AnnouncementController {
         } catch (Exception e) {
             throw new BadRequest("Error creating announcement");
         }
-        
+
     }
 
     // Category
