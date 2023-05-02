@@ -3,6 +3,12 @@ import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
 import EditIcon from "../UI/atoms/EditIcon.vue";
 import BackIcon from "../UI/atoms/BackIcon.vue";
 import PageTemplate from "./PageTemplate.vue";
+const props = defineProps({
+  viewComponent: {
+    type: Boolean,
+    default: true,
+  },
+});
 </script>
 
 <template>
@@ -19,6 +25,7 @@ import PageTemplate from "./PageTemplate.vue";
       </RouterLink>
 
       <button
+        :class="viewComponent ? '' : 'hidden'"
         class="flex gap-2 bg-[#F59E0B] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
       >
         <EditIcon /> Edit
