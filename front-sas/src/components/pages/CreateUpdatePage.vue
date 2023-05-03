@@ -96,70 +96,76 @@ const checkEmpty = () => {
         ></textarea>
       </template>
       <template #detail>
-        <TextDescription>
+        <TextDescription class="flex-wrap xl:flex-nowrap">
           <template #header>Category</template>
-          <select
-            class="bg-[#FAFAFA] p-1 h-9 rounded-lg w-40"
-            v-model="newAnnouncementData.announcementCategory"
+          <template #default>
+            <select
+              class="bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
+              v-model="newAnnouncementData.announcementCategory"
+            >
+              <option v-for="category in categories" :value="category.id">
+                {{ category.categoryName }}
+              </option>
+            </select></template
           >
-            <option v-for="category in categories" :value="category.id">
-              {{ category.categoryName }}
-            </option>
-          </select>
         </TextDescription>
 
-        <TextDescription class="ann-publish-date">
+        <TextDescription class="ann-publish-date flex-wrap xl:flex-nowrap">
           <template #header>Publish Date</template>
-          <div class="flex gap-5 flex-col xl:flex-row">
-            <input
-              v-model="newAnnouncementData.publishDate"
-              type="date"
-              id="publishDate"
-              name="publishDate"
-              class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-40"
-            />
-            <input
-              v-model="newAnnouncementData.publishTime"
-              type="time"
-              id="publishTime"
-              name="publishTime"
-              class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-40"
-            />
-          </div>
+          <template #default>
+            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+              <input
+                v-model="newAnnouncementData.publishDate"
+                type="date"
+                id="publishDate"
+                name="publishDate"
+                class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+              />
+              <input
+                v-model="newAnnouncementData.publishTime"
+                type="time"
+                id="publishTime"
+                name="publishTime"
+                class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+              /></div
+          ></template>
         </TextDescription>
 
-        <TextDescription class="ann-close-date">
+        <TextDescription class="ann-close-date flex-wrap xl:flex-nowrap">
           <template #header>Close Date</template>
-          <div class="flex gap-5 flex-col xl:flex-row">
-            <input
-              v-model="newAnnouncementData.closeDate"
-              type="date"
-              id="closeDate"
-              name="closeDate"
-              class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-40"
-            />
-            <input
-              v-model="newAnnouncementData.closeTime"
-              type="time"
-              id="closeTime"
-              name="closeTime"
-              class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-40"
-            />
-          </div>
+          <template #default>
+            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+              <input
+                v-model="newAnnouncementData.closeDate"
+                type="date"
+                id="closeDate"
+                name="closeDate"
+                class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+              />
+              <input
+                v-model="newAnnouncementData.closeTime"
+                type="time"
+                id="closeTime"
+                name="closeTime"
+                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+              /></div
+          ></template>
         </TextDescription>
 
-        <TextDescription class="ann-display">
+        <TextDescription class="ann-display flex-wrap xl:flex-nowrap">
           <template #header>Display</template>
-          <div class="flex gap-x-2">
-            <input
-              v-model="newAnnouncementData.display"
-              type="checkbox"
-              value=""
-              name="display"
-              id="display"
-            />
-            <label for="display">Check to show this announcement</label>
-          </div>
+          <template #default
+            ><div class="flex gap-x-2">
+              <input
+                v-model="newAnnouncementData.display"
+                type="checkbox"
+                value=""
+                name="display"
+                id="display"
+              />
+              <label for="display">Check to show this announcement</label>
+            </div></template
+          >
         </TextDescription>
       </template>
     </AnnouncementCard>
