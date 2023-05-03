@@ -28,18 +28,18 @@ const props = defineProps({
       <slot name="title"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 justify-start"
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
     >
       <slot name="category"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-start"
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="publishDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-start"
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="closeDate"></slot>
@@ -51,7 +51,7 @@ const props = defineProps({
       <slot name="display"></slot>
     </div>
     <div
-      class="flex text-xl w-full pr-3 pb-3 gap-10 justify-end xl:gap-3 xl:p-0 xl:w-2/3 xl:justify-center"
+      class="flex text-xl w-full pr-3 pb-3 gap-3 justify-end xl:gap-3 xl:p-0 xl:w-2/3 xl:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="action"></slot>

@@ -1,23 +1,23 @@
 <script setup>
-import TextDescription from "../UI/molecules/TextDescription.vue";
-import AnnouncementCard from "../templates/AnnouncementCard.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-import { watchEffect, ref, reactive, computed } from "vue";
-import PageTemplate from "../templates/PageTemplate.vue";
-import { useRoute } from "vue-router";
-import { getISODateTime } from "@/lib/DateTimeManagement.js";
+import TextDescription from '../UI/molecules/TextDescription.vue';
+import AnnouncementCard from '../templates/AnnouncementCard.vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
+import { watchEffect, ref, reactive, computed } from 'vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import { useRoute } from 'vue-router';
+import { getISODateTime } from '@/lib/DateTimeManagement.js';
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
 const router = useRoute();
 const newAnnouncementData = reactive({
-  announcementTitle: "",
-  announcementDescription: "",
+  announcementTitle: '',
+  announcementDescription: '',
   announcementCategory: 1,
-  publishDate: "",
-  publishTime: "",
-  closeDate: "",
-  closeTime: "",
+  publishDate: '',
+  publishTime: '',
+  closeDate: '',
+  closeTime: '',
   display: false,
 });
 const newAnnouncementDataJSON = computed(() =>
@@ -45,14 +45,14 @@ const submitAnnouncement = async () => {
             newAnnouncementData.closeTime
           )
         : null,
-    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+    announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
   };
   try {
     await announcementService.createAnnouncement(newAnnouncement);
-    alert("Announcement created successfully");
+    alert('Announcement created successfully');
   } catch (error) {
-    console.error("Error creating announcement:", error);
-    alert("Error creating announcement, please try again");
+    console.error('Error creating announcement:', error);
+    alert('Error creating announcement, please try again');
   }
 };
 watchEffect(async () => {
@@ -82,7 +82,7 @@ const checkEmpty = () => {
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
-          class="ann-description w-96 rounded-lg p-1"
+          class="ann-description w-full md:w-96 rounded-lg p-1"
       /></template>
       <template #description>
         <div class="text-[#336699]">Description</div>
@@ -90,7 +90,7 @@ const checkEmpty = () => {
           @input="checkEmpty"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
-          class="ann-description w-96 rounded-lg p-1"
+          class="ann-description w-full md:w-96 rounded-lg p-1"
           rows="4"
           cols="50"
         ></textarea>
@@ -110,7 +110,7 @@ const checkEmpty = () => {
 
         <TextDescription class="ann-publish-date">
           <template #header>Publish Date</template>
-          <div class="flex gap-5">
+          <div class="flex gap-5 flex-col xl:flex-row">
             <input
               v-model="newAnnouncementData.publishDate"
               type="date"
@@ -130,7 +130,7 @@ const checkEmpty = () => {
 
         <TextDescription class="ann-close-date">
           <template #header>Close Date</template>
-          <div class="flex gap-5">
+          <div class="flex gap-5 flex-col xl:flex-row">
             <input
               v-model="newAnnouncementData.closeDate"
               type="date"

@@ -48,11 +48,11 @@ const deleteAnnouncement = async () => {
       {{ index + 1 }}
     </template>
     <template #title>
-      <div class="text-[#737373] xl:hidden block">Title</div>
+      <div class="text-[#737373] w-2/4 md:w-1/3 xl:hidden block">Title</div>
       <p class="ann-title">{{ announcementItem.announcementTitle }}</p>
     </template>
     <template #category>
-      <div class="text-[#737373] xl:hidden block">Category</div>
+      <div class="text-[#737373] w-1/3 xl:hidden block">Category</div>
       <BadgeCategories :category="announcementItem.announcementCategory">
         <p class="ann-category">
           {{ announcementItem.announcementCategory }}
@@ -61,7 +61,7 @@ const deleteAnnouncement = async () => {
     </template>
 
     <template #publishDate>
-      <div class="text-[#737373] xl:hidden block">Publish Date</div>
+      <div class="text-[#737373] w-1/3 xl:hidden block">Publish Date</div>
       <p class="ann-publish-date">
         {{
           announcementItem.publishDate === null
@@ -71,7 +71,7 @@ const deleteAnnouncement = async () => {
       </p>
     </template>
     <template #closeDate>
-      <div class="text-[#737373] xl:hidden block">Close Date</div>
+      <div class="text-[#737373] w-1/3 xl:hidden block">Close Date</div>
       <p class="ann-close-date">
         {{
           announcementItem.closeDate === null
@@ -81,7 +81,7 @@ const deleteAnnouncement = async () => {
       </p>
     </template>
     <template #display>
-      <div class="text-[#737373] xl:hidden block">Display</div>
+      <div class="text-[#737373] w-1/3 xl:hidden block">Display</div>
       <p class="ann-display">{{ announcementItem.announcementDisplay }}</p>
     </template>
     <template #action>
