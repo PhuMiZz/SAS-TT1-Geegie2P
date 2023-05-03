@@ -29,16 +29,16 @@ const getAnnouncementDetail = (id) => {
 
 const toggleModal = async (id) => {
   showModal.value = !showModal.value;
+  console.log(showModal.value);
   if (showModal.value) {
     selectedAnnouncement.value = id;
-  } else {
-    emit('refreshData', selectedAnnouncement.value);
   }
 };
 
 const deleteAnnouncement = async () => {
   console.log('delete: ' + selectedAnnouncement.value);
   await announcementService.deleteAnnouncement(selectedAnnouncement.value);
+  emit('refreshData', selectedAnnouncement.value);
   toggleModal();
 };
 </script>
