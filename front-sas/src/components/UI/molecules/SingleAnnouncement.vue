@@ -1,9 +1,9 @@
 <script setup>
-import BadgeCategories from "./BadgeCategories.vue";
-import DetailIcon from "../atoms/DetailIcon.vue";
-import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
+import BadgeCategories from './BadgeCategories.vue';
+import DetailIcon from '../atoms/DetailIcon.vue';
+import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   announcementItem: {
@@ -18,7 +18,7 @@ const props = defineProps({
 
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: "DetailPage", params: { id: id } });
+  router.push({ name: 'DetailPage', params: { id: id } });
 };
 </script>
 
@@ -29,38 +29,48 @@ const getAnnouncementDetail = (id) => {
     </template>
     <template v-slot:title>
       <div class="text-[#737373] w-28 xl:hidden block">Title</div>
-      {{ announcementItem.announcementTitle }}
+      <p class="ann-title">{{ announcementItem.announcementTitle }}</p>
     </template>
     <template v-slot:category>
       <div class="text-[#737373] w-28 xl:hidden block">Category</div>
-      <BadgeCategories :category="announcementItem.announcementCategory">{{
-        announcementItem.announcementCategory
-      }}</BadgeCategories>
+      <BadgeCategories :category="announcementItem.announcementCategory">
+        <p class="ann-category">
+          {{ announcementItem.announcementCategory }}
+        </p></BadgeCategories
+      >
     </template>
 
     <template v-slot:publishDate>
       <div class="text-[#737373] w-28 xl:hidden block">Publish Date</div>
-      {{
-        announcementItem.publishDate === null
-          ? "-"
-          : getLocaleDateTime(announcementItem.publishDate)
-      }}
+      <p class="ann-publish-date">
+        {{
+          announcementItem.publishDate === null
+            ? '-'
+            : getLocaleDateTime(announcementItem.publishDate)
+        }}
+      </p>
     </template>
     <template v-slot:closeDate>
       <div class="text-[#737373] w-28 xl:hidden block">Close Date</div>
-      {{
-        announcementItem.closeDate === null
-          ? "-"
-          : getLocaleDateTime(announcementItem.closeDate)
-      }}
+      <p class="ann-close-date">
+        {{
+          announcementItem.closeDate === null
+            ? '-'
+            : getLocaleDateTime(announcementItem.closeDate)
+        }}
+      </p>
     </template>
     <template v-slot:display>
       <div class="text-[#737373] w-28 xl:hidden block">Display</div>
-      {{ announcementItem.announcementDisplay }}
+      <p class="ann-display">{{ announcementItem.announcementDisplay }}</p>
     </template>
     <template v-slot:detail>
-      <button @click="getAnnouncementDetail(announcementItem.id)">
+      <button
+        class="ann-button"
+        @click="getAnnouncementDetail(announcementItem.id)"
+      >
         <DetailIcon />
+        <p class="hidden">view</p>
       </button>
     </template>
   </AnnouncementTemplate>

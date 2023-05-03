@@ -35,7 +35,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       <!-- Header -->
       <div>
         <div class="text-[#00000] text-3xl text-center md:text-left">
-          SIT Announcement System
+          SIT Announcement System (SAS)
         </div>
         <div class="text-[#737373] text-xl text-center md:text-left">
           Timezone: {{ timezone }}
@@ -53,7 +53,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         </InputTemplate>
         <InputTemplate>
           <SortIcon />
-          Category:
+          Sort By:
           <Dropdown :input="sort" />
         </InputTemplate>
       </div>
