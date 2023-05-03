@@ -1,15 +1,16 @@
 <script setup>
 import BadgeCategories from "./BadgeCategories.vue";
-import DetailIcon from "../atoms/DetailIcon.vue";
 import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import ConfirmOverlay from "@/components/UI/organisms/ConfirmOverlay.vue";
 import OverlayTemplate from "../../templates/OverlayTemplate.vue";
+import AnnouncementService from "../../../lib/AnnouncementService";
 
 const showModal = ref(false);
 const selectedAnnouncement = ref();
+const announcementService = new AnnouncementService();
 const props = defineProps({
   announcementItem: {
     type: Object,
@@ -34,9 +35,9 @@ const toggleModal = (id) => {
   }
 };
 
-const deleteAnnouncement = () => {
+const deleteAnnouncement = async () => {
   console.log("delete: " + selectedAnnouncement.value);
-
+  await announcementService.deleteAnnouncement(selectedAnnouncement.value);
   toggleModal();
 };
 </script>
