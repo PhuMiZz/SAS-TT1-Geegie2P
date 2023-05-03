@@ -62,8 +62,6 @@ const submitAnnouncement = async () => {
 };
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
-    console.log(await announcementService.getAnnouncementDetail(4))
-
 });
 const fetchAnnouncement = async () => {
     if (router.name === "UpdateAnnouncement") {
@@ -72,13 +70,23 @@ const fetchAnnouncement = async () => {
         newAnnouncementData.announcementTitle = announcement.announcementTitle;
         newAnnouncementData.announcementDescription = announcement.announcementDescription;
         newAnnouncementData.announcementCategory = announcement.category.id;
-        newAnnouncementData.publishDate = announcement.publishDate
-        newAnnouncementData.publishTime = announcement.publishDate
-        newAnnouncementData.closeDate = announcement.closeDate
-        newAnnouncementData.closeTime = announcement.closeDate
+
+        if (announcement.publishDate) {
+            const publishDateTime = new Date(announcement.publishDate);
+            newAnnouncementData.publishDate = publishDateTime.toISOString().split("T")[0];
+            newAnnouncementData.publishTime = publishDateTime.toISOString().split("T")[1].substring(0, 5);
+        }
+
+        if (announcement.closeDate) {
+            const closeDateTime = new Date(announcement.closeDate);
+            newAnnouncementData.closeDate = closeDateTime.toISOString().split("T")[0];
+            newAnnouncementData.closeTime = closeDateTime.toISOString().split("T")[1].substring(0, 5);
+        }
+
         newAnnouncementData.display = announcement.announcementDisplay === "Y";
     }
 };
+
 
 
 onMounted(async () => {
@@ -97,7 +105,7 @@ const checkEmpty = () => {
 </script>
 
 <template>
-  <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
+   <pre>{{ newAnnouncementDataJSON }}</pre>
 
   <PageTemplate class="my-10">
     <AnnouncementCard :viewComponent="false">
