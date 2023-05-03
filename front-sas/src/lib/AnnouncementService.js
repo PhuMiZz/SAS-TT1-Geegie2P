@@ -98,5 +98,25 @@ class AnnouncementService {
       console.error(`ERROR DELETING ANNOUNCEMENT: ${error.message}`);
     }
   }
+  async updateAnnouncement(id, announcementData) {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/announcements/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(announcementData),
+      });
+      if (response.ok) {
+        return await response.json();
+      } else {
+        return Promise.reject(response.statusText);
+      }
+    } catch (error) {
+      console.error(`ERROR UPDATING ANNOUNCEMENT: ${error.message}`);
+    }
+  }
+
+
 }
 export default AnnouncementService;

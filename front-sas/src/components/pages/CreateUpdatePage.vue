@@ -1,11 +1,11 @@
 <script setup>
-import TextDescription from '../UI/molecules/TextDescription.vue';
-import AnnouncementCard from '../templates/AnnouncementCard.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
-import { watchEffect, ref, reactive, computed } from 'vue';
-import PageTemplate from '../templates/PageTemplate.vue';
-import { useRoute } from 'vue-router';
-import { getISODateTime } from '@/lib/DateTimeManagement.js';
+import TextDescription from "@/components/UI/molecules/TextDescription.vue";
+import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import {watchEffect, ref, reactive, computed, onMounted} from "vue";
+import PageTemplate from "@/components/templates/PageTemplate.vue";
+import { useRoute } from "vue-router";
+import { getISODateTime } from "@/lib/DateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
@@ -47,16 +47,42 @@ const submitAnnouncement = async () => {
         : null,
     announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
   };
-  try {
-    await announcementService.createAnnouncement(newAnnouncement);
-    alert('Announcement created successfully');
-  } catch (error) {
-    console.error('Error creating announcement:', error);
-    alert('Error creating announcement, please try again');
-  }
+    try {
+        if (router.name === "UpdateAnnouncement") {
+            await announcementService.updateAnnouncement(router.params.id, newAnnouncement);
+            alert("Announcement updated successfully");
+        } else {
+            await announcementService.createAnnouncement(newAnnouncement);
+            alert("Announcement created successfully");
+        }
+    } catch (error) {
+        console.error("Error submitting announcement:", error);
+        alert("Error submitting announcement, please try again");
+    }
 };
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
+    console.log(await announcementService.getAnnouncementDetail(4))
+
+});
+const fetchAnnouncement = async () => {
+    if (router.name === "UpdateAnnouncement") {
+        const announcementId = router.params.id;
+        const announcement = await announcementService.getAnnouncementDetail(announcementId);
+        newAnnouncementData.announcementTitle = announcement.announcementTitle;
+        newAnnouncementData.announcementDescription = announcement.announcementDescription;
+        newAnnouncementData.announcementCategory = announcement.category.id;
+        newAnnouncementData.publishDate = announcement.publishDate
+        newAnnouncementData.publishTime = announcement.publishDate
+        newAnnouncementData.closeDate = announcement.closeDate
+        newAnnouncementData.closeTime = announcement.closeDate
+        newAnnouncementData.display = announcement.announcementDisplay === "Y";
+    }
+};
+
+
+onMounted(async () => {
+    await fetchAnnouncement();
 });
 
 const checkEmpty = () => {
@@ -185,7 +211,10 @@ const checkEmpty = () => {
       >
         Submit
       </button>
-      <button class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded" v-else>
+      <button
+              @click="submitAnnouncement"
+              class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded"
+              v-else>
         Edit
       </button>
     </div>
