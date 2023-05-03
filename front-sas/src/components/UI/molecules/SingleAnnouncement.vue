@@ -29,7 +29,6 @@ const getAnnouncementDetail = (id) => {
 
 const toggleModal = async (id) => {
   showModal.value = !showModal.value;
-  console.log(showModal.value);
   if (showModal.value) {
     selectedAnnouncement.value = id;
   }
