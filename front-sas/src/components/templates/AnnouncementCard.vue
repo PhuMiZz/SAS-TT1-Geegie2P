@@ -3,6 +3,7 @@ import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
 import EditIcon from "../UI/atoms/EditIcon.vue";
 import BackIcon from "../UI/atoms/BackIcon.vue";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const router = useRouter();
 const props = defineProps({
@@ -21,7 +22,10 @@ const props = defineProps({
 });
 
 const editAnnouncement = () => {
-  router.push({ name: "UpdateAnnouncement" });
+  router.push({
+    name: "UpdateAnnouncement",
+    params: { id: props.announcementId },
+  });
 };
 </script>
 
@@ -30,7 +34,7 @@ const editAnnouncement = () => {
   <div class="flex w-full h-12 text-xl gap-5">
     <button
       class="ann-button flex bg-[#336699] item-center w-14 h-full p-3 rounded-t-lg"
-      @click="$router.go(-1)"
+      @click="$router.back()"
     >
       <BackIcon />
       <p class="hidden">Back</p>

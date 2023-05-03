@@ -54,9 +54,11 @@ const submitAnnouncement = async () => {
         newAnnouncement
       );
       alert("Announcement updated successfully");
+      window.location = `/admin/announcement/${router.params.id}`;
     } else {
       await announcementService.createAnnouncement(newAnnouncement);
       alert("Announcement created successfully");
+      window.location = "/admin/announcement";
     }
   } catch (error) {
     console.error("Error submitting announcement:", error);
@@ -119,7 +121,7 @@ const checkEmpty = () => {
 </script>
 
 <template>
-  <pre>{{ newAnnouncementDataJSON }}</pre>
+  <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
 
   <PageTemplate class="my-10">
     <AnnouncementCard :viewComponent="false">
@@ -221,7 +223,11 @@ const checkEmpty = () => {
     <div class="flex row gap-5 justify-end mt-10">
       <button
         class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded"
-        @click="$router.go(-1)"
+        @click="
+          router.name !== 'UpdateAnnouncement'
+            ? $router.push(`/admin/announcement`)
+            : $router.push(`/admin/announcement/${router.params.id}`)
+        "
       >
         Cancel
       </button>
