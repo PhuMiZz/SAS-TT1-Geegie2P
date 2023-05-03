@@ -20,10 +20,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["setAnnouncementDetail"]);
-
 const editAnnouncement = () => {
-  emit("setAnnouncementDetail", props.announcementDetail);
   router.push({ name: "UpdateAnnouncement" });
 };
 </script>
