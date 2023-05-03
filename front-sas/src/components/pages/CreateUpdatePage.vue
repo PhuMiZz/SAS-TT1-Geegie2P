@@ -24,7 +24,7 @@ const newAnnouncementDataJSON = computed(() =>
   JSON.stringify(newAnnouncementData, null, 2)
 );
 
-const emptyInput = ref(true);
+const updateInput = ref(true);
 
 const submitAnnouncement = async () => {
   const newAnnouncement = {
@@ -65,13 +65,15 @@ const submitAnnouncement = async () => {
     alert("Error submitting announcement, please try again");
   }
 };
+
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
 });
+let announcement = {};
 const fetchAnnouncement = async () => {
   if (router.name === "UpdateAnnouncement") {
     const announcementId = router.params.id;
-    const announcement = await announcementService.getAnnouncementDetail(
+    announcement = await announcementService.getAnnouncementDetail(
       announcementId
     );
     newAnnouncementData.announcementTitle = announcement.announcementTitle;
@@ -109,15 +111,17 @@ onMounted(async () => {
   await fetchAnnouncement();
 });
 
-const checkEmpty = () => {
-  const titleInput = newAnnouncementData.announcementTitle;
-  const descInput = newAnnouncementData.announcementDescription;
-  if (titleInput.trim().length === 0 || descInput.trim().length === 0) {
-    emptyInput.value = true;
+const checkUpdate = computed(() => {
+  // for add announcement
+  if (
+    newAnnouncementData.announcementTitle.trim().length === 0 ||
+    newAnnouncementData.announcementDescription.trim().length === 0
+  ) {
+    updateInput.value = true;
   } else {
-    emptyInput.value = false;
+    updateInput.value = false;
   }
-};
+});
 </script>
 
 <template>
@@ -128,7 +132,7 @@ const checkEmpty = () => {
       <template #title>
         <div class="text-[#336699]">Title</div>
         <input
-          @input="checkEmpty"
+          @input="checkUpdate"
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
@@ -137,7 +141,7 @@ const checkEmpty = () => {
       <template #description>
         <div class="text-[#336699]">Description</div>
         <textarea
-          @input="checkEmpty"
+          @input="checkUpdate"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
           class="ann-description w-full md:w-96 rounded-lg p-1"
@@ -152,6 +156,7 @@ const checkEmpty = () => {
             <select
               class="bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
               v-model="newAnnouncementData.announcementCategory"
+              @change="checkUpdate"
             >
               <option v-for="category in categories" :value="category.id">
                 {{ category.categoryName }}
@@ -165,6 +170,7 @@ const checkEmpty = () => {
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
               <input
+                @change="checkUpdate"
                 v-model="newAnnouncementData.publishDate"
                 type="date"
                 id="publishDate"
@@ -172,6 +178,7 @@ const checkEmpty = () => {
                 class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
               />
               <input
+                @change="checkUpdate"
                 v-model="newAnnouncementData.publishTime"
                 type="time"
                 id="publishTime"
@@ -186,6 +193,7 @@ const checkEmpty = () => {
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
               <input
+                @change="checkUpdate"
                 v-model="newAnnouncementData.closeDate"
                 type="date"
                 id="closeDate"
@@ -193,6 +201,7 @@ const checkEmpty = () => {
                 class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
               />
               <input
+                @change="checkUpdate"
                 v-model="newAnnouncementData.closeTime"
                 type="time"
                 id="closeTime"
@@ -207,9 +216,9 @@ const checkEmpty = () => {
           <template #default
             ><div class="flex gap-x-2">
               <input
+                @change="checkUpdate"
                 v-model="newAnnouncementData.display"
                 type="checkbox"
-                value=""
                 name="display"
                 id="display"
               />
@@ -233,7 +242,7 @@ const checkEmpty = () => {
       </button>
       <button
         @click="submitAnnouncement"
-        :disabled="emptyInput"
+        :disabled="updateInput"
         class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded disabled:opacity-50"
         v-if="router.name !== 'UpdateAnnouncement'"
       >
@@ -241,7 +250,8 @@ const checkEmpty = () => {
       </button>
       <button
         @click="submitAnnouncement"
-        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded"
+        :disabled="updateInput"
+        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded disabled:opacity-50"
         v-else
       >
         Edit
