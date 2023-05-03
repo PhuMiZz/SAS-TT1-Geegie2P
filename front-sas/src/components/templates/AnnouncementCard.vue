@@ -23,17 +23,16 @@ const editAnnouncement = () => {
 <template>
   <!-- Button -->
   <div class="flex w-full h-12 text-xl gap-5">
-    <RouterLink to="/admin/announcement">
-      <button
-        class="ann-button flex bg-[#336699] item-center w-full h-full p-3 rounded-t-lg"
-      >
-        <BackIcon />
-        <p class="hidden">Back</p>
-      </button>
-    </RouterLink>
+    <button
+      class="ann-button flex bg-[#336699] item-center w-14 h-full p-3 rounded-t-lg"
+      @click="$router.go(-1)"
+    >
+      <BackIcon />
+      <p class="hidden">Back</p>
+    </button>
 
     <button
-      @click="editAnnouncement()"
+      @click="editAnnouncement"
       :class="viewComponent ? '' : 'hidden'"
       class="flex gap-2 bg-[#F59E0B] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
     >
