@@ -4,7 +4,12 @@ import DetailIcon from "../atoms/DetailIcon.vue";
 import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import ConfirmOverlay from "@/components/UI/organisms/ConfirmOverlay.vue";
+import OverlayTemplate from "../../templates/OverlayTemplate.vue";
 
+const showModal = ref(false);
+const selectedAnnouncement = ref();
 const props = defineProps({
   announcementItem: {
     type: Object,
@@ -19,6 +24,20 @@ const props = defineProps({
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
   router.push({ name: "DetailPage", params: { id: id } });
+};
+
+const toggleModal = (id) => {
+  showModal.value = !showModal.value;
+  if (showModal.value) {
+    selectedAnnouncement.value = id;
+  } else {
+  }
+};
+
+const deleteAnnouncement = () => {
+  console.log("delete: " + selectedAnnouncement.value);
+
+  toggleModal();
 };
 </script>
 
@@ -75,7 +94,7 @@ const getAnnouncementDetail = (id) => {
           view
         </div>
       </button>
-      <button class="ann-button" @click="">
+      <button class="ann-button" @click="toggleModal(announcementItem.id)">
         <div
           class="bg-[#EF4444] text-white active:bg-[#B91C1C] text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         >
@@ -84,6 +103,13 @@ const getAnnouncementDetail = (id) => {
       </button>
     </template>
   </AnnouncementTemplate>
+
+  <OverlayTemplate :showModal="showModal" @hideModal="toggleModal">
+    <ConfirmOverlay
+      @hideModal="toggleModal"
+      @deleteAnnouncement="deleteAnnouncement"
+    />
+  </OverlayTemplate>
 </template>
 
 <style scoped></style>

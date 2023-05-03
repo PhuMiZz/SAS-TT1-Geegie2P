@@ -23,11 +23,6 @@ const newAnnouncementDataJSON = computed(() =>
   JSON.stringify(newAnnouncementData, null, 2)
 );
 
-// const selectCategory = (categoryId) => {
-//   newAnnouncementData.announcementCategory = categoryId;
-//   console.log(newAnnouncementData.announcementCategory);
-// };
-
 const submitAnnouncement = async () => {
   if (
     !newAnnouncementData.announcementTitle ||
