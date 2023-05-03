@@ -2,8 +2,9 @@
 import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
 import EditIcon from "../UI/atoms/EditIcon.vue";
 import BackIcon from "../UI/atoms/BackIcon.vue";
-import router from "../../router";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const props = defineProps({
   viewComponent: {
     type: Boolean,
