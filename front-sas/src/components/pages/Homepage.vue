@@ -1,19 +1,26 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
-import PageTemplate from "../templates/PageTemplate.vue";
-import NavigationBar from "../UI/organisms/NavigationBar.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
-import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
+import PageTemplate from '../templates/PageTemplate.vue';
+import NavigationBar from '../UI/organisms/NavigationBar.vue';
+import AnnouncementService from '@/lib/AnnouncementService';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
+import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
 
 const announcementService = new AnnouncementService();
 
 const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
+
+const filterDeletedData = (announcementDeletedId) => {
+  allAnnouncement.value = allAnnouncement.value.filter(
+    (announcement) => announcement.id !== announcementDeletedId
+  );
+  console.log(announcementDeletedId);
+};
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -42,7 +49,10 @@ watchEffect(async () => {
         <template #display>Display</template>
         <template #action>Action</template>
       </AnnouncementTemplate>
-      <AnnouncementList :announcement-list="allAnnouncement" />
+      <AnnouncementList
+        @refresh-data="filterDeletedData"
+        :announcement-list="allAnnouncement"
+      />
     </div>
   </PageTemplate>
 </template>

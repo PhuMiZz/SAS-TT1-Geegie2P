@@ -1,12 +1,12 @@
 <script setup>
-import BadgeCategories from "./BadgeCategories.vue";
-import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import ConfirmOverlay from "@/components/UI/organisms/ConfirmOverlay.vue";
-import OverlayTemplate from "../../templates/OverlayTemplate.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
+import BadgeCategories from './BadgeCategories.vue';
+import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import ConfirmOverlay from '@/components/UI/organisms/ConfirmOverlay.vue';
+import OverlayTemplate from '../../templates/OverlayTemplate.vue';
+import AnnouncementService from '../../../lib/AnnouncementService';
 
 const showModal = ref(false);
 const selectedAnnouncement = ref();
@@ -21,22 +21,23 @@ const props = defineProps({
     required: false,
   },
 });
-
+const emit = defineEmits(['refreshData']);
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: "DetailPage", params: { id: id } });
+  router.push({ name: 'DetailPage', params: { id: id } });
 };
 
-const toggleModal = (id) => {
+const toggleModal = async (id) => {
   showModal.value = !showModal.value;
   if (showModal.value) {
     selectedAnnouncement.value = id;
   } else {
+    emit('refreshData', selectedAnnouncement.value);
   }
 };
 
 const deleteAnnouncement = async () => {
-  console.log("delete: " + selectedAnnouncement.value);
+  console.log('delete: ' + selectedAnnouncement.value);
   await announcementService.deleteAnnouncement(selectedAnnouncement.value);
   toggleModal();
 };
@@ -65,7 +66,7 @@ const deleteAnnouncement = async () => {
       <p class="ann-publish-date">
         {{
           announcementItem.publishDate === null
-            ? "-"
+            ? '-'
             : getLocaleDateTime(announcementItem.publishDate)
         }}
       </p>
@@ -75,7 +76,7 @@ const deleteAnnouncement = async () => {
       <p class="ann-close-date">
         {{
           announcementItem.closeDate === null
-            ? "-"
+            ? '-'
             : getLocaleDateTime(announcementItem.closeDate)
         }}
       </p>

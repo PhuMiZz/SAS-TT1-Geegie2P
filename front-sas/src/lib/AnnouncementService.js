@@ -87,7 +87,8 @@ class AnnouncementService {
         }
       );
       if (response.ok) {
-        return await response.json();
+        // return await response.json();
+        console.log("Delete Successfully !");
       } else {
         return Promise.reject(response.statusText);
       }

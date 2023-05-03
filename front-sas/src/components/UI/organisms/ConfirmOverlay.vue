@@ -5,6 +5,7 @@ const props = defineProps({
     requied: true,
   },
 });
+defineEmits(['hideModal', 'deleteAnnouncement']);
 </script>
 
 <template>
@@ -50,13 +51,13 @@ const props = defineProps({
           Are you sure you want to delete this announcement?
         </h3>
         <button
-          @click="$emit('deleteAnnouncement')"
+          @click.once="$emit('deleteAnnouncement')"
           class="text-white bg-[#EF4444] hover:bg-red-800 rounded-lg text-sm px-5 py-2.5 mr-2"
         >
           Yes, I'm sure
         </button>
         <button
-          @click="$emit('hideModal')"
+          @click.once="$emit('hideModal')"
           class="text-white bg-gray-600 hover:bg-slate-800 rounded-lg text-sm px-5 py-2.5"
         >
           No, cancel
