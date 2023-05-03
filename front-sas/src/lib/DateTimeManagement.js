@@ -11,4 +11,11 @@ function getLocaleDateTime(dateTime) {
   return new Intl.DateTimeFormat(userLocale, option).format(date);
 }
 
-export { getLocaleDateTime };
+function getISODateTime(date, time) {
+  const format = `${date}T${time}`;
+  const newDate = new Date(format);
+
+  return newDate.toISOString();
+}
+
+export { getLocaleDateTime, getISODateTime };

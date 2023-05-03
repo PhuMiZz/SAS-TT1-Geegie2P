@@ -32,7 +32,11 @@ watchEffect(async () => {
 <template>
   <PageTemplate class="my-10">
     <LoadingPage v-if="isLoading" />
-    <AnnouncementCard v-else :announcementId="Number(announcementId)">
+    <AnnouncementCard
+      v-else
+      :announcementId="Number(announcementId)"
+      :announcementDetail="announcementDetail"
+    >
       <template #title
         ><div class="ann-title text-3xl">
           {{ announcementDetail.announcementTitle }}

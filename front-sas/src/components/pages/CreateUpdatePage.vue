@@ -5,6 +5,7 @@ import AnnouncementService from "@/lib/AnnouncementService.js";
 import { watchEffect, ref, reactive, computed } from "vue";
 import PageTemplate from "../templates/PageTemplate.vue";
 import { useRoute } from "vue-router";
+import { getISODateTime } from "@/lib/DateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
@@ -26,30 +27,37 @@ const newAnnouncementDataJSON = computed(() =>
 const submitAnnouncement = async () => {
   if (
     !newAnnouncementData.announcementTitle ||
-    !newAnnouncementData.announcementDescription ||
-    !newAnnouncementData.announcementCategory ||
-    !newAnnouncementData.publishDate ||
-    !newAnnouncementData.publishTime ||
-    !newAnnouncementData.closeDate ||
-    !newAnnouncementData.closeTime
+    !newAnnouncementData.announcementDescription
   ) {
-    alert("Please fill in all the fields");
-  }
-  const newAnnouncement = {
-    announcementTitle: newAnnouncementData.announcementTitle,
-    announcementDescription: newAnnouncementData.announcementDescription,
-    announcementCategory: newAnnouncementData.announcementCategory,
-    publishDate: `${newAnnouncementData.publishDate}T${newAnnouncementData.publishTime}`,
-    closeDate: `${newAnnouncementData.closeDate}T${newAnnouncementData.closeTime}`,
-    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
-  };
-
-  try {
-    await announcementService.createAnnouncement(newAnnouncement);
-    alert("Announcement created successfully");
-  } catch (error) {
-    console.error("Error creating announcement:", error);
-    alert("Error creating announcement, please try again");
+    alert("Please fill in the required fields");
+  } else {
+    const newAnnouncement = {
+      announcementTitle: newAnnouncementData.announcementTitle,
+      announcementDescription: newAnnouncementData.announcementDescription,
+      announcementCategory: newAnnouncementData.announcementCategory,
+      publishDate:
+        newAnnouncementData.publishDate || newAnnouncementData.publishTime
+          ? getISODateTime(
+              newAnnouncementData.publishDate,
+              newAnnouncementData.publishTime
+            )
+          : null,
+      closeDate:
+        newAnnouncementData.closeDate || newAnnouncementData.closeTime
+          ? getISODateTime(
+              newAnnouncementData.closeDate,
+              newAnnouncementData.closeTime
+            )
+          : null,
+      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+    };
+    try {
+      await announcementService.createAnnouncement(newAnnouncement);
+      alert("Announcement created successfully");
+    } catch (error) {
+      console.error("Error creating announcement:", error);
+      alert("Error creating announcement, please try again");
+    }
   }
 };
 watchEffect(async () => {
@@ -58,7 +66,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <pre>{{ newAnnouncementDataJSON }}</pre>
+  <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
 
   <PageTemplate class="my-10">
     <AnnouncementCard :viewComponent="false">
