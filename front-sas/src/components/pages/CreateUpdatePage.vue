@@ -9,7 +9,7 @@ import { getISODateTime } from "@/lib/DateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
-const route = useRoute();
+const router = useRoute();
 const newAnnouncementData = reactive({
   announcementTitle: "",
   announcementDescription: "",
@@ -24,45 +24,50 @@ const newAnnouncementDataJSON = computed(() =>
   JSON.stringify(newAnnouncementData, null, 2)
 );
 
+const emptyInput = ref(true);
+
 const submitAnnouncement = async () => {
-  if (
-    !newAnnouncementData.announcementTitle ||
-    !newAnnouncementData.announcementDescription
-  ) {
-    alert("Please fill in the required fields");
-  } else {
-    const newAnnouncement = {
-      announcementTitle: newAnnouncementData.announcementTitle,
-      announcementDescription: newAnnouncementData.announcementDescription,
-      categoryId: newAnnouncementData.announcementCategory,
-      publishDate:
-        newAnnouncementData.publishDate || newAnnouncementData.publishTime
-          ? getISODateTime(
-              newAnnouncementData.publishDate,
-              newAnnouncementData.publishTime
-            )
-          : null,
-      closeDate:
-        newAnnouncementData.closeDate || newAnnouncementData.closeTime
-          ? getISODateTime(
-              newAnnouncementData.closeDate,
-              newAnnouncementData.closeTime
-            )
-          : null,
-      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
-    };
-    try {
-      await announcementService.createAnnouncement(newAnnouncement);
-      alert("Announcement created successfully");
-    } catch (error) {
-      console.error("Error creating announcement:", error);
-      alert("Error creating announcement, please try again");
-    }
+  const newAnnouncement = {
+    announcementTitle: newAnnouncementData.announcementTitle,
+    announcementDescription: newAnnouncementData.announcementDescription,
+    categoryId: newAnnouncementData.announcementCategory,
+    publishDate:
+      newAnnouncementData.publishDate || newAnnouncementData.publishTime
+        ? getISODateTime(
+            newAnnouncementData.publishDate,
+            newAnnouncementData.publishTime
+          )
+        : null,
+    closeDate:
+      newAnnouncementData.closeDate || newAnnouncementData.closeTime
+        ? getISODateTime(
+            newAnnouncementData.closeDate,
+            newAnnouncementData.closeTime
+          )
+        : null,
+    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+  };
+  try {
+    await announcementService.createAnnouncement(newAnnouncement);
+    alert("Announcement created successfully");
+  } catch (error) {
+    console.error("Error creating announcement:", error);
+    alert("Error creating announcement, please try again");
   }
 };
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
 });
+
+const checkEmpty = () => {
+  const titleInput = newAnnouncementData.announcementTitle;
+  const descInput = newAnnouncementData.announcementDescription;
+  if (titleInput.trim().length === 0 || descInput.trim().length === 0) {
+    emptyInput.value = true;
+  } else {
+    emptyInput.value = false;
+  }
+};
 </script>
 
 <template>
@@ -73,6 +78,7 @@ watchEffect(async () => {
       <template #title>
         <div class="text-[#336699]">Title</div>
         <input
+          @input="checkEmpty"
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
@@ -81,6 +87,7 @@ watchEffect(async () => {
       <template #description>
         <div class="text-[#336699]">Description</div>
         <textarea
+          @input="checkEmpty"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
           class="ann-description w-96 rounded-lg p-1"
@@ -158,13 +165,17 @@ watchEffect(async () => {
     </AnnouncementCard>
 
     <div class="flex row gap-5 justify-end mt-10">
-      <button class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded">
+      <button
+        class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded"
+        @click="$router.go(-1)"
+      >
         Cancel
       </button>
       <button
         @click="submitAnnouncement"
-        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded"
-        v-if="route.name !== 'UpdateAnnouncement'"
+        :disabled="emptyInput"
+        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded disabled:opacity-50"
+        v-if="router.name !== 'UpdateAnnouncement'"
       >
         Submit
       </button>

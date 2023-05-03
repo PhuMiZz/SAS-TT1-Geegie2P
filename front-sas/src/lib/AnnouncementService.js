@@ -58,6 +58,8 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
+
+  //CRUD
   async createAnnouncement(newAnnouncement) {
     try {
       const response = await fetch(
