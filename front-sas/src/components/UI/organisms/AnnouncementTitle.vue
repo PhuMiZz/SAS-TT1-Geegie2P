@@ -1,6 +1,5 @@
 <script setup>
 import AddIcon from "../atoms/AddIcon.vue";
-import Dropdown from "../molecules/Dropdown.vue";
 import CategoryIcon from "../atoms/CategoryIcon.vue";
 import SortIcon from "../atoms/SortIcon.vue";
 import InputTemplate from "../../templates/InputTemplate.vue";
@@ -50,16 +49,14 @@ const createAnnouncement = () => {
       <div
         class="flex items-center flex-wrap justify-center md:justify-start xl:gap-10"
       >
-        <InputTemplate>
+        <!-- <InputTemplate>
           <CategoryIcon />
           Category:
-          <Dropdown :input="categories" />
         </InputTemplate>
         <InputTemplate>
           <SortIcon />
           Sort By:
-          <Dropdown :input="sort" />
-        </InputTemplate>
+        </InputTemplate> -->
       </div>
       <div class="flex h-full xl:h-3/5 items-center">
         <button
