@@ -34,7 +34,7 @@ const submitAnnouncement = async () => {
     const newAnnouncement = {
       announcementTitle: newAnnouncementData.announcementTitle,
       announcementDescription: newAnnouncementData.announcementDescription,
-      announcementCategory: newAnnouncementData.announcementCategory,
+      categoryId: newAnnouncementData.announcementCategory,
       publishDate:
         newAnnouncementData.publishDate || newAnnouncementData.publishTime
           ? getISODateTime(
