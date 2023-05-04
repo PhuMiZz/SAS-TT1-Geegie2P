@@ -63,7 +63,7 @@ const createAnnouncement = () => {
       <div class="flex h-full xl:h-3/5 items-center">
         <button
           @click="createAnnouncement"
-          class="ann-button bg-[#336699] hover:bg-[#23476b] text-white px-5 rounded-md h-full truncate ease-linear transition-all duration-150"
+          class="ann-button bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] text-white px-5 py-2 rounded-md h-full truncate ease-linear transition-all duration-150"
         >
           <div class="flex gap-1 items-center text-[#00000] text-xl">
             <AddIcon />
