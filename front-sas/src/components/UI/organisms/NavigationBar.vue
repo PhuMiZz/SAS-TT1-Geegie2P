@@ -34,24 +34,25 @@ const onClickMenuHandler = () => {
         class="hidden xl:flex items-center justify-center space-x-16"
         id="navbar-default"
       >
-        <RouterLink to="/admin/announcement">
-          <button class="flex items-center text-xl">
-            <HomeIcon class="mr-3.5" />
-            Home
-          </button>
+        <RouterLink
+          to="/admin/announcement"
+          class="flex items-center text-xl gap-x-3"
+        >
+          <HomeIcon />
+          Home
         </RouterLink>
 
-        <button class="flex items-center text-xl">
-          <UserViewIcon class="mr-3.5" />
+        <RouterLink to="/userview" class="flex items-center text-xl gap-x-3">
+          <UserViewIcon />
           User View
-        </button>
-        <button class="flex items-center text-xl">
-          <AboutUsIcon class="mr-3.5" /> About Us
-        </button>
+        </RouterLink>
+        <RouterLink to="/aboutus" class="flex items-center text-xl gap-x-3">
+          <AboutUsIcon /> About Us
+        </RouterLink>
       </div>
 
       <div class="w-[10%] flex justify-center">
-        <UserIcon />
+        <!-- <UserIcon /> -->
       </div>
       <button
         data-collapse-toggle="navbar-default"
