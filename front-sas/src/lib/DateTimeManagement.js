@@ -17,5 +17,14 @@ function getISODateTime(date, time) {
 
   return newDate.toISOString();
 }
+function extractDateAndTime (dateTime) {
+  if (!dateTime) return ['', ''];
 
-export { getLocaleDateTime, getISODateTime };
+  const isoString = new Date(dateTime).toISOString();
+  const date = isoString.split('T')[0];
+  const time = isoString.split('T')[1].substring(0, 5);
+
+  return [date, time];
+};
+
+export { getLocaleDateTime, getISODateTime,extractDateAndTime };
