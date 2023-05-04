@@ -1,10 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Homepage from "@/components/pages/Homepage.vue";
-import DetailPage from "@/components/pages/DetailPage.vue";
-import PageNotFound from "@/components/pages/PageNotFound.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-
-const announcementService = new AnnouncementService();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,17 +10,27 @@ const router = createRouter({
     {
       path: "/admin/announcement",
       name: "Announcements",
-      component: Homepage,
+      component: () => import("@/components/pages/Homepage.vue"),
     },
     {
       path: "/admin/announcement/:id",
       name: "DetailPage",
-      component: DetailPage,
+      component: () => import("@/components/pages/DetailPage.vue"),
+    },
+    {
+      path: "/admin/announcement/add",
+      name: "CreateAnnouncement",
+      component: () => import("@/components/pages/CreateUpdatePage.vue"),
+    },
+    {
+      path: "/admin/announcement/:id/edit",
+      name: "UpdateAnnouncement",
+      component: () => import("@/components/pages/CreateUpdatePage.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
       name: "PageNotFound",
-      component: PageNotFound,
+      component: () => import("@/components/pages/PageNotFound.vue"),
     },
   ],
 });

@@ -61,7 +61,7 @@ onMounted(async () => {
 <template>
   <span
     :class="[badgeCategoryColor.bgColor, badgeCategoryColor.textColor]"
-    class="w-fit h-fit text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full truncate"
+    class="w-fit h-fit text-lg font-medium px-2.5 py-0.5 rounded-full truncate"
     ><slot></slot
   ></span>
 </template>

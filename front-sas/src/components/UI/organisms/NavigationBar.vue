@@ -1,10 +1,10 @@
 <script setup>
-import HomeIcon from '@/components/UI/atoms/HomeIcon.vue';
-import UserViewIcon from '@/components/UI/atoms/UserViewIcon.vue';
-import AboutUsIcon from '@/components/UI/atoms/AboutUsIcon.vue';
-import UserIcon from '@/components/UI/atoms/UserIcon.vue';
-import { RouterLink } from 'vue-router';
-import { ref } from 'vue';
+import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
+import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
+import UserIcon from "@/components/UI/atoms/UserIcon.vue";
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
 const isOpenMenu = ref(false);
 const onClickMenuHandler = () => {
@@ -19,13 +19,13 @@ const onClickMenuHandler = () => {
     <div
       class="max-w-screen flex flex-wrap items-center xl:justify-between mx-auto p-4"
     >
-      <!-- Add Logo & Name -->
+      <!-- Logo -->
       <RouterLink
         to="/admin/announcement"
         class="flex items-center ml-10 grow xl:grow-0"
       >
         <span
-          class="self-center text-2xl font-semibold whitespace-nowrap text-[#E87B92]"
+          class="self-center text-2xl font-semibold whitespace-nowrap text-[#336699]"
           >Geegie2P</span
         >
       </RouterLink>
@@ -34,24 +34,26 @@ const onClickMenuHandler = () => {
         class="hidden xl:flex items-center justify-center space-x-16"
         id="navbar-default"
       >
-        <RouterLink to="/admin/announcement">
-          <button class="flex items-center text-xl">
-            <HomeIcon class="mr-3.5" />
-            Home
-          </button>
+        <RouterLink
+          to="/admin/announcement"
+          class="flex items-center text-xl gap-x-3"
+        >
+          <HomeIcon class="icon" />
+          <span class="text-page">Home</span>
         </RouterLink>
 
-        <button class="flex items-center text-xl">
-          <UserViewIcon class="mr-3.5" />
-          User View
-        </button>
-        <button class="flex items-center text-xl">
-          <AboutUsIcon class="mr-3.5" /> About Us
-        </button>
+        <RouterLink to="/userview" class="flex items-center text-xl gap-x-3">
+          <UserViewIcon class="icon" />
+          <span class="text-page">User View</span>
+        </RouterLink>
+        <RouterLink to="/aboutus" class="flex items-center text-xl gap-x-3">
+          <AboutUsIcon class="icon" />
+          <span class="text-page">About Us</span>
+        </RouterLink>
       </div>
 
       <div class="w-[10%] flex justify-center">
-        <UserIcon />
+        <!-- <UserIcon /> -->
       </div>
       <button
         data-collapse-toggle="navbar-default"
@@ -99,4 +101,16 @@ const onClickMenuHandler = () => {
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.router-link-active .icon {
+  fill: #336699;
+  stroke: #ffffff;
+}
+.text-page:hover {
+  border-bottom: solid 0.1em #336699;
+  transition-property: all;
+  transition-duration: 150ms;
+  transition-timing-function: linear;
+  color: #336699;
+}
+</style>
