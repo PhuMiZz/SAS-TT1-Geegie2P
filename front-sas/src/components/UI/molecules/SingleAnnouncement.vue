@@ -4,7 +4,7 @@ import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import ConfirmOverlay from "@/components/UI/organisms/ConfirmOverlay.vue";
+import ConfirmModal from "@/components/UI/organisms/ConfirmModal.vue";
 import OverlayTemplate from "../../templates/OverlayTemplate.vue";
 import AnnouncementService from "../../../lib/AnnouncementService";
 
@@ -107,7 +107,7 @@ const deleteAnnouncement = async () => {
   </AnnouncementTemplate>
 
   <OverlayTemplate :showModal="showModal" @hideModal="toggleModal">
-    <ConfirmOverlay
+    <ConfirmModal
       @hideModal="toggleModal"
       @deleteAnnouncement="deleteAnnouncement"
     />
