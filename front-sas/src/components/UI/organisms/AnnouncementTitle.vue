@@ -1,11 +1,11 @@
 <script setup>
-import AddIcon from '../atoms/AddIcon.vue';
-import CategoryIcon from '../atoms/CategoryIcon.vue';
-import SortIcon from '../atoms/SortIcon.vue';
-import InputTemplate from '../../templates/InputTemplate.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
-import { ref, watchEffect } from 'vue';
-import router from '@/router';
+import AddIcon from "../atoms/AddIcon.vue";
+import CategoryIcon from "../atoms/CategoryIcon.vue";
+import SortIcon from "../atoms/SortIcon.vue";
+import InputTemplate from "../../templates/InputTemplate.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import { ref, watchEffect } from "vue";
+import router from "@/router";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
@@ -16,17 +16,17 @@ watchEffect(async () => {
 });
 
 const sort = [
-  'ID',
-  'Title',
-  'Category',
-  'Publish Date',
-  'Close Date',
-  'Display',
+  "ID",
+  "Title",
+  "Category",
+  "Publish Date",
+  "Close Date",
+  "Display",
 ];
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const createAnnouncement = () => {
-  router.push({ name: 'CreateAnnouncement' });
+  router.push({ name: "CreateAnnouncement" });
 };
 </script>
 
@@ -63,7 +63,7 @@ const createAnnouncement = () => {
       <div class="flex h-full xl:h-3/5 items-center">
         <button
           @click="createAnnouncement"
-          class="ann-button bg-[#336699] text-white p-2 rounded-md h-full truncate"
+          class="ann-button bg-[#336699] hover:bg-[#23476b] text-white px-5 rounded-md h-full truncate ease-linear transition-all duration-150"
         >
           <div class="flex gap-1 items-center text-[#00000] text-xl">
             <AddIcon />
