@@ -28,7 +28,7 @@ const getAnnouncementDetail = (id) => {
   router.push({ name: "DetailPage", params: { id: id } });
 };
 
-const toggleModal = async (id) => {
+const toggleModal = (id) => {
   showModal.value = !showModal.value;
   if (showModal.value) {
     selectedAnnouncement.value = id;

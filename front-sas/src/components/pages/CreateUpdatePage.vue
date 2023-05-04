@@ -2,6 +2,8 @@
 import TextDescription from "@/components/UI/molecules/TextDescription.vue";
 import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
 import AnnouncementService from "@/lib/AnnouncementService.js";
+import SuccessModal from "../UI/organisms/SuccessModal.vue";
+import OverlayTemplate from "../templates/OverlayTemplate.vue";
 import { watchEffect, ref, reactive, computed, onMounted } from "vue";
 import PageTemplate from "@/components/templates/PageTemplate.vue";
 import { useRoute } from "vue-router";
@@ -31,6 +33,12 @@ const announcement = ref();
 const updateCheck = () => {
   checkUpdate.value;
 };
+
+const showModal = ref(false);
+const toggleModal = () => {
+  showModal.value = !showModal.value;
+};
+
 const submitAnnouncement = async () => {
   const newAnnouncement = {
     announcementTitle: newAnnouncementData.announcementTitle,
@@ -58,12 +66,14 @@ const submitAnnouncement = async () => {
         router.params.id,
         newAnnouncement
       );
-      alert("Announcement updated successfully");
-      window.location = `/admin/announcement/${router.params.id}`;
+      // alert("Announcement updated successfully");
+      // window.location = `/admin/announcement/${router.params.id}`;
+      toggleModal();
     } else {
       await announcementService.createAnnouncement(newAnnouncement);
-      alert("Announcement created successfully");
-      window.location = "/admin/announcement";
+      // alert("Announcement created successfully");
+      // window.location = "/admin/announcement";
+      toggleModal();
     }
   } catch (error) {
     console.error("Error submitting announcement:", error);
@@ -272,6 +282,16 @@ onMounted(async () => {
       </button>
     </div>
   </PageTemplate>
+  <OverlayTemplate :showModal="showModal">
+    <SuccessModal
+      :createAnnouncement="router.name !== 'UpdateAnnouncement'"
+      @goPreviousPage="
+        router.name === 'UpdateAnnouncement'
+          ? $router.push(`/admin/announcement/${router.params.id}`)
+          : $router.push('/admin/announcement')
+      "
+    />
+  </OverlayTemplate>
 </template>
 
 <style scoped></style>

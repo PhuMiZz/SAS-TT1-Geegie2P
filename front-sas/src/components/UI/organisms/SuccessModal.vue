@@ -5,6 +5,7 @@ const props = defineProps({
     default: false,
   },
 });
+defineEmits(["hideModal", "goPreviousPage"]);
 </script>
 
 <template>
@@ -17,7 +18,7 @@ const props = defineProps({
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-14 h-14 text-[#22C55E]"
+          class="w-14 h-14 text-[#22C55E] mx-auto mb-4"
         >
           <path
             stroke-linecap="round"
@@ -34,7 +35,7 @@ const props = defineProps({
           }}
         </h3>
         <button
-          @click.once="$emit('hideModal')"
+          @click.once="$emit('goPreviousPage')"
           class="text-white bg-gray-600 hover:bg-slate-800 rounded-lg text-sm px-5 py-2.5"
         >
           Go Back
