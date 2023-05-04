@@ -38,16 +38,16 @@ const onClickMenuHandler = () => {
           to="/admin/announcement"
           class="flex items-center text-xl gap-x-3"
         >
-          <HomeIcon />
+          <HomeIcon class="icon" />
           Home
         </RouterLink>
 
         <RouterLink to="/userview" class="flex items-center text-xl gap-x-3">
-          <UserViewIcon />
+          <UserViewIcon class="icon" />
           User View
         </RouterLink>
         <RouterLink to="/aboutus" class="flex items-center text-xl gap-x-3">
-          <AboutUsIcon /> About Us
+          <AboutUsIcon class="icon" /> About Us
         </RouterLink>
       </div>
 
@@ -100,4 +100,9 @@ const onClickMenuHandler = () => {
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.router-link-active .icon {
+  fill: #336699;
+  stroke: #ffffff;
+}
+</style>
