@@ -10,10 +10,10 @@ import router from "@/router";
 const announcementService = new AnnouncementService();
 const categories = ref([]);
 
-watchEffect(async () => {
-  const allCategory = await announcementService.getAllCategory();
-  categories.value = allCategory.map((e) => e.categoryName);
-});
+// watchEffect(async () => {
+//   const allCategory = await announcementService.getAllCategory();
+//   categories.value = allCategory.map((e) => e.categoryName);
+// });
 
 const sort = [
   "ID",
