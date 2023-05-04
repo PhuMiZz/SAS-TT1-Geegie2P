@@ -91,14 +91,14 @@ const deleteAnnouncement = async () => {
         @click="getAnnouncementDetail(announcementItem.id)"
       >
         <div
-          class="bg-[#336699] text-white active:bg-[#23476b] hover:bg-[#23476b] font text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          class="bg-[#336699] text-white active:bg-[#23476b] hover:bg-[#23476b] font text-xl px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         >
           view
         </div>
       </button>
       <button class="ann-button" @click="toggleModal(announcementItem.id)">
         <div
-          class="bg-[#EF4444] text-white active:bg-[#B91C1C] hover:bg-[#B91C1C] text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          class="bg-[#EF4444] text-white active:bg-[#B91C1C] hover:bg-[#B91C1C] text-xl px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         >
           delete
         </div>
