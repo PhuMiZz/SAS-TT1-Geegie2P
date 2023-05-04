@@ -48,12 +48,12 @@ defineEmits(["routerPage"]);
     >
       <EditIcon /> Edit
     </button>
-    <button
+    <!-- <button
       :class="viewComponent ? '' : 'hidden'"
       class="flex gap-2 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
     >
       <DeleteIcon /> Delete
-    </button>
+    </button> -->
   </div>
 
   <!-- Detail -->
