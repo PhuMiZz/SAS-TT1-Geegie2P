@@ -1,8 +1,6 @@
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
+import { ref, watchEffect } from "vue";
 import PageTemplate from "../templates/PageTemplate.vue";
-import NavigationBar from "../UI/organisms/NavigationBar.vue";
 import AnnouncementService from "@/lib/AnnouncementService";
 import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
