@@ -69,4 +69,6 @@ public class AnnouncementService {
 //        if (announcement.getAnnouncementDisplay() == null){
 //            announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
 //        }
-    return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.cla
+    return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
+    }
+}
