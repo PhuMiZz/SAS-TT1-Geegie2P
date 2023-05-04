@@ -2,7 +2,7 @@
 import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
 import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
 import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
-import UserIcon from "@/components/UI/atoms/UserIcon.vue";
+// import UserIcon from "@/components/UI/atoms/UserIcon.vue";
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
 
