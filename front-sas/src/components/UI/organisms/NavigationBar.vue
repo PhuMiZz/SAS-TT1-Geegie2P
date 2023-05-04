@@ -19,7 +19,7 @@ const onClickMenuHandler = () => {
     <div
       class="max-w-screen flex flex-wrap items-center xl:justify-between mx-auto p-4"
     >
-      <!-- Add Logo & Name -->
+      <!-- Logo -->
       <RouterLink
         to="/admin/announcement"
         class="flex items-center ml-10 grow xl:grow-0"
@@ -39,15 +39,16 @@ const onClickMenuHandler = () => {
           class="flex items-center text-xl gap-x-3"
         >
           <HomeIcon class="icon" />
-          Home
+          <span class="text-page">Home</span>
         </RouterLink>
 
         <RouterLink to="/userview" class="flex items-center text-xl gap-x-3">
           <UserViewIcon class="icon" />
-          User View
+          <span class="text-page">User View</span>
         </RouterLink>
         <RouterLink to="/aboutus" class="flex items-center text-xl gap-x-3">
-          <AboutUsIcon class="icon" /> About Us
+          <AboutUsIcon class="icon" />
+          <span class="text-page">About Us</span>
         </RouterLink>
       </div>
 
@@ -104,5 +105,12 @@ const onClickMenuHandler = () => {
 .router-link-active .icon {
   fill: #336699;
   stroke: #ffffff;
+}
+.text-page:hover {
+  border-bottom: solid 0.1em #336699;
+  transition-property: all;
+  transition-duration: 150ms;
+  transition-timing-function: linear;
+  color: #336699;
 }
 </style>
