@@ -25,9 +25,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return new ResponseEntity<>(errorResponse, status);
     }
-    @ExceptionHandler(InvalidAnnouncementIdException.class)
+    @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleInvalidAnnouncementId(InvalidAnnouncementIdException exception, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleInvalidAnnouncementId(BadRequestException exception, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),

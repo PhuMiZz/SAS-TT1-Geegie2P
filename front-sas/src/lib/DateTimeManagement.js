@@ -25,6 +25,6 @@ function extractDateAndTime (dateTime) {
   const time = isoString.split('T')[1].substring(0, 5);
 
   return [date, time];
-};
+}
 
 export { getLocaleDateTime, getISODateTime,extractDateAndTime };

@@ -7,7 +7,7 @@ import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
 import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.entities.Category;
-import sit.int221.announcementsystem.exceptions.BadRequest;
+import sit.int221.announcementsystem.exceptions.BadRequestException;
 import sit.int221.announcementsystem.exceptions.ItemNotFoundException;
 import sit.int221.announcementsystem.repositories.AnnouncementRepository;
 import sit.int221.announcementsystem.repositories.CategoryRepository;
@@ -45,7 +45,7 @@ public class AnnouncementService {
         if (announcement.getAnnouncementDisplay() == null) {
             announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
         } else  if (announcement.getAnnouncementTitle().isBlank() || announcement.getAnnouncementDescription().isBlank()){
-            throw new BadRequest("Not Found");
+            throw new BadRequestException("Not Found");
         }
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
@@ -69,7 +69,4 @@ public class AnnouncementService {
 //        if (announcement.getAnnouncementDisplay() == null){
 //            announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
 //        }
-    return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
-    }
-
-}
+    return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.cla
