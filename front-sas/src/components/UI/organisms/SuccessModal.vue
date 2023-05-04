@@ -36,7 +36,7 @@ defineEmits(["hideModal", "goPreviousPage"]);
         </h3>
         <button
           @click.once="$emit('goPreviousPage')"
-          class="text-white bg-gray-600 hover:bg-slate-800 rounded-lg text-sm px-5 py-2.5"
+          class="text-white bg-gray-600 hover:bg-slate-800 rounded-lg text-sm px-5 py-2.5 ease-linear transition-all duration-150"
         >
           Go Back
         </button>
