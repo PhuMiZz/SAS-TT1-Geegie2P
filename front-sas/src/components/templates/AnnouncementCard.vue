@@ -3,7 +3,6 @@ import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
 import EditIcon from "../UI/atoms/EditIcon.vue";
 import BackIcon from "../UI/atoms/BackIcon.vue";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
 
 const router = useRouter();
 const props = defineProps({
@@ -35,7 +34,7 @@ defineEmits(["routerPage"]);
   <!-- Button -->
   <div class="flex w-full h-12 text-xl gap-5">
     <button
-      class="ann-button flex bg-[#336699] item-center w-14 h-full p-3 rounded-t-lg"
+      class="ann-button flex bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] item-center w-14 h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
       @click="$emit('routerPage')"
     >
       <BackIcon />
@@ -45,13 +44,13 @@ defineEmits(["routerPage"]);
     <button
       @click="editAnnouncement"
       :class="viewComponent ? '' : 'hidden'"
-      class="flex gap-2 bg-[#F59E0B] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
+      class="flex gap-2 bg-[#F59E0B] hover:bg-[#d68d0e] active:bg-[#d68d0e] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
     >
       <EditIcon /> Edit
     </button>
     <button
       :class="viewComponent ? '' : 'hidden'"
-      class="flex gap-2 bg-[#EF4444] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg"
+      class="flex gap-2 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
     >
       <DeleteIcon /> Delete
     </button>

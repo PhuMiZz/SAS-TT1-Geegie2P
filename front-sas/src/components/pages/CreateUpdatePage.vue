@@ -255,7 +255,7 @@ onMounted(async () => {
 
     <div class="flex row gap-5 justify-end mt-10">
       <button
-        class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded"
+        class="w-48 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white text-xl p-3 rounded ease-linear transition-all duration-150"
         @click="
           router.name === 'UpdateAnnouncement'
             ? $router.push(`/admin/announcement/${router.params.id}`)
@@ -267,7 +267,7 @@ onMounted(async () => {
       <button
         @click="submitAnnouncement"
         :disabled="!checkUpdate"
-        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded disabled:opacity-50"
+        class="w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
         v-if="router.name !== 'UpdateAnnouncement'"
       >
         Submit
@@ -275,7 +275,7 @@ onMounted(async () => {
       <button
         @click="submitAnnouncement"
         :disabled="!checkUpdate"
-        class="w-48 bg-[#22C55E] text-white text-xl p-3 rounded disabled:opacity-50"
+        class="w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
         v-else
       >
         Edit
