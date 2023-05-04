@@ -44,7 +44,7 @@ public class AnnouncementService {
         Announcement announcement = modelMapper.map(newAnnouncement, Announcement.class);
         if (announcement.getAnnouncementDisplay() == null) {
             announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
-        } else  if (announcement.getAnnouncementTitle().isBlank() || announcement.getAnnouncementDescription().isBlank()){
+        } else if (announcement.getAnnouncementTitle().isBlank() || announcement.getAnnouncementDescription().isBlank()) {
             throw new BadRequestException("Not Found");
         }
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
@@ -56,7 +56,7 @@ public class AnnouncementService {
         announcementRepository.deleteById(announcementId);
     }
 
-    public AnnouncementCreateUpdateViewDto updateAnnouncement(AnnouncementCreateUpdateDto updateAnnouncement,AnnouncementCreateUpdateDto oldAnnouncement){
+    public AnnouncementCreateUpdateViewDto updateAnnouncement(AnnouncementCreateUpdateDto updateAnnouncement, AnnouncementCreateUpdateDto oldAnnouncement) {
 //        AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementRepository.findById(announcementId).
 //                orElseThrow(() -> new ItemNotFoundException("The announcement is not found")),AnnouncementCreateUpdateDto.class);
         oldAnnouncement.setAnnouncementTitle(updateAnnouncement.getAnnouncementTitle().isBlank() ? null : updateAnnouncement.getAnnouncementTitle());
@@ -65,8 +65,10 @@ public class AnnouncementService {
         oldAnnouncement.setPublishDate(updateAnnouncement.getPublishDate());
         oldAnnouncement.setCloseDate(updateAnnouncement.getCloseDate());
         oldAnnouncement.setAnnouncementDisplay(updateAnnouncement.getAnnouncementDisplay().isBlank() ? "N" : updateAnnouncement.getAnnouncementDisplay());
-        Announcement announcement = modelMapper.map(oldAnnouncement,Announcement.class);
+        Announcement announcement = modelMapper.map(oldAnnouncement, Announcement.class);
 //        if (announcement.getAnnouncementDisplay() == null){
 //            announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
 //        }
-    return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.cla
+        return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
+    }
+}

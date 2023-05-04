@@ -1,12 +1,12 @@
 <script setup>
-import BadgeCategories from "./BadgeCategories.vue";
-import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import ConfirmModal from "@/components/UI/organisms/ConfirmModal.vue";
-import OverlayTemplate from "../../templates/OverlayTemplate.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
+import BadgeCategories from './BadgeCategories.vue';
+import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import ConfirmModal from '@/components/UI/organisms/ConfirmModal.vue';
+import OverlayTemplate from '../../templates/OverlayTemplate.vue';
+import AnnouncementService from '../../../lib/AnnouncementService';
 
 const showModal = ref(false);
 const selectedAnnouncement = ref();
@@ -22,10 +22,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["refreshData"]);
+const emit = defineEmits(['refreshData']);
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: "DetailPage", params: { id: id } });
+  router.push({ name: 'DetailPage', params: { id: id } });
 };
 
 const toggleModal = (id) => {
@@ -38,7 +38,7 @@ const toggleModal = (id) => {
 const deleteAnnouncement = async () => {
   // console.log('delete: ' + selectedAnnouncement.value);
   await announcementService.deleteAnnouncement(selectedAnnouncement.value);
-  emit("refreshData", selectedAnnouncement.value);
+  emit('refreshData', selectedAnnouncement.value);
   toggleModal();
 };
 </script>
@@ -49,7 +49,7 @@ const deleteAnnouncement = async () => {
       {{ index + 1 }}
     </template>
     <template #title>
-      <div class="text-[#737373] w-2/4 md:w-1/3 xl:hidden block">Title</div>
+      <div class="text-[#737373] w-1/3 xl:hidden block">Title</div>
       <p class="ann-title">{{ announcementItem.announcementTitle }}</p>
     </template>
     <template #category>
@@ -66,7 +66,7 @@ const deleteAnnouncement = async () => {
       <p class="ann-publish-date">
         {{
           announcementItem.publishDate === null
-            ? "-"
+            ? '-'
             : getLocaleDateTime(announcementItem.publishDate)
         }}
       </p>
@@ -76,7 +76,7 @@ const deleteAnnouncement = async () => {
       <p class="ann-close-date">
         {{
           announcementItem.closeDate === null
-            ? "-"
+            ? '-'
             : getLocaleDateTime(announcementItem.closeDate)
         }}
       </p>
@@ -91,14 +91,14 @@ const deleteAnnouncement = async () => {
         @click="getAnnouncementDetail(announcementItem.id)"
       >
         <div
-          class="bg-[#336699] text-white active:bg-[#23476b] hover:bg-[#23476b] font text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          class="bg-[#336699] text-white active:bg-[#23476b] hover:bg-[#23476b] font text-xl px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         >
           view
         </div>
       </button>
       <button class="ann-button" @click="toggleModal(announcementItem.id)">
         <div
-          class="bg-[#EF4444] text-white active:bg-[#B91C1C] hover:bg-[#B91C1C] text-base px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          class="bg-[#EF4444] text-white active:bg-[#B91C1C] hover:bg-[#B91C1C] text-xl px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         >
           delete
         </div>
