@@ -124,15 +124,6 @@ watchEffect(async () => {
 onMounted(async () => {
   // await fetchAnnouncement();
 });
-
-const getPreviousPage = () => {
-  // router.push({ name: "Announcements" });
-  // if (router.name === "UpdateAnnouncement") {
-  //   router.push({ name: "DetailPage", params: { id: router.params.id } });
-  // } else {
-  //   router.push({ name: "Announcements" });
-  // }
-};
 </script>
 
 <template>
@@ -154,7 +145,7 @@ const getPreviousPage = () => {
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
-          class="ann-description w-full md:w-96 rounded-lg p-1"
+          class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
       /></template>
       <template #description>
         <div class="text-[#336699]">Description</div>
@@ -162,7 +153,7 @@ const getPreviousPage = () => {
           @input="updateCheck"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
-          class="ann-description w-full md:w-96 rounded-lg p-1"
+          class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
         ></textarea>
@@ -172,7 +163,7 @@ const getPreviousPage = () => {
           <template #header>Category</template>
           <template #default>
             <select
-              class="bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
+              class="bg-[#FAFAFA] p-1 h-9 w-full rounded-lg text-[#404040]"
               v-model="newAnnouncementData.announcementCategory"
               @change="updateCheck"
             >
@@ -193,7 +184,7 @@ const getPreviousPage = () => {
                 type="date"
                 id="publishDate"
                 name="publishDate"
-                class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+                class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
               />
               <input
                 @change="updateCheck"
@@ -216,7 +207,7 @@ const getPreviousPage = () => {
                 type="date"
                 id="closeDate"
                 name="closeDate"
-                class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+                class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
               />
               <input
                 @change="updateCheck"
@@ -224,7 +215,7 @@ const getPreviousPage = () => {
                 type="time"
                 id="closeTime"
                 name="closeTime"
-                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
               /></div
           ></template>
         </TextDescription>
@@ -240,7 +231,12 @@ const getPreviousPage = () => {
                 name="display"
                 id="display"
               />
-              <label for="display">Check to show this announcement</label>
+              <label
+                for="display"
+                class="text-[#737373]"
+                :class="newAnnouncementData.display ? 'text-[#404040]' : ''"
+                >Check to show this announcement</label
+              >
             </div></template
           >
         </TextDescription>
