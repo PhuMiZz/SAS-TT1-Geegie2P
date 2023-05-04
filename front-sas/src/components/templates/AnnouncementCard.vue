@@ -27,6 +27,8 @@ const editAnnouncement = () => {
     params: { id: props.announcementId },
   });
 };
+
+defineEmits(["routerPage"]);
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const editAnnouncement = () => {
   <div class="flex w-full h-12 text-xl gap-5">
     <button
       class="ann-button flex bg-[#336699] item-center w-14 h-full p-3 rounded-t-lg"
-      @click="$router.back()"
+      @click="$emit('routerPage')"
     >
       <BackIcon />
       <p class="hidden">Back</p>

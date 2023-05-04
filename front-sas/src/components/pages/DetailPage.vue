@@ -36,6 +36,7 @@ watchEffect(async () => {
       v-else
       :announcementId="Number(announcementId)"
       :announcementDetail="announcementDetail"
+      @routerPage="$router.push('/admin/announcement')"
     >
       <template #title
         ><div class="ann-title text-3xl">

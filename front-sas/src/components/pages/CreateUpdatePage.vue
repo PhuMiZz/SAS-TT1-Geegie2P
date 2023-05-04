@@ -1,23 +1,26 @@
 <script setup>
-import TextDescription from '@/components/UI/molecules/TextDescription.vue';
-import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
-import { watchEffect, ref, reactive, computed, onMounted } from 'vue';
-import PageTemplate from '@/components/templates/PageTemplate.vue';
-import {useRoute} from 'vue-router';
-import {extractDateAndTime, getISODateTime} from '@/lib/DateTimeManagement.js';
+import TextDescription from "@/components/UI/molecules/TextDescription.vue";
+import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import { watchEffect, ref, reactive, computed, onMounted } from "vue";
+import PageTemplate from "@/components/templates/PageTemplate.vue";
+import { useRoute } from "vue-router";
+import {
+  extractDateAndTime,
+  getISODateTime,
+} from "@/lib/DateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
 const router = useRoute();
 const newAnnouncementData = reactive({
-  announcementTitle: '',
-  announcementDescription: '',
+  announcementTitle: "",
+  announcementDescription: "",
   announcementCategory: 1,
-  publishDate: '',
-  publishTime: '',
-  closeDate: '',
-  closeTime: '',
+  publishDate: "",
+  publishTime: "",
+  closeDate: "",
+  closeTime: "",
   display: false,
 });
 const newAnnouncementDataJSON = computed(() =>
@@ -26,7 +29,7 @@ const newAnnouncementDataJSON = computed(() =>
 
 const announcement = ref();
 const updateCheck = () => {
-    checkUpdate.value;
+  checkUpdate.value;
 };
 const submitAnnouncement = async () => {
   const newAnnouncement = {
@@ -47,81 +50,103 @@ const submitAnnouncement = async () => {
             newAnnouncementData.closeTime
           )
         : null,
-    announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
+    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
   };
   try {
-    if (router.name === 'UpdateAnnouncement') {
+    if (router.name === "UpdateAnnouncement") {
       await announcementService.updateAnnouncement(
         router.params.id,
         newAnnouncement
       );
-      alert('Announcement updated successfully');
+      alert("Announcement updated successfully");
       window.location = `/admin/announcement/${router.params.id}`;
     } else {
       await announcementService.createAnnouncement(newAnnouncement);
-      alert('Announcement created successfully');
-      window.location = '/admin/announcement';
+      alert("Announcement created successfully");
+      window.location = "/admin/announcement";
     }
   } catch (error) {
-    console.error('Error submitting announcement:', error);
-    alert('Error submitting announcement, please try again');
+    console.error("Error submitting announcement:", error);
+    alert("Error submitting announcement, please try again");
   }
 };
 const originalAnnouncementData = reactive({});
 const fetchAnnouncement = async () => {
-    if (router.name === 'UpdateAnnouncement') {
-        const announcementId = router.params.id;
-        announcement.value = await announcementService.getAnnouncementDetail(announcementId);
+  if (router.name === "UpdateAnnouncement") {
+    const announcementId = router.params.id;
+    announcement.value = await announcementService.getAnnouncementDetail(
+      announcementId
+    );
 
-        const [publishDate, publishTime] = extractDateAndTime(announcement.value.publishDate);
-        const [closeDate, closeTime] = extractDateAndTime(announcement.value.closeDate);
+    const [publishDate, publishTime] = extractDateAndTime(
+      announcement.value.publishDate
+    );
+    const [closeDate, closeTime] = extractDateAndTime(
+      announcement.value.closeDate
+    );
 
-        Object.assign(originalAnnouncementData, {
-            announcementTitle: announcement.value.announcementTitle,
-            announcementDescription: announcement.value.announcementDescription,
-            announcementCategory: categories.value.find(
-                (e) => e.categoryName === announcement.value.announcementCategory
-            ).id,
-            publishDate,
-            publishTime,
-            closeDate,
-            closeTime,
-            display: announcement.value.announcementDisplay === 'Y',
-        });
+    Object.assign(originalAnnouncementData, {
+      announcementTitle: announcement.value.announcementTitle,
+      announcementDescription: announcement.value.announcementDescription,
+      announcementCategory: categories.value.find(
+        (e) => e.categoryName === announcement.value.announcementCategory
+      ).id,
+      publishDate,
+      publishTime,
+      closeDate,
+      closeTime,
+      display: announcement.value.announcementDisplay === "Y",
+    });
 
-        Object.assign(newAnnouncementData, originalAnnouncementData);
-    }
+    Object.assign(newAnnouncementData, originalAnnouncementData);
+  }
 };
 
-
 const checkUpdate = computed(() => {
-    if (router.name === 'UpdateAnnouncement') {
-        return JSON.stringify(newAnnouncementData) !== JSON.stringify(originalAnnouncementData);
-    } else {
-        return (
-            newAnnouncementData.announcementTitle.trim().length > 0 &&
-            newAnnouncementData.announcementDescription.trim().length > 0
-        );
-    }
+  if (router.name === "UpdateAnnouncement") {
+    return (
+      JSON.stringify(newAnnouncementData) !==
+      JSON.stringify(originalAnnouncementData)
+    );
+  } else {
+    return (
+      newAnnouncementData.announcementTitle.trim().length > 0 &&
+      newAnnouncementData.announcementDescription.trim().length > 0
+    );
+  }
 });
-
 
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
-
 });
 
 onMounted(async () => {
   // await fetchAnnouncement();
 });
+
+const getPreviousPage = () => {
+  // router.push({ name: "Announcements" });
+  // if (router.name === "UpdateAnnouncement") {
+  //   router.push({ name: "DetailPage", params: { id: router.params.id } });
+  // } else {
+  //   router.push({ name: "Announcements" });
+  // }
+};
 </script>
 
 <template>
   <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
 
   <PageTemplate class="my-10">
-    <AnnouncementCard :viewComponent="false">
+    <AnnouncementCard
+      :viewComponent="false"
+      @routerPage="
+        router.name === 'UpdateAnnouncement'
+          ? $router.push(`/admin/announcement/${router.params.id}`)
+          : $router.push('/admin/announcement')
+      "
+    >
       <template #title>
         <div class="text-[#336699]">Title</div>
         <input
@@ -223,16 +248,16 @@ onMounted(async () => {
     </AnnouncementCard>
 
     <div class="flex row gap-5 justify-end mt-10">
-        <button
-            class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded"
-            @click="
-        router.name === 'UpdateAnnouncement'
-        ? $router.push(`/admin/announcement/${router.params.id}`)
-        : $router.push('/admin/announcement')
-    "
-        >
-            Cancel
-        </button>
+      <button
+        class="w-48 bg-[#EF4444] text-white text-xl p-3 rounded"
+        @click="
+          router.name === 'UpdateAnnouncement'
+            ? $router.push(`/admin/announcement/${router.params.id}`)
+            : $router.push('/admin/announcement')
+        "
+      >
+        Cancel
+      </button>
       <button
         @click="submitAnnouncement"
         :disabled="!checkUpdate"
