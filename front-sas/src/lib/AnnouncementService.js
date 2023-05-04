@@ -90,7 +90,7 @@ class AnnouncementService {
       );
       if (response.ok) {
         // return await response.json();
-        console.log("Delete Successfully !");
+        // console.log("Delete Successfully !");
       } else {
         return Promise.reject(response.statusText);
       }
@@ -100,13 +100,16 @@ class AnnouncementService {
   }
   async updateAnnouncement(id, announcementData) {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/announcements/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(announcementData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/announcements/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(announcementData),
+        }
+      );
       if (response.ok) {
         return await response.json();
       } else {
@@ -116,8 +119,5 @@ class AnnouncementService {
       console.error(`ERROR UPDATING ANNOUNCEMENT: ${error.message}`);
     }
   }
-
-
-
 }
 export default AnnouncementService;
