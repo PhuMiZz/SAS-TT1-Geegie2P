@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import sit.int221.announcementsystem.dtos.AnnouncementsViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.entities.Category;
-import sit.int221.announcementsystem.exceptions.BadRequest;
-import sit.int221.announcementsystem.exceptions.InvalidAnnouncementIdException;
+import sit.int221.announcementsystem.exceptions.BadRequestException;
+
 import sit.int221.announcementsystem.services.AnnouncementService;
 import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
@@ -34,14 +34,12 @@ public class AnnouncementController {
     @Autowired
     private CategoryService categoryService;
     @Autowired
-    private ListMapper listMapper;
-    @Autowired
     private ModelMapper modelMapper;
 
     @GetMapping("/announcements")
     public List<AnnouncementsViewDto> getAnnouncements() {
         List<Announcement> announcements = announcementService.getAnnouncements();
-        return listMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper);
+        return ListMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper);
     }
 
     @GetMapping("/announcements/{id}")
@@ -50,19 +48,9 @@ public class AnnouncementController {
             int announcementId = Integer.parseInt(id);
             return modelMapper.map(announcementService.getAnnouncementDetail(announcementId), AnnouncementDetailDto.class);
         } catch (NumberFormatException ex) {
-            throw new InvalidAnnouncementIdException("Invalid announcement ID: " + id);
+            throw new BadRequestException("Invalid announcement ID: " + id);
         }
     }
-//    @GetMapping("/announcements/{id}")
-//    public AnnouncementCreateDto getAnnouncementById(@PathVariable String id) {
-//        try {
-//            int announcementId = Integer.parseInt(id);
-//            return modelMapper.map(announcementService.getAnnouncementDetail(announcementId), AnnouncementCreateDto.class);
-//        }  catch (NumberFormatException ex) {
-//            throw new InvalidAnnouncementIdException("Invalid announcement ID: " + id);
-//        }
-//
-//    }
 
     @PostMapping("/announcements")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
@@ -79,7 +67,7 @@ public class AnnouncementController {
             AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
         } catch (DataIntegrityViolationException e){
-            throw new BadRequest("Not Found");
+            throw new BadRequestException("Announcement not found");
         }
     }
     // Category
@@ -91,8 +79,6 @@ public class AnnouncementController {
     @GetMapping("/categories/find/{categoryName}")
     public Integer findCategoryIdByName(@PathVariable String categoryName) {
             return categoryService.FindCategoryByName(categoryName);
-
-
     }
 
 
