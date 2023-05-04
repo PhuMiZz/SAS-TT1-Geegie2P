@@ -1,44 +1,56 @@
 <script setup>
-import TextDescription from "@/components/UI/molecules/TextDescription.vue";
-import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-import SuccessModal from "../UI/organisms/SuccessModal.vue";
-import OverlayTemplate from "../templates/OverlayTemplate.vue";
-import { watchEffect, ref, reactive, computed, onMounted } from "vue";
-import PageTemplate from "@/components/templates/PageTemplate.vue";
-import { useRoute } from "vue-router";
+import TextDescription from '@/components/UI/molecules/TextDescription.vue';
+import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
+import SuccessModal from '../UI/organisms/SuccessModal.vue';
+import OverlayTemplate from '../templates/OverlayTemplate.vue';
+import { watchEffect, ref, reactive, computed, onMounted } from 'vue';
+import PageTemplate from '@/components/templates/PageTemplate.vue';
+import { useRoute } from 'vue-router';
 import {
   extractDateAndTime,
   getISODateTime,
-} from "@/lib/DateTimeManagement.js";
+} from '@/lib/DateTimeManagement.js';
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
 const router = useRoute();
 const newAnnouncementData = reactive({
-  announcementTitle: "",
-  announcementDescription: "",
+  announcementTitle: '',
+  announcementDescription: '',
   announcementCategory: 1,
-  publishDate: "",
-  publishTime: "",
-  closeDate: "",
-  closeTime: "",
+  publishDate: '',
+  publishTime: '',
+  closeDate: '',
+  closeTime: '',
   display: false,
 });
 const newAnnouncementDataJSON = computed(() =>
   JSON.stringify(newAnnouncementData, null, 2)
 );
-
+const checkUpdate = computed(() => {
+  if (router.name === 'UpdateAnnouncement') {
+    return (
+      JSON.stringify(newAnnouncementData) !==
+      JSON.stringify(originalAnnouncementData)
+    );
+  } else {
+    return (
+      newAnnouncementData.announcementTitle.trim().length > 0 &&
+      newAnnouncementData.announcementDescription.trim().length > 0
+    );
+  }
+});
+const originalAnnouncementData = reactive({});
 const announcement = ref();
+const showModal = ref(false);
+//function
 const updateCheck = () => {
   checkUpdate.value;
 };
-
-const showModal = ref(false);
 const toggleModal = () => {
   showModal.value = !showModal.value;
 };
-
 const submitAnnouncement = async () => {
   const newAnnouncement = {
     announcementTitle: newAnnouncementData.announcementTitle,
@@ -58,10 +70,10 @@ const submitAnnouncement = async () => {
             newAnnouncementData.closeTime
           )
         : null,
-    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+    announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
   };
   try {
-    if (router.name === "UpdateAnnouncement") {
+    if (router.name === 'UpdateAnnouncement') {
       await announcementService.updateAnnouncement(
         router.params.id,
         newAnnouncement
@@ -76,13 +88,13 @@ const submitAnnouncement = async () => {
       toggleModal();
     }
   } catch (error) {
-    console.error("Error submitting announcement:", error);
-    alert("Error submitting announcement, please try again");
+    console.error('Error submitting announcement:', error);
+    alert('Error submitting announcement, please try again');
   }
 };
-const originalAnnouncementData = reactive({});
+
 const fetchAnnouncement = async () => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     const announcementId = router.params.id;
     announcement.value = await announcementService.getAnnouncementDetail(
       announcementId
@@ -105,34 +117,16 @@ const fetchAnnouncement = async () => {
       publishTime,
       closeDate,
       closeTime,
-      display: announcement.value.announcementDisplay === "Y",
+      display: announcement.value.announcementDisplay === 'Y',
     });
 
     Object.assign(newAnnouncementData, originalAnnouncementData);
   }
 };
 
-const checkUpdate = computed(() => {
-  if (router.name === "UpdateAnnouncement") {
-    return (
-      JSON.stringify(newAnnouncementData) !==
-      JSON.stringify(originalAnnouncementData)
-    );
-  } else {
-    return (
-      newAnnouncementData.announcementTitle.trim().length > 0 &&
-      newAnnouncementData.announcementDescription.trim().length > 0
-    );
-  }
-});
-
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
-});
-
-onMounted(async () => {
-  // await fetchAnnouncement();
 });
 </script>
 
