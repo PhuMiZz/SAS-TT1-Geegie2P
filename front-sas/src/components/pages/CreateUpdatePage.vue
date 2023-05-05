@@ -98,21 +98,23 @@ const submitAnnouncement = async () => {
     );
   } else if (
     (newAnnouncementData.publishDate && newAnnouncementData.publishTime) ||
-    (newAnnouncementData.closeDate && newAnnouncementData.closeTime)
+    (newAnnouncementData.closeDate && newAnnouncementData.closeTime) ||
+    (!newAnnouncementData.publishDate && !newAnnouncementData.publishTime) ||
+    (!newAnnouncementData.closeDate && !newAnnouncementData.closeTime)
   ) {
     const newAnnouncement = {
       announcementTitle: newAnnouncementData.announcementTitle,
       announcementDescription: newAnnouncementData.announcementDescription,
       categoryId: newAnnouncementData.announcementCategory,
       publishDate:
-        newAnnouncementData.publishDate || newAnnouncementData.publishTime
+        newAnnouncementData.publishDate && newAnnouncementData.publishTime
           ? getISODateTime(
               newAnnouncementData.publishDate,
               newAnnouncementData.publishTime
             )
           : null,
       closeDate:
-        newAnnouncementData.closeDate || newAnnouncementData.closeTime
+        newAnnouncementData.closeDate && newAnnouncementData.closeTime
           ? getISODateTime(
               newAnnouncementData.closeDate,
               newAnnouncementData.closeTime
