@@ -50,31 +50,34 @@ const checkUpdate = computed(() => {
 // );
 
 //function
-const updateCheck = () => {
-  checkUpdate.value;
-};
-const toggleModal = () => {
-  showModal.value = !showModal.value;
-};
-const createOrUpdateAnnouncement = async (announcement) => {
-  try {
-    if (router.name === 'UpdateAnnouncement') {
-      await announcementService.updateAnnouncement(
-        router.params.id,
-        announcement
-      );
-      // alert("Announcement updated successfully");
-      // window.location = `/admin/announcement/${router.params.id}`;
-      toggleModal();
-    } else {
-      await announcementService.createAnnouncement(announcement);
-      // alert("Announcement created successfully");
-      // window.location = "/admin/announcement";
-      toggleModal();
-    }
-  } catch (error) {
-    console.error('Error submitting announcement:', error);
-    alert('Error submitting announcement, please try again');
+const fetchAnnouncement = async () => {
+  if (router.name === 'UpdateAnnouncement') {
+    const announcementId = router.params.id;
+    announcement.value = await announcementService.getAnnouncementDetail(
+      announcementId
+    );
+
+    const [publishDate, publishTime] = extractDateAndTime(
+      announcement.value.publishDate
+    );
+    const [closeDate, closeTime] = extractDateAndTime(
+      announcement.value.closeDate
+    );
+
+    Object.assign(originalAnnouncementData, {
+      announcementTitle: announcement.value.announcementTitle,
+      announcementDescription: announcement.value.announcementDescription,
+      announcementCategory: categories.value.find(
+        (e) => e.categoryName === announcement.value.announcementCategory
+      ).id,
+      publishDate,
+      publishTime,
+      closeDate,
+      closeTime,
+      display: announcement.value.announcementDisplay === 'Y',
+    });
+
+    Object.assign(newAnnouncementData, originalAnnouncementData);
   }
 };
 const submitAnnouncement = async () => {
@@ -120,36 +123,32 @@ const submitAnnouncement = async () => {
     createOrUpdateAnnouncement(newAnnouncement);
   }
 };
-
-const fetchAnnouncement = async () => {
-  if (router.name === 'UpdateAnnouncement') {
-    const announcementId = router.params.id;
-    announcement.value = await announcementService.getAnnouncementDetail(
-      announcementId
-    );
-
-    const [publishDate, publishTime] = extractDateAndTime(
-      announcement.value.publishDate
-    );
-    const [closeDate, closeTime] = extractDateAndTime(
-      announcement.value.closeDate
-    );
-
-    Object.assign(originalAnnouncementData, {
-      announcementTitle: announcement.value.announcementTitle,
-      announcementDescription: announcement.value.announcementDescription,
-      announcementCategory: categories.value.find(
-        (e) => e.categoryName === announcement.value.announcementCategory
-      ).id,
-      publishDate,
-      publishTime,
-      closeDate,
-      closeTime,
-      display: announcement.value.announcementDisplay === 'Y',
-    });
-
-    Object.assign(newAnnouncementData, originalAnnouncementData);
+const createOrUpdateAnnouncement = async (announcement) => {
+  try {
+    if (router.name === 'UpdateAnnouncement') {
+      await announcementService.updateAnnouncement(
+        router.params.id,
+        announcement
+      );
+      // alert("Announcement updated successfully");
+      // window.location = `/admin/announcement/${router.params.id}`;
+      toggleModal();
+    } else {
+      await announcementService.createAnnouncement(announcement);
+      // alert("Announcement created successfully");
+      // window.location = "/admin/announcement";
+      toggleModal();
+    }
+  } catch (error) {
+    console.error('Error submitting announcement:', error);
+    alert('Error submitting announcement, please try again');
   }
+};
+const updateCheck = () => {
+  checkUpdate.value;
+};
+const toggleModal = () => {
+  showModal.value = !showModal.value;
 };
 
 watchEffect(async () => {

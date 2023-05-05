@@ -5,11 +5,11 @@ const props = defineProps({
     default: false,
   },
 });
-defineEmits(["hideModal", "goPreviousPage"]);
+defineEmits(['hideModal', 'goPreviousPage']);
 </script>
 
 <template>
-  <div class="relative w-full max-w-md max-h-full">
+  <div class="relative w-[90%] md:w-full max-w-md max-h-full">
     <div class="relative rounded-lg shadow bg-[#1e3e5e]">
       <div class="p-6 text-center">
         <svg
@@ -30,8 +30,8 @@ defineEmits(["hideModal", "goPreviousPage"]);
         <h3 class="mb-5 text-lg font-normal text-white">
           {{
             props.createAnnouncement
-              ? "Announcement created successfully"
-              : "Announcement updated successfully"
+              ? 'Announcement created successfully'
+              : 'Announcement updated successfully'
           }}
         </h3>
         <button
