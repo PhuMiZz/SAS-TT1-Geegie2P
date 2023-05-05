@@ -5,11 +5,11 @@ const props = defineProps({
     requied: true,
   },
 });
-defineEmits(["hideModal", "deleteAnnouncement"]);
+defineEmits(['hideModal', 'deleteAnnouncement']);
 </script>
 
 <template>
-  <div class="relative w-full max-w-md max-h-full">
+  <div class="relative w-[90%] md:w-full max-w-md max-h-full">
     <div class="relative rounded-lg shadow bg-[#1e3e5e]">
       <button
         @click="$emit('hideModal')"
@@ -52,13 +52,13 @@ defineEmits(["hideModal", "deleteAnnouncement"]);
         </h3>
         <button
           @click.once="$emit('deleteAnnouncement')"
-          class="text-white bg-[#EF4444] hover:bg-red-800 rounded-lg text-sm px-5 py-2.5 mr-2 ease-linear transition-all duration-150"
+          class="text-white w-full mb-2 md:mb-0 md:w-1/3 bg-[#EF4444] hover:bg-red-800 rounded-lg text-sm px-5 py-2.5 mr-2 ease-linear transition-all duration-150"
         >
           Yes, I'm sure
         </button>
         <button
           @click.once="$emit('hideModal')"
-          class="text-white bg-gray-600 hover:bg-slate-800 rounded-lg text-sm px-5 py-2.5 ease-linear transition-all duration-150"
+          class="text-white w-full md:w-1/3 bg-gray-600 hover:bg-slate-800 rounded-lg text-sm px-5 py-2.5 ease-linear transition-all duration-150"
         >
           No, cancel
         </button>

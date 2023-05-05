@@ -13,8 +13,12 @@ import {
 } from '@/lib/DateTimeManagement.js';
 
 const announcementService = new AnnouncementService();
-const categories = ref([]);
 const router = useRoute();
+const categories = ref([]);
+const currentDate = ref();
+const currentTime = ref();
+const announcement = ref();
+const showModal = ref(false);
 const newAnnouncementData = reactive({
   announcementTitle: '',
   announcementDescription: '',
@@ -25,14 +29,14 @@ const newAnnouncementData = reactive({
   closeTime: '',
   display: false,
 });
-const newAnnouncementDataJSON = computed(() =>
-  JSON.stringify(newAnnouncementData, null, 2)
-);
+const originalAnnouncementData = reactive({});
 const checkUpdate = computed(() => {
   if (router.name === 'UpdateAnnouncement') {
     return (
       JSON.stringify(newAnnouncementData) !==
-      JSON.stringify(originalAnnouncementData)
+        JSON.stringify(originalAnnouncementData) &&
+      newAnnouncementData.announcementTitle.trim().length > 0 &&
+      newAnnouncementData.announcementDescription.trim().length > 0
     );
   } else {
     return (
@@ -41,58 +45,11 @@ const checkUpdate = computed(() => {
     );
   }
 });
-const originalAnnouncementData = reactive({});
-const announcement = ref();
-const showModal = ref(false);
-//function
-const updateCheck = () => {
-  checkUpdate.value;
-};
-const toggleModal = () => {
-  showModal.value = !showModal.value;
-};
-const submitAnnouncement = async () => {
-  const newAnnouncement = {
-    announcementTitle: newAnnouncementData.announcementTitle,
-    announcementDescription: newAnnouncementData.announcementDescription,
-    categoryId: newAnnouncementData.announcementCategory,
-    publishDate:
-      newAnnouncementData.publishDate || newAnnouncementData.publishTime
-        ? getISODateTime(
-            newAnnouncementData.publishDate,
-            newAnnouncementData.publishTime
-          )
-        : null,
-    closeDate:
-      newAnnouncementData.closeDate || newAnnouncementData.closeTime
-        ? getISODateTime(
-            newAnnouncementData.closeDate,
-            newAnnouncementData.closeTime
-          )
-        : null,
-    announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
-  };
-  try {
-    if (router.name === 'UpdateAnnouncement') {
-      await announcementService.updateAnnouncement(
-        router.params.id,
-        newAnnouncement
-      );
-      // alert("Announcement updated successfully");
-      // window.location = `/admin/announcement/${router.params.id}`;
-      toggleModal();
-    } else {
-      await announcementService.createAnnouncement(newAnnouncement);
-      // alert("Announcement created successfully");
-      // window.location = "/admin/announcement";
-      toggleModal();
-    }
-  } catch (error) {
-    console.error('Error submitting announcement:', error);
-    alert('Error submitting announcement, please try again');
-  }
-};
+// const newAnnouncementDataJSON = computed(() =>
+//   JSON.stringify(newAnnouncementData, null, 2)
+// );
 
+//function
 const fetchAnnouncement = async () => {
   if (router.name === 'UpdateAnnouncement') {
     const announcementId = router.params.id;
@@ -123,10 +80,82 @@ const fetchAnnouncement = async () => {
     Object.assign(newAnnouncementData, originalAnnouncementData);
   }
 };
+const submitAnnouncement = async () => {
+  if (
+    (newAnnouncementData.publishDate && !newAnnouncementData.publishTime) ||
+    (!newAnnouncementData.publishDate && newAnnouncementData.publishTime)
+  ) {
+    alert(
+      `please insert ${
+        newAnnouncementData.publishDate ? 'publish time' : 'publish date'
+      }`
+    );
+  } else if (
+    (newAnnouncementData.closeDate && !newAnnouncementData.closeTime) ||
+    (!newAnnouncementData.closeDate && newAnnouncementData.closeTime)
+  ) {
+    alert(
+      `please insert ${
+        newAnnouncementData.closeDate ? 'close time' : 'close date'
+      }`
+    );
+  } else {
+    const newAnnouncement = {
+      announcementTitle: newAnnouncementData.announcementTitle,
+      announcementDescription: newAnnouncementData.announcementDescription,
+      categoryId: newAnnouncementData.announcementCategory,
+      publishDate:
+        newAnnouncementData.publishDate && newAnnouncementData.publishTime
+          ? getISODateTime(
+              newAnnouncementData.publishDate,
+              newAnnouncementData.publishTime
+            )
+          : null,
+      closeDate:
+        newAnnouncementData.closeDate && newAnnouncementData.closeTime
+          ? getISODateTime(
+              newAnnouncementData.closeDate,
+              newAnnouncementData.closeTime
+            )
+          : null,
+      announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
+    };
+    createOrUpdateAnnouncement(newAnnouncement);
+  }
+};
+const createOrUpdateAnnouncement = async (announcement) => {
+  try {
+    if (router.name === 'UpdateAnnouncement') {
+      await announcementService.updateAnnouncement(
+        router.params.id,
+        announcement
+      );
+      // alert("Announcement updated successfully");
+      // window.location = `/admin/announcement/${router.params.id}`;
+      toggleModal();
+    } else {
+      await announcementService.createAnnouncement(announcement);
+      // alert("Announcement created successfully");
+      // window.location = "/admin/announcement";
+      toggleModal();
+    }
+  } catch (error) {
+    console.error('Error submitting announcement:', error);
+    alert('Error submitting announcement, please try again');
+  }
+};
+const updateCheck = () => {
+  checkUpdate.value;
+};
+const toggleModal = () => {
+  showModal.value = !showModal.value;
+};
 
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
+  currentDate.value = new Date().toISOString().split('T')[0];
+  currentTime.value = new Date().toISOString().split('T')[1].substring(0, 5);
 });
 </script>
 
@@ -150,6 +179,7 @@ watchEffect(async () => {
           type="text"
           placeholder="insert title here..."
           class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
+          maxlength="200"
       /></template>
       <template #description>
         <div class="text-[#336699]">Description</div>
@@ -160,6 +190,7 @@ watchEffect(async () => {
           class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
+          maxlength="10000"
         ></textarea>
       </template>
       <template #detail>
@@ -189,6 +220,12 @@ watchEffect(async () => {
                 id="publishDate"
                 name="publishDate"
                 class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :min="currentDate"
+                :max="
+                  newAnnouncementData.closeDate
+                    ? newAnnouncementData.closeDate
+                    : ''
+                "
               />
               <input
                 @change="updateCheck"
@@ -212,6 +249,11 @@ watchEffect(async () => {
                 id="closeDate"
                 name="closeDate"
                 class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :min="
+                  newAnnouncementData.publishDate
+                    ? newAnnouncementData.publishDate
+                    : currentDate
+                "
               />
               <input
                 @change="updateCheck"
