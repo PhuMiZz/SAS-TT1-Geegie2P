@@ -54,7 +54,11 @@ public class AnnouncementController {
 
     @PostMapping("/announcements")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
-        return announcementService.createAnnouncement(newAnnouncement);
+        try {
+            return announcementService.createAnnouncement(newAnnouncement);
+        } catch (DataIntegrityViolationException e){
+            throw new BadRequestException("Data incorrect");
+        }
     }
 
     @DeleteMapping("/announcements/{id}")
