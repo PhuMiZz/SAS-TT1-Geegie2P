@@ -54,44 +54,64 @@ const toggleModal = () => {
   showModal.value = !showModal.value;
 };
 const submitAnnouncement = async () => {
-  const newAnnouncement = {
-    announcementTitle: newAnnouncementData.announcementTitle,
-    announcementDescription: newAnnouncementData.announcementDescription,
-    categoryId: newAnnouncementData.announcementCategory,
-    publishDate:
-      newAnnouncementData.publishDate || newAnnouncementData.publishTime
-        ? getISODateTime(
-            newAnnouncementData.publishDate,
-            newAnnouncementData.publishTime
-          )
-        : null,
-    closeDate:
-      newAnnouncementData.closeDate || newAnnouncementData.closeTime
-        ? getISODateTime(
-            newAnnouncementData.closeDate,
-            newAnnouncementData.closeTime
-          )
-        : null,
-    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
-  };
-  try {
-    if (router.name === "UpdateAnnouncement") {
-      await announcementService.updateAnnouncement(
-        router.params.id,
-        newAnnouncement
-      );
-      // alert("Announcement updated successfully");
-      // window.location = `/admin/announcement/${router.params.id}`;
-      toggleModal();
-    } else {
-      await announcementService.createAnnouncement(newAnnouncement);
-      // alert("Announcement created successfully");
-      // window.location = "/admin/announcement";
-      toggleModal();
+  if (
+    (newAnnouncementData.publishDate && newAnnouncementData.publishTime) ||
+    (newAnnouncementData.closeDate && newAnnouncementData.closeTime)
+  ) {
+    const newAnnouncement = {
+      announcementTitle: newAnnouncementData.announcementTitle,
+      announcementDescription: newAnnouncementData.announcementDescription,
+      categoryId: newAnnouncementData.announcementCategory,
+      publishDate:
+        newAnnouncementData.publishDate || newAnnouncementData.publishTime
+          ? getISODateTime(
+              newAnnouncementData.publishDate,
+              newAnnouncementData.publishTime
+            )
+          : null,
+      closeDate:
+        newAnnouncementData.closeDate || newAnnouncementData.closeTime
+          ? getISODateTime(
+              newAnnouncementData.closeDate,
+              newAnnouncementData.closeTime
+            )
+          : null,
+      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+    };
+    try {
+      if (router.name === "UpdateAnnouncement") {
+        await announcementService.updateAnnouncement(
+          router.params.id,
+          newAnnouncement
+        );
+        // alert("Announcement updated successfully");
+        // window.location = `/admin/announcement/${router.params.id}`;
+        toggleModal();
+      } else {
+        await announcementService.createAnnouncement(newAnnouncement);
+        // alert("Announcement created successfully");
+        // window.location = "/admin/announcement";
+        toggleModal();
+      }
+    } catch (error) {
+      console.error("Error submitting announcement:", error);
+      alert("Error submitting announcement, please try again");
     }
-  } catch (error) {
-    console.error("Error submitting announcement:", error);
-    alert("Error submitting announcement, please try again");
+  } else if (
+    newAnnouncementData.publishDate ||
+    newAnnouncementData.publishTime
+  ) {
+    alert(
+      `please insert ${
+        newAnnouncementData.publishDate ? "publish time" : "publish date"
+      }`
+    );
+  } else if (newAnnouncementData.closeDate || newAnnouncementData.closeTime) {
+    alert(
+      `please insert ${
+        newAnnouncementData.closeDate ? "close time" : "close date"
+      }`
+    );
   }
 };
 
@@ -152,6 +172,7 @@ watchEffect(async () => {
           type="text"
           placeholder="insert title here..."
           class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
+          maxlength="200"
       /></template>
       <template #description>
         <div class="text-[#336699]">Description</div>
@@ -162,6 +183,7 @@ watchEffect(async () => {
           class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
+          maxlength="10000"
         ></textarea>
       </template>
       <template #detail>
@@ -214,6 +236,7 @@ watchEffect(async () => {
                 id="closeDate"
                 name="closeDate"
                 class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :min="newAnnouncementData.publishDate"
               />
               <input
                 @change="updateCheck"
