@@ -1,37 +1,37 @@
 <script setup>
-import TextDescription from "@/components/UI/molecules/TextDescription.vue";
-import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-import SuccessModal from "../UI/organisms/SuccessModal.vue";
-import OverlayTemplate from "../templates/OverlayTemplate.vue";
-import { watchEffect, ref, reactive, computed, onMounted } from "vue";
-import PageTemplate from "@/components/templates/PageTemplate.vue";
-import { useRoute } from "vue-router";
+import TextDescription from '@/components/UI/molecules/TextDescription.vue';
+import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
+import SuccessModal from '../UI/organisms/SuccessModal.vue';
+import OverlayTemplate from '../templates/OverlayTemplate.vue';
+import { watchEffect, ref, reactive, computed, onMounted } from 'vue';
+import PageTemplate from '@/components/templates/PageTemplate.vue';
+import { useRoute } from 'vue-router';
 import {
   extractDateAndTime,
   getISODateTime,
-} from "@/lib/DateTimeManagement.js";
+} from '@/lib/DateTimeManagement.js';
 
 const announcementService = new AnnouncementService();
-const categories = ref([]);
 const router = useRoute();
+const categories = ref([]);
 const currentDate = ref();
 const currentTime = ref();
+const announcement = ref();
+const showModal = ref(false);
 const newAnnouncementData = reactive({
-  announcementTitle: "",
-  announcementDescription: "",
+  announcementTitle: '',
+  announcementDescription: '',
   announcementCategory: 1,
-  publishDate: "",
-  publishTime: "",
-  closeDate: "",
-  closeTime: "",
+  publishDate: '',
+  publishTime: '',
+  closeDate: '',
+  closeTime: '',
   display: false,
 });
-const newAnnouncementDataJSON = computed(() =>
-  JSON.stringify(newAnnouncementData, null, 2)
-);
+const originalAnnouncementData = reactive({});
 const checkUpdate = computed(() => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     return (
       JSON.stringify(newAnnouncementData) !==
         JSON.stringify(originalAnnouncementData) &&
@@ -45,9 +45,10 @@ const checkUpdate = computed(() => {
     );
   }
 });
-const originalAnnouncementData = reactive({});
-const announcement = ref();
-const showModal = ref(false);
+// const newAnnouncementDataJSON = computed(() =>
+//   JSON.stringify(newAnnouncementData, null, 2)
+// );
+
 //function
 const updateCheck = () => {
   checkUpdate.value;
@@ -55,8 +56,47 @@ const updateCheck = () => {
 const toggleModal = () => {
   showModal.value = !showModal.value;
 };
+const createOrUpdateAnnouncement = async (announcement) => {
+  try {
+    if (router.name === 'UpdateAnnouncement') {
+      await announcementService.updateAnnouncement(
+        router.params.id,
+        announcement
+      );
+      // alert("Announcement updated successfully");
+      // window.location = `/admin/announcement/${router.params.id}`;
+      toggleModal();
+    } else {
+      await announcementService.createAnnouncement(announcement);
+      // alert("Announcement created successfully");
+      // window.location = "/admin/announcement";
+      toggleModal();
+    }
+  } catch (error) {
+    console.error('Error submitting announcement:', error);
+    alert('Error submitting announcement, please try again');
+  }
+};
 const submitAnnouncement = async () => {
   if (
+    (newAnnouncementData.publishDate && !newAnnouncementData.publishTime) ||
+    (!newAnnouncementData.publishDate && newAnnouncementData.publishTime)
+  ) {
+    alert(
+      `please insert ${
+        newAnnouncementData.publishDate ? 'publish time' : 'publish date'
+      }`
+    );
+  } else if (
+    (newAnnouncementData.closeDate && !newAnnouncementData.closeTime) ||
+    (!newAnnouncementData.closeDate && newAnnouncementData.closeTime)
+  ) {
+    alert(
+      `please insert ${
+        newAnnouncementData.closeDate ? 'close time' : 'close date'
+      }`
+    );
+  } else if (
     (newAnnouncementData.publishDate && newAnnouncementData.publishTime) ||
     (newAnnouncementData.closeDate && newAnnouncementData.closeTime)
   ) {
@@ -78,47 +118,14 @@ const submitAnnouncement = async () => {
               newAnnouncementData.closeTime
             )
           : null,
-      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+      announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
     };
-    try {
-      if (router.name === "UpdateAnnouncement") {
-        await announcementService.updateAnnouncement(
-          router.params.id,
-          newAnnouncement
-        );
-        // alert("Announcement updated successfully");
-        // window.location = `/admin/announcement/${router.params.id}`;
-        toggleModal();
-      } else {
-        await announcementService.createAnnouncement(newAnnouncement);
-        // alert("Announcement created successfully");
-        // window.location = "/admin/announcement";
-        toggleModal();
-      }
-    } catch (error) {
-      console.error("Error submitting announcement:", error);
-      alert("Error submitting announcement, please try again");
-    }
-  } else if (
-    newAnnouncementData.publishDate ||
-    newAnnouncementData.publishTime
-  ) {
-    alert(
-      `please insert ${
-        newAnnouncementData.publishDate ? "publish time" : "publish date"
-      }`
-    );
-  } else if (newAnnouncementData.closeDate || newAnnouncementData.closeTime) {
-    alert(
-      `please insert ${
-        newAnnouncementData.closeDate ? "close time" : "close date"
-      }`
-    );
+    createOrUpdateAnnouncement(newAnnouncement);
   }
 };
 
 const fetchAnnouncement = async () => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     const announcementId = router.params.id;
     announcement.value = await announcementService.getAnnouncementDetail(
       announcementId
@@ -141,7 +148,7 @@ const fetchAnnouncement = async () => {
       publishTime,
       closeDate,
       closeTime,
-      display: announcement.value.announcementDisplay === "Y",
+      display: announcement.value.announcementDisplay === 'Y',
     });
 
     Object.assign(newAnnouncementData, originalAnnouncementData);
@@ -151,8 +158,8 @@ const fetchAnnouncement = async () => {
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
-  currentDate.value = new Date().toISOString().split("T")[0];
-  currentTime.value = new Date().toISOString().split("T")[1].substring(0, 5);
+  currentDate.value = new Date().toISOString().split('T')[0];
+  currentTime.value = new Date().toISOString().split('T')[1].substring(0, 5);
 });
 </script>
 
