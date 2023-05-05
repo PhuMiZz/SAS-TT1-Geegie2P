@@ -96,12 +96,7 @@ const submitAnnouncement = async () => {
         newAnnouncementData.closeDate ? 'close time' : 'close date'
       }`
     );
-  } else if (
-    (newAnnouncementData.publishDate && newAnnouncementData.publishTime) ||
-    (newAnnouncementData.closeDate && newAnnouncementData.closeTime) ||
-    (!newAnnouncementData.publishDate && !newAnnouncementData.publishTime) ||
-    (!newAnnouncementData.closeDate && !newAnnouncementData.closeTime)
-  ) {
+  } else {
     const newAnnouncement = {
       announcementTitle: newAnnouncementData.announcementTitle,
       announcementDescription: newAnnouncementData.announcementDescription,
