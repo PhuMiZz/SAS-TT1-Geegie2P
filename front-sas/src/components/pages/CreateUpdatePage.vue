@@ -4,7 +4,7 @@ import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
 import AnnouncementService from '@/lib/AnnouncementService.js';
 import SuccessModal from '../UI/organisms/SuccessModal.vue';
 import OverlayTemplate from '../templates/OverlayTemplate.vue';
-import { watchEffect, ref, reactive, computed, onMounted } from 'vue';
+import { watchEffect, ref, reactive, computed } from 'vue';
 import PageTemplate from '@/components/templates/PageTemplate.vue';
 import { useRoute } from 'vue-router';
 import {
@@ -120,7 +120,7 @@ const submitAnnouncement = async () => {
           : null,
       announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
     };
-    createOrUpdateAnnouncement(newAnnouncement);
+    await createOrUpdateAnnouncement(newAnnouncement);
   }
 };
 const createOrUpdateAnnouncement = async (announcement) => {

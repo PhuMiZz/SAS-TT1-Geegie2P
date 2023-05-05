@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("${CORS_ORIGIN:http://localhost:5173}")
 public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
