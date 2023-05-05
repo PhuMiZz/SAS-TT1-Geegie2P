@@ -15,6 +15,8 @@ import {
 const announcementService = new AnnouncementService();
 const categories = ref([]);
 const router = useRoute();
+const currentDate = ref();
+const currentTime = ref();
 const newAnnouncementData = reactive({
   announcementTitle: "",
   announcementDescription: "",
@@ -149,6 +151,8 @@ const fetchAnnouncement = async () => {
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
+  currentDate.value = new Date().toISOString().split("T")[0];
+  currentTime.value = new Date().toISOString().split("T")[1].substring(0, 5);
 });
 </script>
 
@@ -213,6 +217,12 @@ watchEffect(async () => {
                 id="publishDate"
                 name="publishDate"
                 class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :min="currentDate"
+                :max="
+                  newAnnouncementData.closeDate
+                    ? newAnnouncementData.closeDate
+                    : ''
+                "
               />
               <input
                 @change="updateCheck"
@@ -236,7 +246,11 @@ watchEffect(async () => {
                 id="closeDate"
                 name="closeDate"
                 class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
-                :min="newAnnouncementData.publishDate"
+                :min="
+                  newAnnouncementData.publishDate
+                    ? newAnnouncementData.publishDate
+                    : currentDate
+                "
               />
               <input
                 @change="updateCheck"
