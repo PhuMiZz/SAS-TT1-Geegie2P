@@ -1,8 +1,8 @@
 <script setup>
-import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
-import EditIcon from "../UI/atoms/EditIcon.vue";
-import BackIcon from "../UI/atoms/BackIcon.vue";
-import { useRouter } from "vue-router";
+import DeleteIcon from '../UI/atoms/DeleteIcon.vue';
+import EditIcon from '../UI/atoms/EditIcon.vue';
+import BackIcon from '../UI/atoms/BackIcon.vue';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const props = defineProps({
@@ -22,12 +22,12 @@ const props = defineProps({
 
 const editAnnouncement = () => {
   router.push({
-    name: "UpdateAnnouncement",
+    name: 'UpdateAnnouncement',
     params: { id: props.announcementId },
   });
 };
 
-defineEmits(["routerPage"]);
+defineEmits(['routerPage']);
 </script>
 
 <template>
@@ -42,9 +42,9 @@ defineEmits(["routerPage"]);
     </button>
 
     <button
+      v-if="viewComponent"
       @click="editAnnouncement"
-      :class="viewComponent ? '' : 'hidden'"
-      class="flex gap-2 bg-[#F59E0B] hover:bg-[#d68d0e] active:bg-[#d68d0e] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
+      class="ann-button flex gap-2 bg-[#F59E0B] hover:bg-[#d68d0e] active:bg-[#d68d0e] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
     >
       <EditIcon /> Edit
     </button>

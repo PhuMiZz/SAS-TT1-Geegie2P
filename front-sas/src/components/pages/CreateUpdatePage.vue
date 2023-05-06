@@ -53,6 +53,7 @@ const checkUpdate = computed(() => {
 const fetchAnnouncement = async () => {
   if (router.name === 'UpdateAnnouncement') {
     const announcementId = router.params.id;
+
     announcement.value = await announcementService.getAnnouncementDetail(
       announcementId
     );
@@ -120,6 +121,17 @@ const submitAnnouncement = async () => {
           : null,
       announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
     };
+    console.log(newAnnouncement);
+    console.log(
+      Boolean(
+        newAnnouncementData.publishDate && newAnnouncementData.publishTime
+      )
+        ? getISODateTime(
+            newAnnouncementData.publishDate,
+            newAnnouncementData.publishTime
+          )
+        : null
+    );
     await createOrUpdateAnnouncement(newAnnouncement);
   }
 };
@@ -141,7 +153,7 @@ const createOrUpdateAnnouncement = async (announcement) => {
     }
   } catch (error) {
     console.error('Error submitting announcement:', error);
-    alert('Error submitting announcement, please try again');
+    alert('There is an error');
   }
 };
 const updateCheck = () => {
@@ -178,8 +190,7 @@ watchEffect(async () => {
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
-          class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
-          maxlength="200"
+          class="ann-title w-full md:w-96 rounded-lg p-1 text-[#404040]"
       /></template>
       <template #description>
         <div class="text-[#336699]">Description</div>
@@ -190,7 +201,6 @@ watchEffect(async () => {
           class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
-          maxlength="10000"
         ></textarea>
       </template>
       <template #detail>
@@ -198,7 +208,7 @@ watchEffect(async () => {
           <template #header>Category</template>
           <template #default>
             <select
-              class="bg-[#FAFAFA] p-1 h-9 w-full rounded-lg text-[#404040]"
+              class="ann-category bg-[#FAFAFA] p-1 h-9 w-full rounded-lg text-[#404040]"
               v-model="newAnnouncementData.announcementCategory"
               @change="updateCheck"
             >
@@ -209,7 +219,7 @@ watchEffect(async () => {
           >
         </TextDescription>
 
-        <TextDescription class="ann-publish-date flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap xl:flex-nowrap">
           <template #header>Publish Date</template>
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
@@ -238,7 +248,7 @@ watchEffect(async () => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="ann-close-date flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap xl:flex-nowrap">
           <template #header>Close Date</template>
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
@@ -266,7 +276,7 @@ watchEffect(async () => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="ann-display flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap xl:flex-nowrap">
           <template #header>Display</template>
           <template #default
             ><div class="flex gap-x-2">
@@ -276,6 +286,7 @@ watchEffect(async () => {
                 type="checkbox"
                 name="display"
                 id="display"
+                class="ann-display"
               />
               <label
                 for="display"
@@ -291,7 +302,7 @@ watchEffect(async () => {
 
     <div class="flex row gap-5 justify-end mt-10">
       <button
-        class="w-48 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white text-xl p-3 rounded ease-linear transition-all duration-150"
+        class="ann-button w-48 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white text-xl p-3 rounded ease-linear transition-all duration-150"
         @click="
           router.name === 'UpdateAnnouncement'
             ? $router.push(`/admin/announcement/${router.params.id}`)
@@ -303,7 +314,7 @@ watchEffect(async () => {
       <button
         @click="submitAnnouncement"
         :disabled="!checkUpdate"
-        class="w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
+        class="ann-button w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
         v-if="router.name !== 'UpdateAnnouncement'"
       >
         Submit
@@ -311,10 +322,10 @@ watchEffect(async () => {
       <button
         @click="submitAnnouncement"
         :disabled="!checkUpdate"
-        class="w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
+        class="ann-button w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
         v-else
       >
-        Edit
+        Update
       </button>
     </div>
   </PageTemplate>
