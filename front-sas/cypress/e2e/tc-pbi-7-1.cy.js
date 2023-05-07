@@ -57,7 +57,7 @@ describe('TC-UPDATE-ANNOUNCEMENT-1: normal - update title and description', () =
         cy.get('.ann-button').contains('edit',{matchCase: false}).click()
 
         cy.wait(200)
-        cy.get('.ann-button').contains(/submit|save|update|add|edit/g,{matchCase: false}).as('ann-submit')
+        cy.get('.ann-button').contains('submit',{matchCase: false}).as('ann-submit')
         cy.get('@ann-submit').should('be.disabled')
     })
 
@@ -118,6 +118,7 @@ describe('TC-UPDATE-ANNOUNCEMENT-1: normal - update title and description', () =
         cy.get('.ann-button').contains(/submit|save|update|add|edit/g,{matchCase: false}).as('ann-submit')
         cy.get('@ann-submit').should('be.enabled')
         cy.get('@ann-submit').click()
+        cy.wait(200)
     })
 
     it('should show the updated data in both listing and detail page .',()=>{

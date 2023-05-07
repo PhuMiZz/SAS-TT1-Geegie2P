@@ -43,13 +43,13 @@ function getISODateTime(date, time) {
 //
 //   return [dateFormat, time];
 // }
+
 function extractDateAndTime(dateTime) {
   if (!dateTime) return ['', ''];
 
   const gmtString = new Date(dateTime);
 
-  const userLocale = navigator.language || 'en-GB';
-  const formattedDateTime = new Intl.DateTimeFormat(userLocale, {
+  const formattedDateTime = new Intl.DateTimeFormat('en-GB', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -57,10 +57,9 @@ function extractDateAndTime(dateTime) {
     minute: '2-digit',
     hour12: false,
   }).format(gmtString);
-
-  const date = formattedDateTime.split(',')[0].replace(/\//g, '-');
+  const splitDate = formattedDateTime.split(',')[0].split('/')
+  const date = `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}`
   const time = formattedDateTime.split(',')[1].trim().substring(0, 5);
-
   return [date, time];
 }
 
