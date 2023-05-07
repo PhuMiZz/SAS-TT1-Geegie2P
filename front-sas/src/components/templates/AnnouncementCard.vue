@@ -57,30 +57,27 @@ defineEmits(['routerPage']);
   </div>
 
   <!-- Detail -->
+
   <div
-    class="ann-item flex flex-col bg-[#F5F5F5] w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 text-2xl items-center xl:h-full"
+    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-full"
   >
-    <div
-      class="flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-full"
-    >
-      <div class="w-full h-full flex flex-col gap-y-5 md:w-3/5">
-        <slot name="title"></slot>
-        <!-- <div class="order-3">
-          <slot name="description"></slot>
-        </div> -->
-      </div>
-      <div
-        class="w-full md:w-3/5 xl:w-3/5 h-full p-5 rounded-xl bg-[#E5E5E5] xl:self-start"
-      >
-        <slot name="detail"></slot>
+    <div class="w-full h-full flex flex-col gap-y-5 md:w-3/5">
+      <slot name="title"></slot>
+      <div class="">
+        <slot name="description"></slot>
       </div>
     </div>
     <div
+      class="w-full md:w-3/5 xl:w-3/5 h-full p-5 rounded-xl bg-[#E5E5E5] xl:self-start"
+    >
+      <slot name="detail"></slot>
+    </div>
+  </div>
+  <!-- <div
       class="w-full break-words h-full flex flex-col gap-y-5 md:px-10 md:break-keep"
     >
       <slot name="description"></slot>
-    </div>
-  </div>
+    </div> -->
 </template>
 
 <style scoped></style>

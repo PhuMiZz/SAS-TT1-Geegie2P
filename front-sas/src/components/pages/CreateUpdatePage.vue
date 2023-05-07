@@ -1,16 +1,16 @@
 <script setup>
-import TextDescription from "@/components/UI/molecules/TextDescription.vue";
-import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-import SuccessModal from "../UI/organisms/SuccessModal.vue";
-import OverlayTemplate from "../templates/OverlayTemplate.vue";
-import { watchEffect, ref, reactive, computed } from "vue";
-import PageTemplate from "@/components/templates/PageTemplate.vue";
-import { useRoute } from "vue-router";
+import TextDescription from '@/components/UI/molecules/TextDescription.vue';
+import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
+import SuccessModal from '../UI/organisms/SuccessModal.vue';
+import OverlayTemplate from '../templates/OverlayTemplate.vue';
+import { watchEffect, ref, reactive, computed } from 'vue';
+import PageTemplate from '@/components/templates/PageTemplate.vue';
+import { useRoute } from 'vue-router';
 import {
   extractDateAndTime,
   getISODateTime,
-} from "@/lib/DateTimeManagement.js";
+} from '@/lib/DateTimeManagement.js';
 
 const announcementService = new AnnouncementService();
 const router = useRoute();
@@ -20,18 +20,18 @@ const categories = ref([]);
 const announcement = ref();
 const showModal = ref(false);
 const newAnnouncementData = reactive({
-  announcementTitle: "",
-  announcementDescription: "",
+  announcementTitle: '',
+  announcementDescription: '',
   announcementCategory: 1,
-  publishDate: "",
-  publishTime: "",
-  closeDate: "",
-  closeTime: "",
+  publishDate: '',
+  publishTime: '',
+  closeDate: '',
+  closeTime: '',
   display: false,
 });
 const originalAnnouncementData = reactive({});
 const checkUpdate = computed(() => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     return (
       JSON.stringify(newAnnouncementData) !==
         JSON.stringify(originalAnnouncementData) &&
@@ -51,7 +51,7 @@ const checkUpdate = computed(() => {
 
 //function
 const fetchAnnouncement = async () => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     const announcementId = router.params.id;
 
     announcement.value = await announcementService.getAnnouncementDetail(
@@ -75,7 +75,7 @@ const fetchAnnouncement = async () => {
       publishTime,
       closeDate,
       closeTime,
-      display: announcement.value.announcementDisplay === "Y",
+      display: announcement.value.announcementDisplay === 'Y',
     });
 
     Object.assign(newAnnouncementData, originalAnnouncementData);
@@ -88,7 +88,7 @@ const submitAnnouncement = async () => {
   ) {
     alert(
       `please insert ${
-        newAnnouncementData.publishDate ? "publish time" : "publish date"
+        newAnnouncementData.publishDate ? 'publish time' : 'publish date'
       }`
     );
   } else if (
@@ -97,7 +97,7 @@ const submitAnnouncement = async () => {
   ) {
     alert(
       `please insert ${
-        newAnnouncementData.closeDate ? "close time" : "close date"
+        newAnnouncementData.closeDate ? 'close time' : 'close date'
       }`
     );
   } else {
@@ -113,14 +113,14 @@ const submitAnnouncement = async () => {
         newAnnouncementData.closeDate,
         newAnnouncementData.closeTime
       ),
-      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+      announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
     };
     await createOrUpdateAnnouncement(newAnnouncement);
   }
 };
 const createOrUpdateAnnouncement = async (announcement) => {
   try {
-    if (router.name === "UpdateAnnouncement") {
+    if (router.name === 'UpdateAnnouncement') {
       await announcementService.updateAnnouncement(
         router.params.id,
         announcement
@@ -135,8 +135,8 @@ const createOrUpdateAnnouncement = async (announcement) => {
       toggleModal();
     }
   } catch (error) {
-    console.error("Error submitting announcement:", error);
-    alert("There is an error");
+    console.error('Error submitting announcement:', error);
+    alert('There is an error');
   }
 };
 const updateCheck = () => {
@@ -173,7 +173,7 @@ watchEffect(async () => {
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
-          class="ann-title w-full md:w-96 rounded-lg p-1 text-[#404040]"
+          class="ann-title w-full rounded-lg p-1 text-[#404040]"
       /></template>
       <template #description>
         <div class="text-[#336699]">Description</div>
@@ -181,7 +181,7 @@ watchEffect(async () => {
           @input="updateCheck"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
-          class="ann-description w-full md:w-96 rounded-lg p-1 text-[#404040]"
+          class="ann-description w-full rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
         ></textarea>
