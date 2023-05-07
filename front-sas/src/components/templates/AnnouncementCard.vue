@@ -1,8 +1,8 @@
 <script setup>
-import DeleteIcon from '../UI/atoms/DeleteIcon.vue';
-import EditIcon from '../UI/atoms/EditIcon.vue';
-import BackIcon from '../UI/atoms/BackIcon.vue';
-import { useRouter } from 'vue-router';
+import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
+import EditIcon from "../UI/atoms/EditIcon.vue";
+import BackIcon from "../UI/atoms/BackIcon.vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const props = defineProps({
@@ -22,12 +22,12 @@ const props = defineProps({
 
 const editAnnouncement = () => {
   router.push({
-    name: 'UpdateAnnouncement',
+    name: "UpdateAnnouncement",
     params: { id: props.announcementId },
   });
 };
 
-defineEmits(['routerPage']);
+defineEmits(["routerPage"]);
 </script>
 
 <template>
@@ -58,7 +58,7 @@ defineEmits(['routerPage']);
 
   <!-- Detail -->
   <div
-    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-96"
+    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-full"
   >
     <div class="w-full h-full flex flex-col gap-y-5 md:w-3/5">
       <slot name="title"></slot>
@@ -66,7 +66,9 @@ defineEmits(['routerPage']);
         <slot name="description"></slot>
       </div>
     </div>
-    <div class="w-full md:w-3/5 xl:w-3/5 h-full p-5 rounded-xl bg-[#E5E5E5]">
+    <div
+      class="w-full md:w-3/5 xl:w-3/5 h-full p-5 rounded-xl bg-[#E5E5E5] xl:self-start"
+    >
       <slot name="detail"></slot>
     </div>
   </div>
