@@ -47,7 +47,6 @@ describe('TC-CREATE-ANNOUNCEMENT-2: nomal - at boundary data', () => {
         cy.get('@ann-1').get('.ann-publish-date').contains('6:00')
         cy.get('@ann-1').get('.ann-close-date').contains('-')
         cy.get('@ann-1').get('.ann-display').contains('N')
-
     })
   });
   

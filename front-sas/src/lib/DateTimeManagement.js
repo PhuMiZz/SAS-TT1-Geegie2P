@@ -58,7 +58,8 @@ function extractDateAndTime(dateTime) {
     hour12: false,
   }).format(gmtString);
   const splitDate = formattedDateTime.split(',')[0].split('/')
-  const date = `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}`
+  console.log(splitDate)
+  const date = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
   const time = formattedDateTime.split(',')[1].trim().substring(0, 5);
   return [date, time];
 }
