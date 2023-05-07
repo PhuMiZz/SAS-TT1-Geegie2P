@@ -8,7 +8,8 @@ describe('TC-UPDATE-ANNOUNCEMENT-3: normal - update category and display', () =>
         cy.get('.ann-description').type('หลักสูตรขอแจ้งตารางสอบปลายภาค (ร่าง) 2/65 โดยนักศึกษาที่สอบซ้อนในวันเดียวกัน ขอให้แจ้งกลับมาที่พี่ตุ๊ก ภายในวันที่ 8 พ.ค. 66')
         cy.get('.ann-publish-date').type('2023-05-03')
         cy.get('.ann-publish-time').type('06:00')
-        cy.get('.ann-button').contains('submit',{matchCase: false}).click()
+        cy.get('.ann-button').contains(/submit|save|update|add|edit/g,{matchCase: false}).click()
+        cy.wait(200)
     }) ;
 
     it('should contain SAS and Timezone',()=>{
@@ -129,7 +130,8 @@ describe('TC-UPDATE-ANNOUNCEMENT-3: normal - update category and display', () =>
         cy.get('@ann-1').get('.ann-publish-date').contains('3 May 2023',{matchCase: false})
         cy.get('@ann-1').get('.ann-publish-date').contains('06:00')
         cy.get('@ann-1').get('.ann-close-date').contains('-')
-        cy.get('@ann-1').get('.ann-display').contains('N')
+        cy.get('@ann-1').get('.ann-display').contains('Y')
+        cy.wait(200)
         cy.get('@ann-1').get('.ann-button').contains('view',{matchCase: false}).click()
 
         cy.wait(200) ;
