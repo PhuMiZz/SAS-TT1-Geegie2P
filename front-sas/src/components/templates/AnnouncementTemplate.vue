@@ -23,7 +23,7 @@ const props = defineProps({
       <slot name="announcementNo"></slot>
     </div>
     <div
-      class="flex w-full basis-full pt-3 px-3 gap-10 scrollbar-hide xl:overflow-auto xl:max-h-full xl:gap-0 xl:p-0 xl:w-1/3 text-xl xl:justify-start"
+      class="flex w-full basis-full pt-3 px-3 gap-10 scrollbar-hide xl:overflow-auto xl:max-h-full xl:gap-0 xl:py-3 xl:w-1/3 text-xl xl:justify-start"
     >
       <slot name="title"></slot>
     </div>
