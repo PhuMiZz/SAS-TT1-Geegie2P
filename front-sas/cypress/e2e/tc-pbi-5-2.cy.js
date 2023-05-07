@@ -34,6 +34,7 @@ describe('TC-CREATE-ANNOUNCEMENT-2: nomal - at boundary data', () => {
         cy.get('.ann-publish-date').type('2023-05-08')
         cy.get('.ann-publish-time').type('06:00')
         cy.get('.ann-button').contains('submit',{matchCase: false}).click()
+        cy.wait(200)
     })
 
     it('should show the new announcement "AAAAAAAA-BBBBBBBB-CCCCCCCC-....."',()=>{
@@ -46,6 +47,7 @@ describe('TC-CREATE-ANNOUNCEMENT-2: nomal - at boundary data', () => {
         cy.get('@ann-1').get('.ann-publish-date').contains('6:00')
         cy.get('@ann-1').get('.ann-close-date').contains('-')
         cy.get('@ann-1').get('.ann-display').contains('N')
+
     })
   });
   
