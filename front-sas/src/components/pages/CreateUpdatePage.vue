@@ -287,8 +287,17 @@ watchEffect(async () => {
         @click="submitAnnouncement"
         :disabled="!checkUpdate"
         class="ann-button w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
+        v-if="router.name !== 'UpdateAnnouncement'"
       >
         Submit
+      </button>
+      <button
+        @click="submitAnnouncement"
+        :disabled="!checkUpdate"
+        class="ann-button w-48 bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D] text-white text-xl p-3 rounded disabled:opacity-50 disabled:hover:bg-[#22C55E] ease-linear transition-all duration-150"
+        v-else
+      >
+        Update
       </button>
     </div>
   </PageTemplate>
