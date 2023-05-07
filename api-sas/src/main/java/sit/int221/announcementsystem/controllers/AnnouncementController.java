@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("${CORS_ORIGIN:http://localhost:5173}")
 public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
@@ -54,7 +54,11 @@ public class AnnouncementController {
 
     @PostMapping("/announcements")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
-        return announcementService.createAnnouncement(newAnnouncement);
+        try {
+            return announcementService.createAnnouncement(newAnnouncement);
+        } catch (DataIntegrityViolationException e){
+            throw new BadRequestException("Data incorrect");
+        }
     }
 
     @DeleteMapping("/announcements/{id}")

@@ -38,8 +38,7 @@ watchEffect(async () => {
       :announcementDetail="announcementDetail"
       @routerPage="$router.push('/admin/announcement')"
     >
-      <template #title
-        ><div class="ann-title text-3xl">
+      <template #title><div class="ann-title text-3xl">
           {{ announcementDetail.announcementTitle }}
         </div></template
       >
