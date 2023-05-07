@@ -105,33 +105,10 @@ const submitAnnouncement = async () => {
       announcementTitle: newAnnouncementData.announcementTitle,
       announcementDescription: newAnnouncementData.announcementDescription,
       categoryId: newAnnouncementData.announcementCategory,
-      publishDate:
-        newAnnouncementData.publishDate && newAnnouncementData.publishTime
-          ? getISODateTime(
-              newAnnouncementData.publishDate,
-              newAnnouncementData.publishTime
-            )
-          : null,
-      closeDate:
-        newAnnouncementData.closeDate && newAnnouncementData.closeTime
-          ? getISODateTime(
-              newAnnouncementData.closeDate,
-              newAnnouncementData.closeTime
-            )
-          : null,
+      publishDate: getISODateTime(newAnnouncementData.publishDate, newAnnouncementData.publishTime),
+      closeDate: getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime),
       announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
     };
-    console.log(newAnnouncement);
-    console.log(
-      Boolean(
-        newAnnouncementData.publishDate && newAnnouncementData.publishTime
-      )
-        ? getISODateTime(
-            newAnnouncementData.publishDate,
-            newAnnouncementData.publishTime
-          )
-        : null
-    );
     await createOrUpdateAnnouncement(newAnnouncement);
   }
 };

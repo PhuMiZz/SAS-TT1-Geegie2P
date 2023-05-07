@@ -13,12 +13,16 @@ function getLocaleDateTime(dateTime) {
 }
 
 function getISODateTime(date, time) {
+  if (!date || !time) return null;
+
   const format = `${date}T${time}`;
   const newDate = new Date(format);
+
   return newDate.toISOString();
 }
 
-// function extractDateAndTime(dateTime) {
+
+// function extractDateAndTime2(dateTime) {
 //   if (!dateTime) return ['', ''];
 //
 //   const gmtString = new Date(dateTime);
