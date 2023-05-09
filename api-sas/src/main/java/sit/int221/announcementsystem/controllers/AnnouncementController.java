@@ -3,17 +3,19 @@ package sit.int221.announcementsystem.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
-import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateViewDto;
-import sit.int221.announcementsystem.dtos.AnnouncementDetailDto;
+import sit.int221.announcementsystem.dtos.*;
 
 import org.springframework.web.bind.annotation.*;
 
-import sit.int221.announcementsystem.dtos.AnnouncementsViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.entities.Category;
 import sit.int221.announcementsystem.exceptions.BadRequestException;
@@ -26,7 +28,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/announcements")
 @CrossOrigin("${CORS_ORIGIN:http://localhost:5173}")
 public class AnnouncementController {
     @Autowired
@@ -35,14 +37,14 @@ public class AnnouncementController {
     private CategoryService categoryService;
     @Autowired
     private ModelMapper modelMapper;
-
-    @GetMapping("/announcements")
+    @Autowired
+    private ListMapper listMapper = ListMapper.getInstance();
+    @GetMapping("")
     public List<AnnouncementsViewDto> getAnnouncements() {
-        List<Announcement> announcements = announcementService.getAnnouncements();
-        return ListMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper);
+        return announcementService.getAnnouncementsViewDtos();
     }
 
-    @GetMapping("/announcements/{id}")
+    @GetMapping("/{id}")
     public AnnouncementDetailDto getAnnouncementDetail(@PathVariable String id) {
         try {
             int announcementId = Integer.parseInt(id);
@@ -52,7 +54,7 @@ public class AnnouncementController {
         }
     }
 
-    @PostMapping("/announcements")
+    @PostMapping("")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
         try {
             return announcementService.createAnnouncement(newAnnouncement);
@@ -61,11 +63,11 @@ public class AnnouncementController {
         }
     }
 
-    @DeleteMapping("/announcements/{id}")
+    @DeleteMapping("/{id}")
     public void deleteAnnouncement(@PathVariable Integer id) {
             announcementService.DeleteAnnouncement(id);
     }
-    @PutMapping("/announcements/{id}")
+    @PutMapping("/{id}")
     public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){
         try {
             AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
@@ -84,6 +86,19 @@ public class AnnouncementController {
     public Integer findCategoryIdByName(@PathVariable String categoryName) {
             return categoryService.FindCategoryByName(categoryName);
     }
+    @GetMapping("/pages")
+    public PageDto<AnnouncementsViewDto> getAnnouncementsPages(
+            @RequestParam(value = "mode", defaultValue = "admin") String mode,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Announcement> announcements = switch (mode.toLowerCase()) {
+            case "admin" -> announcementService.getAdminAnnouncements(pageable);
+            case "closed" -> announcementService.getClosedAnnouncements(pageable);
+            default -> announcementService.getActiveAnnouncements(pageable);
+        };
 
+        return listMapper.toPageDTO(announcements, AnnouncementsViewDto.class, modelMapper);
+    }
 
 }
