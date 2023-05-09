@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import AnnouncementService from "@/lib/AnnouncementService";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementCard from "../templates/AnnouncementCard.vue";
-import TextDescription from "../UI/molecules/TextDescription.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
-import PageTemplate from "../templates/PageTemplate.vue";
+import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import AnnouncementService from '@/lib/AnnouncementService';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementCard from '../templates/AnnouncementCard.vue';
+import TextDescription from '../UI/molecules/TextDescription.vue';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
+import PageTemplate from '../templates/PageTemplate.vue';
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -38,13 +38,14 @@ watchEffect(async () => {
       :announcementDetail="announcementDetail"
       @routerPage="$router.push('/admin/announcement')"
     >
-      <template #title><div class="ann-title text-3xl">
+      <template #title
+        ><div class="ann-title text-3xl">
           {{ announcementDetail.announcementTitle }}
         </div></template
       >
       <template #description>
-        <div class="text-[#336699]">Description</div>
-        <div class="ann-description">
+        <div class="text-[#336699] text-xl">Description</div>
+        <div class="ann-description text-lg">
           {{ announcementDetail.announcementDescription }}
         </div>
       </template>
@@ -60,25 +61,31 @@ watchEffect(async () => {
 
         <TextDescription class="ann-publish-date">
           <template #header>Publish Date</template>
-          {{
-            announcementDetail.publishDate === null
-              ? "-"
-              : getLocaleDateTime(announcementDetail.publishDate)
-          }}
+          <p class="text-lg">
+            {{
+              announcementDetail.publishDate === null
+                ? '-'
+                : getLocaleDateTime(announcementDetail.publishDate)
+            }}
+          </p>
         </TextDescription>
 
         <TextDescription class="ann-close-date">
           <template #header>Close Date</template>
-          {{
-            announcementDetail.closeDate === null
-              ? "-"
-              : getLocaleDateTime(announcementDetail.closeDate)
-          }}
+          <p class="text-lg">
+            {{
+              announcementDetail.closeDate === null
+                ? '-'
+                : getLocaleDateTime(announcementDetail.closeDate)
+            }}
+          </p>
         </TextDescription>
 
         <TextDescription class="ann-display">
           <template #header>Display</template>
-          {{ announcementDetail.announcementDisplay }}
+          <p class="text-lg">
+            {{ announcementDetail.announcementDisplay }}
+          </p>
         </TextDescription>
       </template>
     </AnnouncementCard>

@@ -181,7 +181,7 @@ watchEffect(async () => {
           @input="updateCheck"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
-          class="ann-description w-full rounded-lg p-1 text-[#404040]"
+          class="ann-description w-full rounded-lg p-1 mt-5 text-[#404040]"
           rows="4"
           cols="50"
         ></textarea>
