@@ -80,9 +80,9 @@ public class AnnouncementController {
         return categoryService.getCategories();
     }
 
-    @GetMapping("/categories/find/{categoryName}")
-    public Integer findCategoryIdByName(@PathVariable String categoryName) {
-            return categoryService.FindCategoryByName(categoryName);
+    @GetMapping("/categories/{id}")
+    public List<Announcement> getAnnouncementByCategory(@PathVariable Integer id) {
+           return announcementService.getAnnouncementByCategory(id);
     }
 
 

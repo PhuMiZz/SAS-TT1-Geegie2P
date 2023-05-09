@@ -16,8 +16,4 @@ public class CategoryService {
     public List<Category> getCategories(){
         return repository.findAll();
     }
-
-    public Integer FindCategoryByName(String categoryName){
-        return repository.getCategoryByCategoryName(categoryName).getId();
-    }
 }
