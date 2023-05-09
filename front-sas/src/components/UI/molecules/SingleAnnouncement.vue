@@ -64,21 +64,13 @@ const deleteAnnouncement = async () => {
     <template #publishDate>
       <div class="text-[#737373] w-1/3 xl:hidden block">Publish Date</div>
       <p class="ann-publish-date">
-        {{
-          announcementItem.publishDate === null
-            ? "-"
-            : getLocaleDateTime(announcementItem.publishDate)
-        }}
+          {{ getLocaleDateTime(announcementItem.publishDate) }}
       </p>
     </template>
     <template #closeDate>
       <div class="text-[#737373] w-1/3 xl:hidden block">Close Date</div>
       <p class="ann-close-date">
-        {{
-          announcementItem.closeDate === null
-            ? "-"
-            : getLocaleDateTime(announcementItem.closeDate)
-        }}
+          {{ getLocaleDateTime(announcementItem.closeDate) }}
       </p>
     </template>
     <template #display>
