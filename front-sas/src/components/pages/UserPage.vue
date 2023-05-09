@@ -31,8 +31,8 @@ const test = (n) => {
 </script>
 
 <template>
-  <PageTemplate>
-    <LoadingPage v-if="isLoading" />
+  <LoadingPage v-if="isLoading" />
+  <PageTemplate v-else>
     <AnnouncementTitle :isUserPage="true" />
     <div
       v-if="isAnnouncementEmpty"
