@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import PageTemplate from '../templates/PageTemplate.vue';
 import AnnouncementTitle from '../UI/organisms/AnnouncementTitle.vue';
@@ -16,18 +16,22 @@ const router = useRouter();
 const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
-
+const getTotalIndex = (index) => {
+  return allAnnouncement.value.page * allAnnouncement.value.size + index;
+};
+const refreshAnnouncement = async (pageNo) => {
+  allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
+    pageNo
+  );
+};
 watchEffect(async () => {
   isLoading.value = true;
-  allAnnouncement.value = await announcementService.getAllAnnouncement();
-  isAnnouncementEmpty.value = Object.keys(allAnnouncement.value).length === 0;
+  // allAnnouncement.value = await announcementService.getAllAnnouncement();
+  allAnnouncement.value = await announcementService.getPagesAllAnnouncement();
+  isAnnouncementEmpty.value =
+    Object.keys(allAnnouncement.value.content).length === 0;
   isLoading.value = false;
-  console.log(Object.keys(allAnnouncement.value).length === 0);
 });
-
-const test = (n) => {
-  console.log(n);
-};
 </script>
 
 <template>
@@ -47,17 +51,26 @@ const test = (n) => {
         <template #category>Category</template>
       </AnnouncementUserTemplate>
     </div>
-    <AnnouncementList :announcementList="allAnnouncement" v-slot="announcement">
+    <AnnouncementList
+      :announcementList="allAnnouncement.content"
+      v-slot="announcement"
+    >
       <SingleUserAnnouncement
         @announcementId="
           (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
         "
-        :index="announcement.index"
+        :index="getTotalIndex(announcement.index)"
         :announcementItem="announcement.announcementItem"
         class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
       />
     </AnnouncementList>
-    <!-- <PaginationTemplate /> -->
+    <PaginationTemplate
+      v-if="!isAnnouncementEmpty"
+      @select-page="refreshAnnouncement"
+      :total-pages="allAnnouncement.totalPages"
+      :offset="allAnnouncement.page"
+      :page-size="allAnnouncement.size"
+    />
   </PageTemplate>
 </template>
 

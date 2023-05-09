@@ -13,20 +13,25 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  // async getPagesAllAnnouncement() {
-  //   try {
-  //     const response = await fetch(
-  //       `${import.meta.env.VITE_API_URL}/api/announcements/pages`
-  //     );
-  //     if (response.ok) {
-  //       return await response.json();
-  //     } else {
-  //       return Promise.reject(response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error(`ERROR FETCHING DATA: ${error.message}`);
-  //   }
-  // }
+  async getPagesAllAnnouncement(pageNo = 0) {
+    let item;
+    if (pageNo === 0) {
+      item = '';
+    } else item = `?page=${pageNo}`;
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/announcements/pages${item}`
+      );
+      if (response.ok) {
+        return await response.json();
+      } else {
+        return Promise.reject(response.statusText);
+      }
+    } catch (error) {
+      console.error(`ERROR FETCHING DATA: ${error.message}`);
+    }
+  }
   async getAnnouncementDetail(id) {
     try {
       const response = await fetch(

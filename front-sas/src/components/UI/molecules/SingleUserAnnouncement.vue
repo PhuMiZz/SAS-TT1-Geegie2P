@@ -29,7 +29,9 @@ const props = defineProps({
   <AnnouncementUserTemplate
     @click="$emit('announcementId', announcementItem.id)"
   >
-    <template #announcementNo> {{ index + 1 }} </template>
+    <template #announcementNo>
+      {{ index + 1 }}
+    </template>
     <template #title>
       <div class="text-[#737373] w-1/3 md:w-1/3 xl:hidden block">Title</div>
       <p class="ann-title">{{ announcementItem.announcementTitle }}</p>
