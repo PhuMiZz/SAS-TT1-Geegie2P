@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface AnnouncementRepository extends JpaRepository<Announcement,Integer> {
     List<Announcement> findAllByOrderByPublishDateDescCloseDateDesc();
-    public List<Announcement> getAnnouncementsByCategory(Category category);
+    List<Announcement> getAnnouncementsByCategory(Category category);
 }

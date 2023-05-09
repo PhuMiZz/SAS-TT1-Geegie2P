@@ -44,10 +44,12 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getAllAnnouncementByCategory(id) {
+  async getAllAnnouncementByCategory(categoryId) {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/categories/${id}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/announcements/category/${categoryId}`
       );
       if (response.ok) {
         return await response.json();

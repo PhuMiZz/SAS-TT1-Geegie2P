@@ -74,6 +74,11 @@ public class AnnouncementController {
             throw new BadRequestException("Announcement not found");
         }
     }
+
+    @GetMapping("/announcements/category/{categoryId}")
+    public List<AnnouncementsViewDto> getAllAnnouncementByCategory(@PathVariable Integer categoryId){
+        return ListMapper.getInstance().mapList(announcementService.getAnnouncementByCategory(categoryId), AnnouncementsViewDto.class, modelMapper);
+    }
     // Category
     @GetMapping("/categories")
     public List<Category> getCategories() {
@@ -81,9 +86,12 @@ public class AnnouncementController {
     }
 
     @GetMapping("/categories/{id}")
-    public List<AnnouncementsViewDto> getAnnouncementByCategory(@PathVariable Integer id) {
-        List<Announcement> announcements = announcementService.getAnnouncementByCategory(id);
-           return ListMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper) ;
+    public Category getCategory(@PathVariable Integer id) {
+           return categoryService.getCategoryById(id) ;
+    }
+    @PostMapping("/categories")
+    public Category createCategory(@RequestBody Category newCategory){
+        return categoryService.createCategory(newCategory);
     }
 
 

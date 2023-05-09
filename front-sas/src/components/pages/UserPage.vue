@@ -27,17 +27,12 @@ watchEffect(async () => {
 const test = (n) => {
   console.log(n);
 };
-
-const changeCategory = async (id) => {
-  allAnnouncement.value =
-    await announcementService.getAllAnnouncementByCategory(id);
-};
 </script>
 
 <template>
   <PageTemplate>
     <LoadingPage v-if="isLoading" />
-    <AnnouncementTitle :isUserPage="true" @changeCategory="changeCategory" />
+    <AnnouncementTitle :isUserPage="true" />
     <div
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"

@@ -31,6 +31,7 @@ watchEffect(async () => {
 const changeCategory = async (id) => {
   allAnnouncement.value =
     await announcementService.getAllAnnouncementByCategory(id);
+  isAnnouncementEmpty.value = Object.keys(allAnnouncement.value).length === 0;
 };
 </script>
 
