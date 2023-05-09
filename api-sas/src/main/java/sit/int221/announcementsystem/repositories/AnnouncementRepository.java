@@ -17,7 +17,5 @@ public interface AnnouncementRepository extends JpaRepository<Announcement,Integ
     Page<Announcement> findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus displayStatus, ZonedDateTime closeDate, Pageable pageable);
     Page<Announcement> findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus displayStatus, ZonedDateTime closeDate, Pageable pageable);
     Page<Announcement> findAllByOrderByPublishDateDescCloseDateDesc(Pageable pageable);
-
-
-    public List<Announcement> getAnnouncementsByCategory(Category category);
+    
 }

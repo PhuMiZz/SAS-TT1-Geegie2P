@@ -1,13 +1,14 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRouter } from "vue-router";
-import PageTemplate from "../templates/PageTemplate.vue";
-import AnnouncementTitle from "../UI/organisms/AnnouncementTitle.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
+import { ref, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
+import PageTemplate from '../templates/PageTemplate.vue';
+import AnnouncementTitle from '../UI/organisms/AnnouncementTitle.vue';
+import AnnouncementService from '@/lib/AnnouncementService';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementUserTemplate from '../templates/AnnouncementUserTemplate.vue';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import SingleUserAnnouncement from '../UI/molecules/SingleUserAnnouncement.vue';
+import PaginationTemplate from '../templates/PaginationTemplate.vue';
 
 const announcementService = new AnnouncementService();
 const router = useRouter();
@@ -56,6 +57,7 @@ const test = (n) => {
         class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
       />
     </AnnouncementList>
+    <!-- <PaginationTemplate /> -->
   </PageTemplate>
 </template>
 
