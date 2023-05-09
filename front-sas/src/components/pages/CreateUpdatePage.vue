@@ -152,6 +152,20 @@ watchEffect(async () => {
   currentDate.value = new Date().toISOString().split("T")[0];
   currentTime.value = new Date().toISOString().split("T")[1].substring(0, 5);
 });
+
+const setTimeDefault = (event) => {
+  if (event.currentTarget.id === "publishDate") {
+    newAnnouncementData.publishTime = newAnnouncementData.publishDate
+      ? "06:00"
+      : "";
+  } else {
+    newAnnouncementData.closeTime = newAnnouncementData.closeDate
+      ? "18:00"
+      : "";
+  }
+
+  // updateCheck();
+};
 </script>
 
 <template>
@@ -209,7 +223,7 @@ watchEffect(async () => {
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
               <input
-                @change="updateCheck"
+                @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.publishDate"
                 type="date"
                 id="publishDate"
@@ -228,7 +242,7 @@ watchEffect(async () => {
                 type="time"
                 id="publishTime"
                 name="publishTime"
-                class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+                class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full disabled:opacity-60"
                 :disabled="newAnnouncementData.publishDate === ''"
               /></div
           ></template>
@@ -239,7 +253,7 @@ watchEffect(async () => {
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
               <input
-                @change="updateCheck"
+                @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.closeDate"
                 type="date"
                 id="closeDate"
@@ -257,7 +271,7 @@ watchEffect(async () => {
                 type="time"
                 id="closeTime"
                 name="closeTime"
-                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040] disabled:opacity-60"
                 :disabled="newAnnouncementData.closeDate === ''"
               /></div
           ></template>
