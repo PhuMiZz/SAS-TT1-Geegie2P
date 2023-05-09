@@ -1,10 +1,10 @@
 <script setup>
-import HomeIcon from '@/components/UI/atoms/HomeIcon.vue';
-import UserViewIcon from '@/components/UI/atoms/UserViewIcon.vue';
-import AboutUsIcon from '@/components/UI/atoms/AboutUsIcon.vue';
+import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
+import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
 // import UserIcon from "@/components/UI/atoms/UserIcon.vue";
-import { RouterLink } from 'vue-router';
-import { ref } from 'vue';
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
 const isOpenMenu = ref(false);
 const onClickMenuHandler = () => {
@@ -39,7 +39,7 @@ const onClickMenuHandler = () => {
           class="flex items-center text-xl gap-x-3"
         >
           <HomeIcon class="icon" />
-          <span class="text-page">Home</span>
+          <span class="text-page">Admin View</span>
         </RouterLink>
 
         <RouterLink
