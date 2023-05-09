@@ -47,7 +47,7 @@ class AnnouncementService {
   async getAllCategory() {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/categories`
+        `${import.meta.env.VITE_API_URL}/api/announcements/categories`
       );
       if (response.ok) {
         return await response.json();
