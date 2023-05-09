@@ -1,28 +1,36 @@
 <script setup>
 import AddIcon from "../atoms/AddIcon.vue";
 import CategoryIcon from "../atoms/CategoryIcon.vue";
-import SortIcon from "../atoms/SortIcon.vue";
 import InputTemplate from "../../templates/InputTemplate.vue";
 import AnnouncementService from "@/lib/AnnouncementService.js";
 import { ref, watchEffect } from "vue";
 import router from "@/router";
 
+const props = defineProps({
+  isUserPage: {
+    type: Boolean,
+    require: false,
+  },
+});
+
 const announcementService = new AnnouncementService();
 const categories = ref([]);
+const selectedCategoryId = ref(0);
+const isActive = ref(false);
+const statusDescription = ref("Closed Announcements");
+const statusAnnouncement = () => {
+  if (!isActive.value) {
+    isActive.value = true;
+    statusDescription.value = "Active Announcements";
+  } else {
+    isActive.value = false;
+    statusDescription.value = "Closed Announcements";
+  }
+};
 
-// watchEffect(async () => {
-//   const allCategory = await announcementService.getAllCategory();
-//   categories.value = allCategory.map((e) => e.categoryName);
-// });
-
-const sort = [
-  "ID",
-  "Title",
-  "Category",
-  "Publish Date",
-  "Close Date",
-  "Display",
-];
+watchEffect(async () => {
+  categories.value = await announcementService.getAllCategory();
+});
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const createAnnouncement = () => {
@@ -51,17 +59,33 @@ const createAnnouncement = () => {
       <div
         class="flex items-center flex-wrap justify-center md:justify-start xl:gap-10"
       >
-        <!-- <InputTemplate>
+        <InputTemplate>
           <CategoryIcon />
           Category:
+          <select
+            class="ann-category bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
+            v-model="selectedCategoryId"
+            @change="$emit('changeCategory', selectedCategoryId)"
+          >
+            <option :value="0">ทั้งหมด</option>
+            <option v-for="category in categories" :value="category.id">
+              {{ category.categoryName }}
+            </option>
+          </select>
         </InputTemplate>
-        <InputTemplate>
-          <SortIcon />
-          Sort By:
-        </InputTemplate> -->
       </div>
       <div class="flex h-full xl:h-3/5 items-center">
         <button
+          v-if="isUserPage"
+          @click="statusAnnouncement"
+          class="ann-button bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] text-white px-5 py-2 rounded-md h-full truncate ease-linear transition-all duration-150"
+        >
+          <div class="flex gap-1 items-center text-[#00000] text-xl">
+            {{ statusDescription }}
+          </div>
+        </button>
+        <button
+          v-else
           @click="createAnnouncement"
           class="ann-button bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] text-white px-5 py-2 rounded-md h-full truncate ease-linear transition-all duration-150"
         >

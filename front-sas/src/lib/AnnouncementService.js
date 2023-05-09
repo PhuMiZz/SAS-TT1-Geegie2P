@@ -21,8 +21,8 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else if (response.status === 404 || response.status === 400) {
-        alert('The request page is not available');
-        window.location = '/admin/announcement';
+        alert("The request page is not available");
+        window.location = "/admin/announcement";
       } else {
         return Promise.reject(response.statusText);
       }
@@ -44,18 +44,23 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getCategoryIdByName(categoryName) {
+  async getAllAnnouncementByCategory(categoryId) {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/categories/find/${categoryName}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/announcements/category/${categoryId}`
       );
       if (response.ok) {
         return await response.json();
+      } else if (response.status === 404 || response.status === 400) {
+        alert("The request page is not available");
+        window.location = "/announcement";
       } else {
         return Promise.reject(response.statusText);
       }
     } catch (error) {
-      console.error(`ERROR FETCHING DATA: ${error.message}`);
+      console.error(`ERROR FETCHING DETAIL: ${error.message}`);
     }
   }
 
@@ -65,9 +70,9 @@ class AnnouncementService {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements`,
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(newAnnouncement),
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         }
       );
       if (response.ok) {
@@ -84,8 +89,8 @@ class AnnouncementService {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`,
         {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
         }
       );
       if (response.ok) {
@@ -103,9 +108,9 @@ class AnnouncementService {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`,
         {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(announcementData),
         }

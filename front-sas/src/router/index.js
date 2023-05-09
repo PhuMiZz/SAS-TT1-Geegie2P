@@ -10,7 +10,7 @@ const router = createRouter({
     {
       path: "/admin/announcement",
       name: "Announcements",
-      component: () => import("@/components/pages/Homepage.vue"),
+      component: () => import("@/components/pages/AdminPage.vue"),
     },
     {
       path: "/admin/announcement/:id",
@@ -26,6 +26,17 @@ const router = createRouter({
       path: "/admin/announcement/:id/edit",
       name: "UpdateAnnouncement",
       component: () => import("@/components/pages/CreateUpdatePage.vue"),
+    },
+    {
+      path: "/announcement",
+      name: "UserAnnouncement",
+      component: () => import("@/components/pages/UserPage.vue"),
+    },
+
+    {
+      path: "/announcement/:id",
+      name: "UserDetailPage",
+      component: () => import("@/components/pages/UserDetailPage.vue"),
     },
     {
       path: "/:pathMatch(.*)*",

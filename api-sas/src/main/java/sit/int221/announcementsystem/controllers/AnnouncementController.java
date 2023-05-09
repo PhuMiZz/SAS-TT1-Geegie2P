@@ -76,15 +76,24 @@ public class AnnouncementController {
             throw new BadRequestException("Announcement not found");
         }
     }
+
+    @GetMapping("/announcements/category/{categoryId}")
+    public List<AnnouncementsViewDto> getAllAnnouncementByCategory(@PathVariable Integer categoryId){
+        return ListMapper.getInstance().mapList(announcementService.getAnnouncementByCategory(categoryId), AnnouncementsViewDto.class, modelMapper);
+    }
     // Category
     @GetMapping("/categories")
     public List<Category> getCategories() {
         return categoryService.getCategories();
     }
 
-    @GetMapping("/categories/find/{categoryName}")
-    public Integer findCategoryIdByName(@PathVariable String categoryName) {
-            return categoryService.FindCategoryByName(categoryName);
+    @GetMapping("/categories/{id}")
+    public Category getCategory(@PathVariable Integer id) {
+           return categoryService.getCategoryById(id) ;
+    }
+    @PostMapping("/categories")
+    public Category createCategory(@RequestBody Category newCategory){
+        return categoryService.createCategory(newCategory);
     }
     @GetMapping("/pages")
     public PageDto<AnnouncementsViewDto> getAnnouncementsPages(

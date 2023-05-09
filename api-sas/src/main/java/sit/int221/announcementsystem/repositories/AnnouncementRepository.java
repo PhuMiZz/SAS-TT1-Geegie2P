@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface AnnouncementRepository extends JpaRepository<Announcement,Integer> {
     List<Announcement> findAllByOrderByPublishDateDescCloseDateDesc();
+    List<Announcement> getAnnouncementsByCategory(Category category);
     Page<Announcement> findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus displayStatus, ZonedDateTime closeDate, Pageable pageable);
     Page<Announcement> findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus displayStatus, ZonedDateTime closeDate, Pageable pageable);
     Page<Announcement> findAllByOrderByPublishDateDescCloseDateDesc(Pageable pageable);
