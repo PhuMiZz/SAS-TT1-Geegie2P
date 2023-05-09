@@ -229,6 +229,7 @@ watchEffect(async () => {
                 id="publishTime"
                 name="publishTime"
                 class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+                :disabled="newAnnouncementData.publishDate === ''"
               /></div
           ></template>
         </TextDescription>
@@ -257,6 +258,7 @@ watchEffect(async () => {
                 id="closeTime"
                 name="closeTime"
                 class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :disabled="newAnnouncementData.closeDate === ''"
               /></div
           ></template>
         </TextDescription>

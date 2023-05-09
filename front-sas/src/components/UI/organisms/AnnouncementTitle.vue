@@ -1,14 +1,11 @@
 <script setup>
-import AddIcon from '../atoms/AddIcon.vue';
-import CategoryIcon from '../atoms/CategoryIcon.vue';
-import SortIcon from '../atoms/SortIcon.vue';
-import InputTemplate from '../../templates/InputTemplate.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
-import { onMounted, ref, watchEffect } from 'vue';
-import router from '@/router';
-import { useRoute } from 'vue-router';
+import AddIcon from "../atoms/AddIcon.vue";
+import CategoryIcon from "../atoms/CategoryIcon.vue";
+import InputTemplate from "../../templates/InputTemplate.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import { ref, watchEffect } from "vue";
+import router from "@/router";
 
-const { params } = useRoute();
 const props = defineProps({
   isUserPage: {
     type: Boolean,
@@ -18,34 +15,26 @@ const props = defineProps({
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
+const selectedCategoryId = ref(0);
 const isActive = ref(false);
-const statusDescription = ref('Closed Announcements');
+const statusDescription = ref("Closed Announcements");
 const statusAnnouncement = () => {
   if (!isActive.value) {
     isActive.value = true;
-    statusDescription.value = 'Active Announcements';
+    statusDescription.value = "Active Announcements";
   } else {
     isActive.value = false;
-    statusDescription.value = 'Closed Announcements';
+    statusDescription.value = "Closed Announcements";
   }
 };
 
 watchEffect(async () => {
-  const allCategory = await announcementService.getAllCategory();
-  categories.value = allCategory.map((e) => e.categoryName);
+  categories.value = await announcementService.getAllCategory();
 });
-const sort = [
-  'ID',
-  'Title',
-  'Category',
-  'Publish Date',
-  'Close Date',
-  'Display',
-];
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const createAnnouncement = () => {
-  router.push({ name: 'CreateAnnouncement' });
+  router.push({ name: "CreateAnnouncement" });
 };
 </script>
 
@@ -73,12 +62,17 @@ const createAnnouncement = () => {
         <InputTemplate>
           <CategoryIcon />
           Category:
+          <select
+            class="ann-category bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
+            v-model="selectedCategoryId"
+            @change="$emit('changeCategory', selectedCategoryId)"
+          >
+            <option :value="0">ทั้งหมด</option>
+            <option v-for="category in categories" :value="category.id">
+              {{ category.categoryName }}
+            </option>
+          </select>
         </InputTemplate>
-
-        <!-- <InputTemplate>
-          <SortIcon />
-          Sort By:
-        </InputTemplate> -->
       </div>
       <div class="flex h-full xl:h-3/5 items-center">
         <button

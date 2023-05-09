@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
-import PageTemplate from '../templates/PageTemplate.vue';
-import AnnouncementTitle from '../UI/organisms/AnnouncementTitle.vue';
-import AnnouncementService from '@/lib/AnnouncementService';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
-import AnnouncementUserTemplate from '../templates/AnnouncementUserTemplate.vue';
-import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
-import SingleUserAnnouncement from '../UI/molecules/SingleUserAnnouncement.vue';
+import { ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import PageTemplate from "../templates/PageTemplate.vue";
+import AnnouncementTitle from "../UI/organisms/AnnouncementTitle.vue";
+import AnnouncementService from "@/lib/AnnouncementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue";
+import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
+import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
 
 const announcementService = new AnnouncementService();
 const router = useRouter();
@@ -23,15 +23,21 @@ watchEffect(async () => {
   isLoading.value = false;
   console.log(Object.keys(allAnnouncement.value).length === 0);
 });
+
 const test = (n) => {
   console.log(n);
+};
+
+const changeCategory = async (id) => {
+  allAnnouncement.value =
+    await announcementService.getAllAnnouncementByCategory(id);
 };
 </script>
 
 <template>
   <PageTemplate>
     <LoadingPage v-if="isLoading" />
-    <AnnouncementTitle :isUserPage="true" />
+    <AnnouncementTitle :isUserPage="true" @changeCategory="changeCategory" />
     <div
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"

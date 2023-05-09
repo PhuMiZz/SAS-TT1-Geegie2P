@@ -81,8 +81,9 @@ public class AnnouncementController {
     }
 
     @GetMapping("/categories/{id}")
-    public List<Announcement> getAnnouncementByCategory(@PathVariable Integer id) {
-           return announcementService.getAnnouncementByCategory(id);
+    public List<AnnouncementsViewDto> getAnnouncementByCategory(@PathVariable Integer id) {
+        List<Announcement> announcements = announcementService.getAnnouncementByCategory(id);
+           return ListMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper) ;
     }
 
 

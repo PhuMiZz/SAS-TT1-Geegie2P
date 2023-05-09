@@ -34,6 +34,7 @@ public class AnnouncementService {
     }
 
     public List<Announcement> getAnnouncementByCategory(int categoryId) {
+        if (categoryId == 0) return getAnnouncements();
         Category category = categoryRepository.findById(categoryId).orElseThrow(
                 () -> new ItemNotFoundException("Category ID: " + categoryId + " does not exist!.")
         );

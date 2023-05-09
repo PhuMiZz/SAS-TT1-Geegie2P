@@ -1,12 +1,12 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import PageTemplate from '../templates/PageTemplate.vue';
-import AnnouncementService from '@/lib/AnnouncementService';
-import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
-import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
-import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
-import SingleAnnouncement from '../UI/molecules/SingleAnnouncement.vue';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import { ref, watchEffect } from "vue";
+import PageTemplate from "../templates/PageTemplate.vue";
+import AnnouncementService from "@/lib/AnnouncementService";
+import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
+import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
+import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
+import SingleAnnouncement from "../UI/molecules/SingleAnnouncement.vue";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
 
 const announcementService = new AnnouncementService();
 
@@ -27,12 +27,17 @@ watchEffect(async () => {
   isAnnouncementEmpty.value = Object.keys(allAnnouncement.value).length === 0;
   isLoading.value = false;
 });
+
+const changeCategory = async (id) => {
+  allAnnouncement.value =
+    await announcementService.getAllAnnouncementByCategory(id);
+};
 </script>
 
 <template>
   <LoadingPage v-if="isLoading" />
   <PageTemplate v-else>
-    <AnnouncementTitle />
+    <AnnouncementTitle @changeCategory="changeCategory" />
     <div
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
