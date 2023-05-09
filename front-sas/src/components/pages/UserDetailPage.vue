@@ -33,7 +33,7 @@ watchEffect(async () => {
     <LoadingPage v-if="isLoading" />
     <AnnouncementCard
       @router-page="$router.push('/announcement')"
-      :view-component="false"
+      :user-component="true"
       :announcement-detail="announcementDetail"
       :announcement-id="Number(announcementId)"
     >

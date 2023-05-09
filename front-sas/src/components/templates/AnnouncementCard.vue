@@ -18,6 +18,10 @@ const props = defineProps({
     type: Object,
     required: false,
   },
+  userComponent: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 const editAnnouncement = () => {
@@ -42,7 +46,7 @@ defineEmits(['routerPage']);
     </button>
 
     <button
-      v-if="viewComponent"
+      v-if="!userComponent || !viewComponent"
       @click="editAnnouncement"
       class="ann-button flex gap-2 bg-[#F59E0B] hover:bg-[#d68d0e] active:bg-[#d68d0e] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
     >
@@ -68,7 +72,7 @@ defineEmits(['routerPage']);
       <slot name="description"></slot>
     </div>
     <div
-      v-if="viewComponent"
+      v-if="!userComponent || !viewComponent"
       class="w-full md:w-3/5 xl:w-3/5 h-full p-5 my-7 rounded-xl bg-[#E5E5E5] xl:self-center"
     >
       <slot name="detail"></slot>
