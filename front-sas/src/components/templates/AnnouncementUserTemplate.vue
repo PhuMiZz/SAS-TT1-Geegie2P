@@ -15,10 +15,10 @@ const props = defineProps({
     <div
       :class="
         props.header
-          ? 'bg-transparent text-xl'
-          : 'bg-[#336699] text-white text-2xl'
+          ? 'bg-transparent text-xl '
+          : 'bg-[#336699] text-white text-2xl '
       "
-      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-1/5 xl:rounded-none xl:rounded-l-xl"
+      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-fit xl:rounded-none xl:rounded-l-xl"
     >
       <slot name="announcementNo"></slot>
     </div>
