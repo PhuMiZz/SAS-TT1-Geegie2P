@@ -61,23 +61,17 @@ watchEffect(async () => {
 
         <TextDescription class="ann-publish-date">
           <template #header>Publish Date</template>
+
           <p class="text-lg">
-            {{
-              announcementDetail.publishDate === null
-                ? '-'
-                : getLocaleDateTime(announcementDetail.publishDate)
-            }}
+            {{ getLocaleDateTime(announcementDetail.publishDate) }}
           </p>
         </TextDescription>
 
         <TextDescription class="ann-close-date">
           <template #header>Close Date</template>
+
           <p class="text-lg">
-            {{
-              announcementDetail.closeDate === null
-                ? '-'
-                : getLocaleDateTime(announcementDetail.closeDate)
-            }}
+            {{ getLocaleDateTime(announcementDetail.closeDate) }}
           </p>
         </TextDescription>
 

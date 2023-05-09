@@ -1,4 +1,7 @@
 function getLocaleDateTime(dateTime) {
+  if (!dateTime) {
+    return "-";
+  }
   const date = new Date(dateTime);
   const option = {
     day: "numeric",
