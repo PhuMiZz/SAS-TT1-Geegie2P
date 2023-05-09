@@ -1,11 +1,12 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import PageTemplate from "../templates/PageTemplate.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
-import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import { ref, watchEffect } from 'vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import AnnouncementService from '@/lib/AnnouncementService';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import AnnouncementTitle from '@/components/UI/organisms/AnnouncementTitle.vue';
+import AnnouncementTemplate from '../templates/AnnouncementTemplate.vue';
+import SingleAnnouncement from '../UI/molecules/SingleAnnouncement.vue';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
 
 const announcementService = new AnnouncementService();
 
@@ -48,9 +49,15 @@ watchEffect(async () => {
         <template #action>Action</template>
       </AnnouncementTemplate>
       <AnnouncementList
-        @refresh-data="filterDeletedData"
         :announcement-list="allAnnouncement"
-      />
+        v-slot="announcement"
+      >
+        <SingleAnnouncement
+          @refresh-data="filterDeletedData"
+          :index="announcement.index"
+          :announcement-item="announcement.announcementItem"
+        />
+      </AnnouncementList>
     </div>
   </PageTemplate>
 </template>

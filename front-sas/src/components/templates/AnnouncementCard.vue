@@ -68,6 +68,7 @@ defineEmits(['routerPage']);
       <slot name="description"></slot>
     </div>
     <div
+      v-if="viewComponent"
       class="w-full md:w-3/5 xl:w-3/5 h-full p-5 my-7 rounded-xl bg-[#E5E5E5] xl:self-center"
     >
       <slot name="detail"></slot>
