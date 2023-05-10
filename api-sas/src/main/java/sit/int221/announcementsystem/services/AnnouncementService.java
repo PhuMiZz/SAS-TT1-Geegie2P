@@ -34,13 +34,14 @@ public class AnnouncementService {
         return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc();
     }
 
-    public List<Announcement> getActiveAnnouncements(){
+    public List<Announcement> getActiveAnnouncements() {
         ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus.Y,now);
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus.Y, now);
     }
-    public List<Announcement> getClosedAnnouncements(){
+
+    public List<Announcement> getClosedAnnouncements() {
         ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y,now);
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y, now);
     }
 
     public Announcement getAnnouncementDetail(int announcementId) {
@@ -84,16 +85,17 @@ public class AnnouncementService {
         Announcement announcement = modelMapper.map(oldAnnouncement, Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
-    public Page<Announcement> getPageAdminAnnouncements(Pageable pageable) {
-        return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
+
+    public Page<Announcement> getAnnouncementsByModeAndCategory(String mode, Integer categoryId, Pageable pageable) {
+        return switch (mode.toLowerCase()) {
+            case "admin" ->
+                    categoryId != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(categoryId, pageable) : announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
+            case "close" ->
+                    categoryId != null ? announcementRepository.findClosedAnnouncementsByCategory(categoryId, pageable) : announcementRepository.findClosedAnnouncements(pageable);
+            default -> // active
+                    categoryId != null ? announcementRepository.findActiveAnnouncementsByCategory(categoryId, pageable) : announcementRepository.findActiveAnnouncements(pageable);
+        };
     }
-    public Page<Announcement> getPageActiveAnnouncements(Pageable pageable) {
-        ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus.Y, now, pageable);
-    }
-    public Page<Announcement> getPageClosedAnnouncements(Pageable pageable) {
-        ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y, now, pageable);
-    }
+
 
 }

@@ -164,7 +164,17 @@ const setTimeDefault = (event) => {
       : "";
   }
 
-  // updateCheck();
+  updateCheck();
+};
+
+const checkInputLength = (event) => {
+  if (event.currentTarget.id === "announcementTitle") {
+    console.log(newAnnouncementData.announcementTitle.length);
+  } else {
+    console.log(newAnnouncementData.announcementDescription.length);
+  }
+
+  updateCheck();
 };
 </script>
 
@@ -181,9 +191,29 @@ const setTimeDefault = (event) => {
       "
     >
       <template #title>
-        <div class="text-[#336699]">Title</div>
+        <div class="text-[#336699] flex place-content-between">
+          <label for="announcementTitle"> Title </label>
+          <label
+            for="announcementTitle"
+            class="text-lg text-[#404040] place-self-end"
+            :class="
+              newAnnouncementData.announcementTitle.length < 180
+                ? 'hidden'
+                : newAnnouncementData.announcementTitle.length === 200
+                ? 'text-[#EF4444]'
+                : 'text-[#F59B0E]'
+            "
+          >
+            {{
+              newAnnouncementData.announcementTitle.length === 200
+                ? "max length!!"
+                : `${newAnnouncementData.announcementTitle.length}/200`
+            }}
+          </label>
+        </div>
         <input
-          @input="updateCheck"
+          @input="checkInputLength"
+          id="announcementTitle"
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
@@ -191,12 +221,32 @@ const setTimeDefault = (event) => {
           maxlength="200"
       /></template>
       <template #description>
-        <div class="text-[#336699]">Description</div>
+        <div class="text-[#336699] flex place-content-between">
+          <label for="announcementDescription">Description</label>
+          <label
+            for="announcementDescription"
+            class="text-lg text-[#404040] place-self-end"
+            :class="
+              newAnnouncementData.announcementDescription.length < 9980
+                ? 'hidden'
+                : newAnnouncementData.announcementDescription.length === 10000
+                ? 'text-[#EF4444]'
+                : 'text-[#F59B0E]'
+            "
+          >
+            {{
+              newAnnouncementData.announcementDescription.length === 10000
+                ? "max length!!"
+                : `${newAnnouncementData.announcementDescription.length}/10000`
+            }}
+          </label>
+        </div>
         <textarea
-          @input="updateCheck"
+          @input="checkInputLength"
+          id="announcementDescription"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
-          class="ann-description w-full rounded-lg p-1 mt-5 text-[#404040]"
+          class="ann-description w-full rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
           maxlength="10000"

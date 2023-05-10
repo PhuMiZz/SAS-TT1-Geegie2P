@@ -65,10 +65,10 @@ defineEmits(["routerPage"]);
   <div
     class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-3 text-2xl items-center xl:h-full"
   >
-    <div class="w-full h-full flex flex-col gap-y-5 md:w-3/5">
+    <div class="w-full h-full flex flex-col gap-y-2 md:w-3/5">
       <slot name="title"></slot>
     </div>
-    <div class="w-full h-full flex flex-col md:w-3/5 md:break-keep">
+    <div class="w-full h-full flex flex-col gap-y-2 md:w-3/5 md:break-keep">
       <slot name="description"></slot>
     </div>
     <div

@@ -1,15 +1,15 @@
 <script setup>
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-import AnnouncementUserTemplate from '../../templates/AnnouncementUserTemplate.vue';
-import BadgeCategories from './BadgeCategories.vue';
-import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
-import ConfirmModal from '@/components/UI/organisms/ConfirmModal.vue';
-import OverlayTemplate from '../../templates/OverlayTemplate.vue';
-import AnnouncementService from '../../../lib/AnnouncementService';
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import AnnouncementUserTemplate from "../../templates/AnnouncementUserTemplate.vue";
+import BadgeCategories from "./BadgeCategories.vue";
+import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
+import ConfirmModal from "@/components/UI/organisms/ConfirmModal.vue";
+import OverlayTemplate from "../../templates/OverlayTemplate.vue";
+import AnnouncementService from "../../../lib/AnnouncementService";
 
-defineEmits(['announcementId']);
+defineEmits(["announcementId"]);
 const showModal = ref(false);
 const selectedAnnouncement = ref();
 const announcementService = new AnnouncementService();
@@ -21,6 +21,10 @@ const props = defineProps({
   index: {
     type: Number,
     required: false,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
 });
 </script>
@@ -35,6 +39,12 @@ const props = defineProps({
     <template #title>
       <div class="text-[#737373] w-1/3 md:w-1/3 xl:hidden block">Title</div>
       <p class="ann-title">{{ announcementItem.announcementTitle }}</p>
+    </template>
+    <template #closeDate v-if="isActive"
+      ><div class="text-[#737373] w-1/3 xl:hidden block">Close Date</div>
+      <p class="ann-close-date">
+        {{ getLocaleDateTime(announcementItem.closeDate) }}
+      </p>
     </template>
     <template #category>
       <div class="text-[#737373] w-1/3 xl:hidden block">Category</div>

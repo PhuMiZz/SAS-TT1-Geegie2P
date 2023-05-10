@@ -16,6 +16,7 @@ const router = useRouter();
 const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
+const isActive = ref(true);
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
@@ -33,12 +34,24 @@ watchEffect(async () => {
     Object.keys(allAnnouncement.value.content).length === 0;
   isLoading.value = false;
 });
+
+const toggleStatusAnnouncement = () => {
+  if (!isActive.value) {
+    isActive.value = true;
+  } else {
+    isActive.value = false;
+  }
+};
 </script>
 
 <template>
   <LoadingPage v-if="isLoading" />
   <PageTemplate v-else>
-    <AnnouncementTitle :isUserPage="true" />
+    <AnnouncementTitle
+      :isUserPage="true"
+      @toggleStatusAnnouncement="toggleStatusAnnouncement"
+      :isActive="isActive"
+    />
     <div
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
@@ -49,6 +62,7 @@ watchEffect(async () => {
       <AnnouncementUserTemplate :header="true" class="hidden xl:flex">
         <template #announcementNo>No.</template>
         <template #title>Title</template>
+        <template #closeDate v-if="isActive">Close Date</template>
         <template #category>Category</template>
       </AnnouncementUserTemplate>
     </div>
@@ -60,6 +74,7 @@ watchEffect(async () => {
         @announcementId="
           (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
         "
+        :isActive="isActive"
         :index="getTotalIndex(announcement.index)"
         :announcementItem="announcement.announcementItem"
         class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"

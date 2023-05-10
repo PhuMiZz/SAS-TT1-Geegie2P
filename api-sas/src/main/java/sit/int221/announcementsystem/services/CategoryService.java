@@ -33,11 +33,11 @@ public class CategoryService {
                 () -> new ItemNotFoundException("Category id: " + categoryId + " does not exist!.")
         );
     }
-    public Page<Announcement> getPageAnnouncementsByCategory(int categoryId, Pageable pageable) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(
-                () -> new ItemNotFoundException("Category ID: " + categoryId + " does not exist!.")
-        );
-        return announcementRepository.findByCategory(category, pageable);
-    }
+//    public Page<Announcement> getPageAnnouncementsByCategory(int categoryId, Pageable pageable) {
+//        Category category = categoryRepository.findById(categoryId).orElseThrow(
+//                () -> new ItemNotFoundException("Category ID: " + categoryId + " does not exist!.")
+//        );
+//        return announcementRepository.findByCategory(category, pageable);
+//    }
 
 }
