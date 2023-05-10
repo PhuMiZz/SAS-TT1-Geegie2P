@@ -16,6 +16,7 @@ const router = useRouter();
 const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
+
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
 };
