@@ -26,7 +26,7 @@ class AnnouncementService {
       const response = await fetch(
         `${
           import.meta.env.VITE_API_URL
-        }/api/announcements/pages${pageItem}${modeItem}`
+        }/api/announcements/pages${modeItem}${pageItem}`
       );
       if (response.ok) {
         return await response.json();
