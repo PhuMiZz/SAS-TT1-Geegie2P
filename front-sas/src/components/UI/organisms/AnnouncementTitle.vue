@@ -11,22 +11,15 @@ const props = defineProps({
     type: Boolean,
     require: false,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const announcementService = new AnnouncementService();
 const categories = ref([]);
 const selectedCategoryId = ref(0);
-const isActive = ref(false);
-const statusDescription = ref("Closed Announcements");
-const statusAnnouncement = () => {
-  if (!isActive.value) {
-    isActive.value = true;
-    statusDescription.value = "Active Announcements";
-  } else {
-    isActive.value = false;
-    statusDescription.value = "Closed Announcements";
-  }
-};
 
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
@@ -77,11 +70,13 @@ const createAnnouncement = () => {
       <div class="flex h-full xl:h-3/5 items-center">
         <button
           v-if="isUserPage"
-          @click="statusAnnouncement"
+          @click="$emit('toggleStatusAnnouncement')"
           class="ann-button bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] text-white px-5 py-2 rounded-md h-full truncate ease-linear transition-all duration-150"
         >
           <div class="flex gap-1 items-center text-[#00000] text-xl">
-            {{ statusDescription }}
+            {{
+              props.isActive ? "Active Announcements" : "Closed Announcements"
+            }}
           </div>
         </button>
         <button

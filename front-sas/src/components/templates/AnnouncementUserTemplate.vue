@@ -30,6 +30,11 @@ const props = defineProps({
     <div
       class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
     >
+      <slot name="closeDate"></slot>
+    </div>
+    <div
+      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
+    >
       <slot name="category"></slot>
     </div>
   </div>
