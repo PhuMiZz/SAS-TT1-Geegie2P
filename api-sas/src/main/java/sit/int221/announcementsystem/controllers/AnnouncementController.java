@@ -4,10 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +16,11 @@ import sit.int221.announcementsystem.dtos.*;
 import org.springframework.web.bind.annotation.*;
 
 import sit.int221.announcementsystem.entities.Announcement;
-import sit.int221.announcementsystem.entities.Category;
 import sit.int221.announcementsystem.exceptions.BadRequestException;
 
 import sit.int221.announcementsystem.services.AnnouncementService;
 import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
-
 import java.util.List;
 
 
@@ -44,7 +41,7 @@ public class AnnouncementController {
             @RequestParam(value = "mode", defaultValue = "admin") String mode){
         List<Announcement> announcements = switch (mode.toLowerCase()){
             case "admin" -> announcementService.getAnnouncements();
-            case "closed" -> announcementService.getClosedAnnouncements();
+            case "close" -> announcementService.getClosedAnnouncements();
             default -> announcementService.getActiveAnnouncements();
         };
         return listMapper.mapList(announcements, AnnouncementsViewDto.class, modelMapper);
@@ -95,20 +92,11 @@ public class AnnouncementController {
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "category", required = false) Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Announcement> announcements;
-
-        if (categoryId != null) {
-            announcements = categoryService.getPageAnnouncementsByCategory(categoryId, pageable);
-        } else {
-            announcements = switch (mode.toLowerCase()) {
-                case "admin" -> announcementService.getPageAdminAnnouncements(pageable);
-                case "closed" -> announcementService.getPageClosedAnnouncements(pageable);
-                default -> announcementService.getPageActiveAnnouncements(pageable);
-            };
-        }
-
+        Page<Announcement> announcements = announcementService.getAnnouncementsByModeAndCategory(mode, categoryId, pageable);
         return listMapper.toPageDTO(announcements, AnnouncementsViewDto.class, modelMapper);
     }
+
+
 
 
 }
