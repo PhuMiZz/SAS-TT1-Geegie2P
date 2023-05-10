@@ -9,7 +9,9 @@ import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue"
 import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
 import PaginationTemplate from "../templates/PaginationTemplate.vue";
+import { usePageStore } from "../../stores/pageStore";
 
+const { currentStatus } = usePageStore();
 const announcementService = new AnnouncementService();
 const router = useRouter();
 
@@ -18,12 +20,12 @@ const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
 
 //status
-const currentStatus = reactive({
-  isActive: true,
-  statusMode: "active",
-  categoryId: 0,
-  pageNo: 0,
-});
+// const currentStatus = reactive({
+//   isActive: true,
+//   statusMode: "active",
+//   categoryId: 0,
+//   pageNo: 0,
+// });
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
