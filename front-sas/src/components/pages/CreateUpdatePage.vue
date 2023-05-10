@@ -193,7 +193,8 @@ const checkInputLength = (event) => {
       <template #title>
         <div class="text-[#336699] flex place-content-between">
           <label for="announcementTitle"> Title </label>
-          <div
+          <label
+            for="announcementTitle"
             class="text-lg text-[#404040] place-self-end"
             :class="
               newAnnouncementData.announcementTitle.length < 180
@@ -208,7 +209,7 @@ const checkInputLength = (event) => {
                 ? "max length!!"
                 : `${newAnnouncementData.announcementTitle.length}/200`
             }}
-          </div>
+          </label>
         </div>
         <input
           @input="checkInputLength"
@@ -222,7 +223,8 @@ const checkInputLength = (event) => {
       <template #description>
         <div class="text-[#336699] flex place-content-between">
           <label for="announcementDescription">Description</label>
-          <div
+          <label
+            for="announcementDescription"
             class="text-lg text-[#404040] place-self-end"
             :class="
               newAnnouncementData.announcementDescription.length < 9980
@@ -237,7 +239,7 @@ const checkInputLength = (event) => {
                 ? "max length!!"
                 : `${newAnnouncementData.announcementDescription.length}/10000`
             }}
-          </div>
+          </label>
         </div>
         <textarea
           @input="checkInputLength"
