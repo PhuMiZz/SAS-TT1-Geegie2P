@@ -5,4 +5,5 @@ import sit.int221.announcementsystem.entities.Category;
 
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
+
 }
