@@ -18,6 +18,7 @@ const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
 const isActive = ref(true);
 const statusMode = ref("active");
+const categoryId = ref(0);
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
@@ -25,6 +26,7 @@ const getTotalIndex = (index) => {
 const refreshAnnouncement = async (pageNo) => {
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
     statusMode.value,
+    categoryId.value,
     pageNo
   );
 };
@@ -32,7 +34,8 @@ watchEffect(async () => {
   isLoading.value = true;
   // allAnnouncement.value = await announcementService.getAllAnnouncement();
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    statusMode.value
+    statusMode.value,
+    categoryId.value
   );
   isAnnouncementEmpty.value =
     Object.keys(allAnnouncement.value.content).length === 0;
@@ -49,6 +52,11 @@ const toggleStatusAnnouncement = () => {
     statusMode.value = "close";
   }
 };
+
+const changeCategory = (id) => {
+  categoryId.value = id;
+  console.log(categoryId.value);
+};
 </script>
 
 <template>
@@ -58,6 +66,7 @@ const toggleStatusAnnouncement = () => {
       :isUserPage="true"
       @toggleStatusAnnouncement="toggleStatusAnnouncement"
       :isActive="isActive"
+      @changeCategory="changeCategory"
     />
     <div
       v-if="isAnnouncementEmpty"
