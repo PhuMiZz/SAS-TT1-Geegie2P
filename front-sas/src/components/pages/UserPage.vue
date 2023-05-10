@@ -34,8 +34,7 @@ watchEffect(async () => {
   isLoading.value = true;
   // allAnnouncement.value = await announcementService.getAllAnnouncement();
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    statusMode.value,
-    categoryId.value
+    statusMode.value
   );
   isAnnouncementEmpty.value =
     Object.keys(allAnnouncement.value.content).length === 0;
@@ -53,9 +52,14 @@ const toggleStatusAnnouncement = () => {
   }
 };
 
-const changeCategory = (id) => {
+const changeCategory = async (id) => {
   categoryId.value = id;
-  console.log(categoryId.value);
+  allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
+    statusMode.value,
+    categoryId.value
+  );
+  isAnnouncementEmpty.value =
+    Object.keys(allAnnouncement.value.content).length === 0;
 };
 </script>
 
