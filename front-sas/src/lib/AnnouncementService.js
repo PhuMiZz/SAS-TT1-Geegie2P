@@ -13,15 +13,20 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getPagesAllAnnouncement(pageNo = 0) {
-    let item;
-    if (pageNo === 0) {
-      item = "";
-    } else item = `?page=${pageNo}`;
+  async getPagesAllAnnouncement(mode = "admin", pageNo = 0) {
+    let modeItem = mode === "admin" ? "" : `?mode=${mode}`;
+    let pageItem =
+      pageNo === 0
+        ? ""
+        : mode === "admin"
+        ? `?page=${pageNo}`
+        : `&page=${pageNo}`;
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/announcements/pages${item}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/announcements/pages${pageItem}${modeItem}`
       );
       if (response.ok) {
         return await response.json();

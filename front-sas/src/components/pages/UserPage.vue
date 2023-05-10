@@ -17,29 +17,36 @@ const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
 const isActive = ref(true);
+const statusMode = ref("active");
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
 };
 const refreshAnnouncement = async (pageNo) => {
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
+    statusMode.value,
     pageNo
   );
 };
 watchEffect(async () => {
   isLoading.value = true;
   // allAnnouncement.value = await announcementService.getAllAnnouncement();
-  allAnnouncement.value = await announcementService.getPagesAllAnnouncement();
+  allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
+    statusMode.value
+  );
   isAnnouncementEmpty.value =
     Object.keys(allAnnouncement.value.content).length === 0;
   isLoading.value = false;
 });
 
 const toggleStatusAnnouncement = () => {
-  if (!isActive.value) {
-    isActive.value = true;
+  isActive.value = !isActive.value;
+  if (isActive.value) {
+    console.log(isActive.value);
+    statusMode.value = "active";
   } else {
-    isActive.value = false;
+    console.log(isActive.value);
+    statusMode.value = "close";
   }
 };
 </script>
