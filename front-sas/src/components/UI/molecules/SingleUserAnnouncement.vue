@@ -1,15 +1,9 @@
 <script setup>
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
 import AnnouncementUserTemplate from "../../templates/AnnouncementUserTemplate.vue";
 import BadgeCategories from "./BadgeCategories.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
 
 defineEmits(["announcementId"]);
-const showModal = ref(false);
-const selectedAnnouncement = ref();
-const announcementService = new AnnouncementService();
 const props = defineProps({
   announcementItem: {
     type: Object,
