@@ -166,16 +166,6 @@ const setTimeDefault = (event) => {
 
   updateCheck();
 };
-
-const checkInputLength = (event) => {
-  if (event.currentTarget.id === "announcementTitle") {
-    console.log(newAnnouncementData.announcementTitle.length);
-  } else {
-    console.log(newAnnouncementData.announcementDescription.length);
-  }
-
-  updateCheck();
-};
 </script>
 
 <template>
@@ -212,7 +202,7 @@ const checkInputLength = (event) => {
           </label>
         </div>
         <input
-          @input="checkInputLength"
+          @input="updateCheck"
           id="announcementTitle"
           v-model="newAnnouncementData.announcementTitle"
           type="text"
@@ -242,7 +232,7 @@ const checkInputLength = (event) => {
           </label>
         </div>
         <textarea
-          @input="checkInputLength"
+          @input="updateCheck"
           id="announcementDescription"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."

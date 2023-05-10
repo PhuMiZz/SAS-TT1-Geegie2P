@@ -13,12 +13,18 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getPagesAllAnnouncement(mode = "admin", pageNo = 0) {
+  async getPagesAllAnnouncement(mode = "admin", categoryId = 0, pageNo = 0) {
     let modeItem = mode === "admin" ? "" : `?mode=${mode}`;
+    let categoryItem =
+      categoryId === 0
+        ? ""
+        : mode === "admin"
+        ? `?category=${categoryId}`
+        : `&category=${categoryId}`;
     let pageItem =
       pageNo === 0
         ? ""
-        : mode === "admin"
+        : mode === "admin" && categoryId === 0
         ? `?page=${pageNo}`
         : `&page=${pageNo}`;
 
@@ -26,7 +32,7 @@ class AnnouncementService {
       const response = await fetch(
         `${
           import.meta.env.VITE_API_URL
-        }/api/announcements/pages${pageItem}${modeItem}`
+        }/api/announcements/pages${modeItem}${categoryItem}${pageItem}`
       );
       if (response.ok) {
         return await response.json();
