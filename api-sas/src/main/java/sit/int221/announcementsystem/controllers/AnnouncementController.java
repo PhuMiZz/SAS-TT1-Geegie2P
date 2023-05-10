@@ -83,24 +83,12 @@ public class AnnouncementController {
         }
     }
 
-    @GetMapping("/announcements/category/{categoryId}")
+    @GetMapping("/category/{categoryId}")
     public List<AnnouncementsViewDto> getAllAnnouncementByCategory(@PathVariable Integer categoryId){
         return listMapper.mapList(announcementService.getAnnouncementByCategory(categoryId), AnnouncementsViewDto.class, modelMapper);
     }
-    // Category
-    @GetMapping("/categories")
-    public List<Category> getCategories() {
-        return categoryService.getCategories();
-    }
 
-    @GetMapping("/categories/{id}")
-    public Category getCategory(@PathVariable Integer id) {
-           return categoryService.getCategoryById(id) ;
-    }
-    @PostMapping("/categories")
-    public Category createCategory(@RequestBody Category newCategory){
-        return categoryService.createCategory(newCategory);
-    }
+
     @GetMapping("/pages")
     public PageDto<AnnouncementsViewDto> getAnnouncementsPages(
             @RequestParam(value = "mode", defaultValue = "admin") String mode,
