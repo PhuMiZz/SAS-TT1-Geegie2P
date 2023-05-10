@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
 import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateViewDto;
-import sit.int221.announcementsystem.dtos.AnnouncementsViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.entities.Category;
 import sit.int221.announcementsystem.exceptions.BadRequestException;
@@ -34,13 +33,16 @@ public class AnnouncementService {
     public List<Announcement> getAnnouncements() {
         return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc();
     }
-    public List<AnnouncementsViewDto> getAnnouncementsViewDtos() {
-        List<Announcement> announcements = getAnnouncements();
-        return listMapper.mapList(announcements, AnnouncementsViewDto.class, modelMapper);
+
+    public List<Announcement> getActiveAnnouncements(){
+        ZonedDateTime now = ZonedDateTime.now();
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y,now);
     }
-    public Page<Announcement> getAdminAnnouncements(Pageable pageable) {
-        return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
+    public List<Announcement> getClosedAnnouncements(){
+        ZonedDateTime now = ZonedDateTime.now();
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y,now);
     }
+
     public Announcement getAnnouncementDetail(int announcementId) {
         return announcementRepository.findById(announcementId).orElseThrow(
                 () -> new ItemNotFoundException("Announcement id: " + announcementId + " does not exist!.")
@@ -82,12 +84,16 @@ public class AnnouncementService {
         Announcement announcement = modelMapper.map(oldAnnouncement, Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
-    public Page<Announcement> getActiveAnnouncements(Pageable pageable) {
+    public Page<Announcement> getPageAdminAnnouncements(Pageable pageable) {
+        return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
+    }
+    public Page<Announcement> getPageActiveAnnouncements(Pageable pageable) {
         ZonedDateTime now = ZonedDateTime.now();
         return announcementRepository.findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus.Y, now, pageable);
     }
-    public Page<Announcement> getClosedAnnouncements(Pageable pageable) {
+    public Page<Announcement> getPageClosedAnnouncements(Pageable pageable) {
         ZonedDateTime now = ZonedDateTime.now();
         return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y, now, pageable);
     }
+
 }
