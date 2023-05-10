@@ -22,16 +22,18 @@ const currentStatus = reactive({
   isActive: true,
   statusMode: "active",
   categoryId: 0,
+  pageNo: 0,
 });
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
 };
 const refreshAnnouncement = async (pageNo) => {
+  currentStatus.pageNo = pageNo;
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
     currentStatus.statusMode,
     currentStatus.categoryId,
-    pageNo
+    currentStatus.pageNo
   );
 };
 watchEffect(async () => {
