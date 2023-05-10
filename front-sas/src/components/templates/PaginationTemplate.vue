@@ -16,25 +16,33 @@ const props = defineProps({
   },
   pageRange: {
     type: Number,
-    default: 2,
+    default: 5,
   },
 });
 
 const pages = computed(() => {
   const pages = [];
-  for (let i = pageStart.value; i <= pageEnd.value; i++) {
+  for (let i = pageStart.value; i < pageEnd.value; i++) {
     pages.push(i);
   }
   return pages;
 });
 const pageStart = computed(() => {
-  const start = props.offset - props.pageRange;
-  return start > 0 ? start : 1;
+  if (
+    props.offset === 0 ||
+    props.pageRange > props.totalPages ||
+    props.offset < props.pageRange - 1
+  ) {
+    return 0;
+  } else if (props.offset >= props.pageRange - 1) {
+    return props.offset - (Math.ceil(props.totalPages / props.pageRange) - 1);
+  }
 });
+
 const pageEnd = computed(() => {
-  const end = props.offset + props.pageRange;
-  return end < props.totalPages ? end : props.totalPages;
+  return Math.min(pageStart.value + props.pageRange, props.totalPages);
 });
+
 const nextPage = computed(() => {
   return props.offset + 1;
 });
@@ -52,10 +60,10 @@ const selectPage = (e, action) => {
   }
 };
 const hasFirst = () => {
-  return pageStart.value !== 1;
+  return props.offset === 1;
 };
 const hasLast = () => {
-  return pageEnd.value < props.totalPages;
+  return props.offset === props.totalPages;
 };
 </script>
 
@@ -70,43 +78,43 @@ const hasLast = () => {
       </button>
       <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
 
-      <button
+      <!-- <button
         v-if="hasFirst()"
         @click="selectPage(e, 0)"
         class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
       >
         <span>1</span>
-      </button>
-      <div
+      </button> -->
+      <!-- <div
         v-if="hasFirst()"
         class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out"
       >
         <span>...</span>
-      </div>
+      </div> -->
 
       <button
         v-for="page in pages"
-        v-on="page - 1 == offset ? {} : { click: selectPage }"
+        v-on="page === offset ? {} : { click: selectPage }"
         :key="page"
-        :value="page - 1"
-        :class="page - 1 == offset ? 'bg-[#336699] text-white' : 'bg-white'"
-        class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
+        :value="page"
+        :class="page === offset ? 'bg-[#336699] text-white' : 'bg-white'"
+        class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
       >
-        {{ page }}
+        {{ page + 1 }}
       </button>
-      <div
+      <!-- <div
         v-if="hasLast()"
         class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out"
       >
         <span>...</span>
-      </div>
-      <button
+      </div> -->
+      <!-- <button
         v-if="hasLast()"
         @click="selectPage(e, totalPages - 1)"
         class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
       >
         <span>{{ totalPages }}</span>
-      </button>
+      </button> -->
 
       <button
         @click="selectPage(e, nextPage)"
