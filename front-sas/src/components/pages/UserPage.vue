@@ -1,14 +1,14 @@
 <script setup>
-import { ref, watchEffect, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import PageTemplate from '../templates/PageTemplate.vue';
-import AnnouncementTitle from '../UI/organisms/AnnouncementTitle.vue';
-import AnnouncementService from '@/lib/AnnouncementService';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
-import AnnouncementUserTemplate from '../templates/AnnouncementUserTemplate.vue';
-import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
-import SingleUserAnnouncement from '../UI/molecules/SingleUserAnnouncement.vue';
-import PaginationTemplate from '../templates/PaginationTemplate.vue';
+import { ref, watchEffect, computed } from "vue";
+import { useRouter } from "vue-router";
+import PageTemplate from "../templates/PageTemplate.vue";
+import AnnouncementTitle from "../UI/organisms/AnnouncementTitle.vue";
+import AnnouncementService from "@/lib/AnnouncementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue";
+import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
+import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
+import PaginationTemplate from "../templates/PaginationTemplate.vue";
 
 const announcementService = new AnnouncementService();
 const router = useRouter();
@@ -42,10 +42,10 @@ watchEffect(async () => {
 const toggleStatusAnnouncement = () => {
   isActive.value = !isActive.value;
   if (isActive.value) {
-    console.log(isActive.value);
+    // console.log(isActive.value);
     statusMode.value = "active";
   } else {
-    console.log(isActive.value);
+    // console.log(isActive.value);
     statusMode.value = "close";
   }
 };
