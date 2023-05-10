@@ -48,22 +48,14 @@ public class AnnouncementController {
     }
 
     @GetMapping("/{id}")
-    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable String id) {
-        try {
-            int announcementId = Integer.parseInt(id);
-            return modelMapper.map(announcementService.getAnnouncementDetail(announcementId), AnnouncementDetailDto.class);
-        } catch (NumberFormatException ex) {
-            throw new BadRequestException("Invalid announcement ID: " + id);
-        }
+    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id) {
+        return modelMapper.map(announcementService.getAnnouncementDetail(id), AnnouncementDetailDto.class);
     }
+
 
     @PostMapping("")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
-        try {
-            return announcementService.createAnnouncement(newAnnouncement);
-        } catch (DataIntegrityViolationException e){
-            throw new BadRequestException("Data incorrect");
-        }
+        return announcementService.createAnnouncement(newAnnouncement);
     }
 
     @DeleteMapping("/{id}")
