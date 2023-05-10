@@ -36,7 +36,7 @@ public class AnnouncementService {
 
     public List<Announcement> getActiveAnnouncements(){
         ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y,now);
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus.Y,now);
     }
     public List<Announcement> getClosedAnnouncements(){
         ZonedDateTime now = ZonedDateTime.now();

@@ -20,7 +20,6 @@ public class CategoryController {
     ModelMapper modelMapper;
     @Autowired
     CategoryService categoryService;
-    // Category
     @GetMapping("")
     public List<Category> getCategories() {
         return categoryService.getCategories();

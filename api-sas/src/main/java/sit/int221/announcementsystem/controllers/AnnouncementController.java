@@ -41,7 +41,7 @@ public class AnnouncementController {
     private ListMapper listMapper = ListMapper.getInstance();
     @GetMapping("")
     public List<AnnouncementsViewDto> getAnnouncements(
-            @RequestParam(value = "mode", defaultValue = "admin") String mode) {
+            @RequestParam(value = "mode", defaultValue = "admin") String mode){
         List<Announcement> announcements = switch (mode.toLowerCase()){
             case "admin" -> announcementService.getAnnouncements();
             case "closed" -> announcementService.getClosedAnnouncements();
@@ -88,20 +88,27 @@ public class AnnouncementController {
         return listMapper.mapList(announcementService.getAnnouncementByCategory(categoryId), AnnouncementsViewDto.class, modelMapper);
     }
 
-
     @GetMapping("/pages")
     public PageDto<AnnouncementsViewDto> getAnnouncementsPages(
             @RequestParam(value = "mode", defaultValue = "admin") String mode,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "category", required = false) Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Announcement> announcements = switch (mode.toLowerCase()) {
-            case "admin" -> announcementService.getPageAdminAnnouncements(pageable);
-            case "closed" -> announcementService.getPageClosedAnnouncements(pageable);
-            default -> announcementService.getPageActiveAnnouncements(pageable);
-        };
+        Page<Announcement> announcements;
+
+        if (categoryId != null) {
+            announcements = categoryService.getPageAnnouncementsByCategory(categoryId, pageable);
+        } else {
+            announcements = switch (mode.toLowerCase()) {
+                case "admin" -> announcementService.getPageAdminAnnouncements(pageable);
+                case "closed" -> announcementService.getPageClosedAnnouncements(pageable);
+                default -> announcementService.getPageActiveAnnouncements(pageable);
+            };
+        }
 
         return listMapper.toPageDTO(announcements, AnnouncementsViewDto.class, modelMapper);
     }
+
 
 }
