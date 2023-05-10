@@ -1,18 +1,9 @@
 <script setup>
 import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
 import AnnouncementUserTemplate from "../../templates/AnnouncementUserTemplate.vue";
 import BadgeCategories from "./BadgeCategories.vue";
-import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import ConfirmModal from "@/components/UI/organisms/ConfirmModal.vue";
-import OverlayTemplate from "../../templates/OverlayTemplate.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
 
 defineEmits(["announcementId"]);
-const showModal = ref(false);
-const selectedAnnouncement = ref();
-const announcementService = new AnnouncementService();
 const props = defineProps({
   announcementItem: {
     type: Object,
@@ -42,7 +33,7 @@ const props = defineProps({
     </template>
     <template #closeDate v-if="isActive"
       ><div class="text-[#737373] w-1/3 xl:hidden block">Close Date</div>
-      <p class="ann-close-date">
+      <p class="ann-close-date text-[#737373]">
         {{ getLocaleDateTime(announcementItem.closeDate) }}
       </p>
     </template>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect, computed } from "vue";
+import { ref, watchEffect, computed, reactive } from "vue";
 import { useRouter } from "vue-router";
 import PageTemplate from "../templates/PageTemplate.vue";
 import AnnouncementTitle from "../UI/organisms/AnnouncementTitle.vue";
@@ -9,32 +9,40 @@ import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue"
 import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
 import PaginationTemplate from "../templates/PaginationTemplate.vue";
+import { usePageStore } from "../../stores/pageStore";
 
+const { currentStatus } = usePageStore();
 const announcementService = new AnnouncementService();
 const router = useRouter();
 
 const allAnnouncement = ref([]);
 const isAnnouncementEmpty = ref(false);
 const isLoading = ref(true);
-const isActive = ref(true);
-const statusMode = ref("active");
-const categoryId = ref(0);
+
+//status
+// const currentStatus = reactive({
+//   isActive: true,
+//   statusMode: "active",
+//   categoryId: 0,
+//   pageNo: 0,
+// });
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
 };
 const refreshAnnouncement = async (pageNo) => {
+  currentStatus.pageNo = pageNo;
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    statusMode.value,
-    categoryId.value,
-    pageNo
+    currentStatus.statusMode,
+    currentStatus.categoryId,
+    currentStatus.pageNo
   );
 };
 watchEffect(async () => {
   isLoading.value = true;
   // allAnnouncement.value = await announcementService.getAllAnnouncement();
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    statusMode.value
+    currentStatus.statusMode
   );
   isAnnouncementEmpty.value =
     Object.keys(allAnnouncement.value.content).length === 0;
@@ -42,21 +50,19 @@ watchEffect(async () => {
 });
 
 const toggleStatusAnnouncement = () => {
-  isActive.value = !isActive.value;
-  if (isActive.value) {
-    // console.log(isActive.value);
-    statusMode.value = "active";
+  currentStatus.isActive = !currentStatus.isActive;
+  if (currentStatus.isActive) {
+    currentStatus.statusMode = "active";
   } else {
-    // console.log(isActive.value);
-    statusMode.value = "close";
+    currentStatus.statusMode = "close";
   }
 };
 
 const changeCategory = async (id) => {
-  categoryId.value = id;
+  currentStatus.categoryId = id;
   allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    statusMode.value,
-    categoryId.value
+    currentStatus.statusMode,
+    currentStatus.categoryId
   );
   isAnnouncementEmpty.value =
     Object.keys(allAnnouncement.value.content).length === 0;
@@ -69,7 +75,7 @@ const changeCategory = async (id) => {
     <AnnouncementTitle
       :isUserPage="true"
       @toggleStatusAnnouncement="toggleStatusAnnouncement"
-      :isActive="isActive"
+      :isActive="currentStatus.isActive"
       @changeCategory="changeCategory"
     />
     <div
@@ -82,7 +88,7 @@ const changeCategory = async (id) => {
       <AnnouncementUserTemplate :header="true" class="hidden xl:flex">
         <template #announcementNo>No.</template>
         <template #title>Title</template>
-        <template #closeDate v-if="isActive">Close Date</template>
+        <template #closeDate v-if="currentStatus.isActive">Close Date</template>
         <template #category>Category</template>
       </AnnouncementUserTemplate>
     </div>
@@ -94,7 +100,7 @@ const changeCategory = async (id) => {
         @announcementId="
           (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
         "
-        :isActive="isActive"
+        :isActive="currentStatus.isActive"
         :index="getTotalIndex(announcement.index)"
         :announcementItem="announcement.announcementItem"
         class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"

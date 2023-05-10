@@ -1,13 +1,12 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
-import AnnouncementService from '@/lib/AnnouncementService';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
-import AnnouncementCard from '../templates/AnnouncementCard.vue';
-import TextDescription from '../UI/molecules/TextDescription.vue';
-import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
-import PageTemplate from '../templates/PageTemplate.vue';
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import AnnouncementService from "@/lib/AnnouncementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementCard from "../templates/AnnouncementCard.vue";
+import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
+import PageTemplate from "../templates/PageTemplate.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();

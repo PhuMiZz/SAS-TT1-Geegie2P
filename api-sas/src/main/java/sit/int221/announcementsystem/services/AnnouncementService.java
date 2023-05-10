@@ -36,13 +36,14 @@ public class AnnouncementService {
 
     public List<Announcement> getActiveAnnouncements() {
         ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateAfter(Announcement.DisplayStatus.Y, now);
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateIsNullOrCloseDateAfter(Announcement.DisplayStatus.Y, now);
     }
 
     public List<Announcement> getClosedAnnouncements() {
         ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateBefore(Announcement.DisplayStatus.Y, now);
+        return announcementRepository.findAllByAnnouncementDisplayAndCloseDateIsNotNullAndCloseDateBefore(Announcement.DisplayStatus.Y, now);
     }
+
 
     public Announcement getAnnouncementDetail(int announcementId) {
         return announcementRepository.findById(announcementId).orElseThrow(
@@ -87,15 +88,19 @@ public class AnnouncementService {
     }
 
     public Page<Announcement> getAnnouncementsByModeAndCategory(String mode, Integer categoryId, Pageable pageable) {
+        Category category = categoryId != null ? categoryRepository.findById(categoryId).orElse(null) : null;
+        ZonedDateTime now = ZonedDateTime.now();
+
         return switch (mode.toLowerCase()) {
             case "admin" ->
-                    categoryId != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(categoryId, pageable) : announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
+                    category != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(category, pageable) : announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
             case "close" ->
-                    categoryId != null ? announcementRepository.findClosedAnnouncementsByCategory(categoryId, pageable) : announcementRepository.findClosedAnnouncements(pageable);
+                    category != null ? announcementRepository.findByCategoryAndAnnouncementDisplayAndCloseDateIsNotNullAndCloseDateBeforeOrderByPublishDateDesc(category, Announcement.DisplayStatus.Y, now, pageable) : announcementRepository.findByAnnouncementDisplayAndCloseDateIsNotNullAndCloseDateBeforeOrderByPublishDateDesc(Announcement.DisplayStatus.Y, now, pageable);
             default -> // active
-                    categoryId != null ? announcementRepository.findActiveAnnouncementsByCategory(categoryId, pageable) : announcementRepository.findActiveAnnouncements(pageable);
+                    category != null ? announcementRepository.findByCategoryAndAnnouncementDisplayAndCloseDateIsNullOrderByPublishDateDesc(category, Announcement.DisplayStatus.Y, pageable) : announcementRepository.findByAnnouncementDisplayAndCloseDateNullOrCloseDateAfterOrderByPublishDateDesc(Announcement.DisplayStatus.Y,now, pageable);
         };
     }
+
 
 
 }
