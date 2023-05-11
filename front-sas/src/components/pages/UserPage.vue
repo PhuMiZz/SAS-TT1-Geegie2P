@@ -10,22 +10,14 @@ import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
 import PaginationTemplate from "../templates/PaginationTemplate.vue";
 import { usePageStore } from "../../stores/pageStore";
+import { storeToRefs } from "pinia";
 
-const { currentStatus } = usePageStore();
+const pageStore = usePageStore();
+const { changeCategory, toggleStatusAnnouncement } = pageStore;
+const { currentStatus, allAnnouncement, isAnnouncementEmpty, isLoading } =
+  storeToRefs(pageStore);
 const announcementService = new AnnouncementService();
 const router = useRouter();
-
-const allAnnouncement = ref([]);
-const isAnnouncementEmpty = ref(false);
-const isLoading = ref(true);
-
-//status
-// const currentStatus = reactive({
-//   isActive: true,
-//   statusMode: "active",
-//   categoryId: 0,
-//   pageNo: 0,
-// });
 
 const getTotalIndex = (index) => {
   return allAnnouncement.value.page * allAnnouncement.value.size + index;
@@ -37,35 +29,6 @@ const refreshAnnouncement = async (pageNo) => {
     currentStatus.categoryId,
     currentStatus.pageNo
   );
-};
-watchEffect(async () => {
-  isLoading.value = true;
-  // allAnnouncement.value = await announcementService.getAllAnnouncement();
-  allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    currentStatus.statusMode
-  );
-  isAnnouncementEmpty.value =
-    Object.keys(allAnnouncement.value.content).length === 0;
-  isLoading.value = false;
-});
-
-const toggleStatusAnnouncement = () => {
-  currentStatus.isActive = !currentStatus.isActive;
-  if (currentStatus.isActive) {
-    currentStatus.statusMode = "active";
-  } else {
-    currentStatus.statusMode = "close";
-  }
-};
-
-const changeCategory = async (id) => {
-  currentStatus.categoryId = id;
-  allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-    currentStatus.statusMode,
-    currentStatus.categoryId
-  );
-  isAnnouncementEmpty.value =
-    Object.keys(allAnnouncement.value.content).length === 0;
 };
 </script>
 
