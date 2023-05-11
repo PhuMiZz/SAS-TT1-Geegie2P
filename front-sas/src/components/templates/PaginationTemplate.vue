@@ -28,17 +28,20 @@ const pages = computed(() => {
   return pages;
 });
 const pageStart = computed(() => {
-    if (props.offset < Math.floor(props.pageRange / 2)) {
-        return 0;
-    } else if (props.offset >= props.totalPages - Math.floor(props.pageRange / 2)) {
-        return props.totalPages - props.pageRange;
-    } else {
-        return props.offset - Math.floor(props.pageRange / 2);
-    }
+  if (props.offset < Math.floor(props.pageRange / 2)) {
+    return 0;
+  } else if (
+    props.offset >=
+    props.totalPages - Math.floor(props.pageRange / 2)
+  ) {
+    return props.totalPages - props.pageRange;
+  } else {
+    return props.offset - Math.floor(props.pageRange / 2);
+  }
 });
 
 const pageEnd = computed(() => {
-    return Math.min(pageStart.value + props.pageRange, props.totalPages);
+  return Math.min(pageStart.value + props.pageRange, props.totalPages);
 });
 
 const nextPage = computed(() => {
@@ -70,7 +73,7 @@ const hasLast = () => {
     <nav class="isolate w-fit inline-flex -space-x-px rounded-md shadow-sm">
       <button
         @click="selectPage(e, previousPage)"
-        class="w-16 md:w-20 relative inline-flex items-center justify-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0"
+        class="ann-page-prev w-16 md:w-20 relative inline-flex items-center justify-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0"
       >
         <span>Previous</span>
       </button>
@@ -95,7 +98,11 @@ const hasLast = () => {
         v-on="page === offset ? {} : { click: selectPage }"
         :key="page"
         :value="page"
-        :class="page === offset ? 'bg-[#336699] text-white' : 'bg-white'"
+        :class="
+          page === offset
+            ? `bg-[#336699] text-white ann-page-${page}`
+            : `bg-white ann-page-${page}`
+        "
         class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
       >
         {{ page + 1 }}
@@ -116,7 +123,7 @@ const hasLast = () => {
 
       <button
         @click="selectPage(e, nextPage)"
-        class="w-16 md:w-20 relative inline-flex items-center justify-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0"
+        class="ann-page-next w-16 md:w-20 relative inline-flex items-center justify-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0"
       >
         <span>Next</span>
       </button>

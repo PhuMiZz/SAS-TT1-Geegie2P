@@ -57,7 +57,7 @@ const createAnnouncement = () => {
           <CategoryIcon />
           Category:
           <select
-            class="ann-category bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
+            class="ann-category-filter bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
             v-model="currentStatus.categoryId"
             @change="$emit('changeCategory', currentStatus.categoryId)"
           >
