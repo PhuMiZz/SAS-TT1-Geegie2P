@@ -29,7 +29,6 @@ const pages = computed(() => {
 const pageStart = computed(() => {
   const currentPage = props.offset + 1; // default offset 0
   if (currentPage < props.pageRange || props.pageRange >= props.totalPages) {
-    console.log(currentPage);
     return 0;
   } else if (currentPage === props.totalPages) {
     return currentPage - props.pageRange;
