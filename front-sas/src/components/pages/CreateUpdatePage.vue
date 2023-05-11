@@ -10,7 +10,7 @@ import { useRoute } from "vue-router";
 import {
   extractDateAndTime,
   getISODateTime,
-} from "@/lib/DateTimeManagement.js";
+} from "@/lib/dateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const router = useRoute();
