@@ -46,6 +46,19 @@ export const usePageStore = defineStore("page", () => {
     isLoading.value = false;
   });
 
+  const refreshAnnouncement = async (pageNo) => {
+    currentStatus.pageNo = pageNo;
+    allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
+      currentStatus.statusMode,
+      currentStatus.categoryId,
+      currentStatus.pageNo
+    );
+  };
+
+  const getTotalIndex = (index) => {
+    return allAnnouncement.value.page * allAnnouncement.value.size + index;
+  };
+
   return {
     isLoading,
     allAnnouncement,
@@ -53,6 +66,8 @@ export const usePageStore = defineStore("page", () => {
     currentStatus,
     changeCategory,
     toggleStatusAnnouncement,
+    refreshAnnouncement,
+    getTotalIndex,
   };
 });
 if (import.meta.hot) {
