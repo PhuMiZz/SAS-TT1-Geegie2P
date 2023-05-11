@@ -1,5 +1,5 @@
 <script setup>
-import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
+import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
 import AnnouncementUserTemplate from "../../templates/AnnouncementUserTemplate.vue";
 import BadgeCategories from "./BadgeCategories.vue";
 

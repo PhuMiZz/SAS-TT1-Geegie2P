@@ -5,7 +5,7 @@ import AnnouncementService from '@/lib/AnnouncementService';
 import LoadingPage from '../UI/organisms/LoadingPage.vue';
 import AnnouncementCard from '../templates/AnnouncementCard.vue';
 import TextDescription from '../UI/molecules/TextDescription.vue';
-import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
 import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
 import PageTemplate from '../templates/PageTemplate.vue';
 
