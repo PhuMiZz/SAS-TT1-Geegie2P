@@ -18,10 +18,6 @@ export const usePageStore = defineStore("page", () => {
 
   const changeCategory = async (id) => {
     currentStatus.categoryId = id;
-    allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-      currentStatus.statusMode,
-      currentStatus.categoryId
-    );
     isAnnouncementEmpty.value =
       Object.keys(allAnnouncement.value.content).length === 0;
   };
@@ -37,9 +33,10 @@ export const usePageStore = defineStore("page", () => {
 
   watchEffect(async () => {
     isLoading.value = true;
-    // allAnnouncement.value = await announcementService.getAllAnnouncement();
     allAnnouncement.value = await announcementService.getPagesAllAnnouncement(
-      currentStatus.statusMode
+      currentStatus.statusMode,
+      currentStatus.categoryId,
+      currentStatus.pageNo
     );
     isAnnouncementEmpty.value =
       Object.keys(allAnnouncement.value.content).length === 0;

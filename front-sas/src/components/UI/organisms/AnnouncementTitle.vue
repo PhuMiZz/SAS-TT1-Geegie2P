@@ -10,7 +10,7 @@ import { storeToRefs } from "pinia";
 
 const pageStore = usePageStore();
 const { currentStatus } = storeToRefs(pageStore);
-const { changeCategory, toggleStatusAnnouncement } = pageStore;
+const { toggleStatusAnnouncement } = pageStore;
 
 const props = defineProps({
   isUserPage: {
@@ -59,7 +59,7 @@ const createAnnouncement = () => {
           <select
             class="ann-category bg-[#FAFAFA] p-1 h-9 w-full rounded-lg"
             v-model="currentStatus.categoryId"
-            @change="changeCategory(currentStatus.categoryId)"
+            @change="$emit('changeCategory', currentStatus.categoryId)"
           >
             <option :value="0">ทั้งหมด</option>
             <option v-for="category in categories" :value="category.id">

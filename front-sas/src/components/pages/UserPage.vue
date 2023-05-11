@@ -11,7 +11,7 @@ import { usePageStore } from "../../stores/pageStore";
 import { storeToRefs } from "pinia";
 
 const pageStore = usePageStore();
-const { refreshAnnouncement, getTotalIndex } = pageStore;
+const { changeCategory, refreshAnnouncement, getTotalIndex } = pageStore;
 const { currentStatus, allAnnouncement, isAnnouncementEmpty, isLoading } =
   storeToRefs(pageStore);
 const router = useRouter();
@@ -20,7 +20,7 @@ const router = useRouter();
 <template>
   <LoadingPage v-if="isLoading" />
   <PageTemplate v-else>
-    <AnnouncementTitle :isUserPage="true" />
+    <AnnouncementTitle :isUserPage="true" @changeCategory="changeCategory" />
     <div
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
