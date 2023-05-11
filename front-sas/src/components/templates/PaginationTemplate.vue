@@ -16,7 +16,7 @@ const props = defineProps({
   },
   pageRange: {
     type: Number,
-    default: 5,
+    default: 10,
   },
 });
 
@@ -28,19 +28,17 @@ const pages = computed(() => {
   return pages;
 });
 const pageStart = computed(() => {
-  if (
-    props.offset === 0 ||
-    props.pageRange > props.totalPages ||
-    props.offset < props.pageRange - 1
-  ) {
-    return 0;
-  } else if (props.offset >= props.pageRange - 1) {
-    return props.offset - (Math.ceil(props.totalPages / props.pageRange) - 1);
-  }
+    if (props.offset < Math.floor(props.pageRange / 2)) {
+        return 0;
+    } else if (props.offset >= props.totalPages - Math.floor(props.pageRange / 2)) {
+        return props.totalPages - props.pageRange;
+    } else {
+        return props.offset - Math.floor(props.pageRange / 2);
+    }
 });
 
 const pageEnd = computed(() => {
-  return Math.min(pageStart.value + props.pageRange, props.totalPages);
+    return Math.min(pageStart.value + props.pageRange, props.totalPages);
 });
 
 const nextPage = computed(() => {
