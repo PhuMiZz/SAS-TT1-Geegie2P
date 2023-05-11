@@ -58,10 +58,10 @@ const selectPage = (e, action) => {
   }
 };
 const hasFirst = () => {
-  return props.offset === 1;
+  return props.offset + 1 === 1;
 };
 const hasLast = () => {
-  return props.offset === props.totalPages;
+  return props.offset + 1 === props.totalPages;
 };
 </script>
 
@@ -70,26 +70,11 @@ const hasLast = () => {
     <nav class="isolate w-fit inline-flex -space-x-px rounded-md shadow-sm">
       <button
         @click="selectPage(e, previousPage)"
-        :disabled="props.offset === 0"
+        :disabled="hasFirst()"
         class="ann-page-prev w-16 md:w-20 relative inline-flex items-center justify-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0 disabled:hover:text-gray-400 disabled:hover:bg-white disabled:opacity-50"
       >
         <span>Previous</span>
       </button>
-      <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
-
-      <!-- <button
-        v-if="hasFirst()"
-        @click="selectPage(e, 0)"
-        class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
-      >
-        <span>1</span>
-      </button> -->
-      <!-- <div
-        v-if="hasFirst()"
-        class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out"
-      >
-        <span>...</span>
-      </div> -->
 
       <button
         v-for="page in pages"
@@ -105,23 +90,10 @@ const hasLast = () => {
       >
         {{ page + 1 }}
       </button>
-      <!-- <div
-        v-if="hasLast()"
-        class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out"
-      >
-        <span>...</span>
-      </div> -->
-      <!-- <button
-        v-if="hasLast()"
-        @click="selectPage(e, totalPages - 1)"
-        class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
-      >
-        <span>{{ totalPages }}</span>
-      </button> -->
 
       <button
         @click="selectPage(e, nextPage)"
-        :disabled="offset + 1 === totalPages"
+        :disabled="hasLast()"
         class="ann-page-next w-16 md:w-20 relative inline-flex items-center justify-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0 disabled:hover:text-gray-400 disabled:hover:bg-white disabled:opacity-50"
       >
         <span>Next</span>
