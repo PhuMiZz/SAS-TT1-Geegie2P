@@ -19,7 +19,6 @@ const props = defineProps({
     default: 10,
   },
 });
-
 const pages = computed(() => {
   const pages = [];
   for (let i = pageStart.value; i < pageEnd.value; i++) {
@@ -28,18 +27,14 @@ const pages = computed(() => {
   return pages;
 });
 const pageStart = computed(() => {
-  if (props.offset <= Math.floor(props.pageRange / 2)) {
-    console.log('if');
+  const currentPage = props.offset + 1; // default offset 0
+  if (currentPage < props.pageRange || props.pageRange >= props.totalPages) {
+    console.log(currentPage);
     return 0;
-  } else if (
-    props.offset + (Math.ceil(props.pageRange / 2) - 1) >=
-    props.totalPages
-  ) {
-    console.log('else if');
-    return props.totalPages - props.pageRange;
+  } else if (currentPage === props.totalPages) {
+    return currentPage - props.pageRange;
   } else {
-    console.log('else');
-    return props.offset - Math.floor(props.pageRange / 2);
+    return currentPage - props.pageRange + 1;
   }
 });
 
