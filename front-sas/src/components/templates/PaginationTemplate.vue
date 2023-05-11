@@ -74,7 +74,7 @@ const hasLast = () => {
       <button
         @click="selectPage(e, previousPage)"
         :disabled="props.offset === 0"
-        class="ann-page-prev w-16 md:w-20 relative inline-flex items-center justify-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0 disabled:hover:text-gray-400 disabled:hover:bg-white"
+        class="ann-page-prev w-16 md:w-20 relative inline-flex items-center justify-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0 disabled:hover:text-gray-400 disabled:hover:bg-white disabled:opacity-50"
       >
         <span>Previous</span>
       </button>
@@ -125,7 +125,7 @@ const hasLast = () => {
       <button
         @click="selectPage(e, nextPage)"
         :disabled="offset + 1 === totalPages"
-        class="ann-page-next w-16 md:w-20 relative inline-flex items-center justify-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0 disabled:hover:text-gray-400 disabled:hover:bg-white"
+        class="ann-page-next w-16 md:w-20 relative inline-flex items-center justify-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 transition duration-300 ease-in-out hover:bg-[#336699] hover:text-white focus:z-20 focus:outline-offset-0 disabled:hover:text-gray-400 disabled:hover:bg-white disabled:opacity-50"
       >
         <span>Next</span>
       </button>
