@@ -32,11 +32,11 @@ const pageStart = computed(() => {
     console.log('if');
     return 0;
   } else if (
-    props.offset + (Math.floor(props.pageRange / 2) - 1) >=
+    props.offset + (Math.ceil(props.pageRange / 2) - 1) >=
     props.totalPages
   ) {
     console.log('else if');
-    return props.totalPages - props.pageRange + 1;
+    return props.totalPages - props.pageRange;
   } else {
     console.log('else');
     return props.offset - Math.floor(props.pageRange / 2);
