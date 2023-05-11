@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
+import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
 import AnnouncementService from "@/lib/AnnouncementService";
 import LoadingPage from "../UI/organisms/LoadingPage.vue";
 import AnnouncementCard from "../templates/AnnouncementCard.vue";

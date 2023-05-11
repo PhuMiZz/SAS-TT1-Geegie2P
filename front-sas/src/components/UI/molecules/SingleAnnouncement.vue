@@ -1,5 +1,5 @@
 <script setup>
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import BadgeCategories from './BadgeCategories.vue';
