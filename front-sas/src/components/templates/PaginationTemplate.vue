@@ -1,6 +1,6 @@
 <script setup>
-import { ref, watchEffect, computed } from 'vue';
-const emit = defineEmits(['selectPage']);
+import { ref, watchEffect, computed } from "vue";
+const emit = defineEmits(["selectPage"]);
 const props = defineProps({
   totalPages: {
     type: Number,
@@ -16,7 +16,7 @@ const props = defineProps({
   },
   pageRange: {
     type: Number,
-    default: 5,
+    default: 10,
   },
 });
 
@@ -53,10 +53,10 @@ const previousPage = computed(() => {
 
 const selectPage = (e, action) => {
   if (action >= 0 && action < props.totalPages) {
-    emit('selectPage', action);
+    emit("selectPage", action);
   } else if (e) {
     const pageNo = e.target.value;
-    emit('selectPage', pageNo);
+    emit("selectPage", pageNo);
   }
 };
 const hasFirst = () => {
