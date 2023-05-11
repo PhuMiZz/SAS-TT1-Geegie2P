@@ -1,6 +1,6 @@
 <script setup>
-import { ref, watchEffect, computed } from "vue";
-const emit = defineEmits(["selectPage"]);
+import { ref, watchEffect, computed } from 'vue';
+const emit = defineEmits(['selectPage']);
 const props = defineProps({
   totalPages: {
     type: Number,
@@ -28,14 +28,17 @@ const pages = computed(() => {
   return pages;
 });
 const pageStart = computed(() => {
-  if (props.offset < Math.floor(props.pageRange / 2)) {
+  if (props.offset <= Math.floor(props.pageRange / 2)) {
+    console.log('if');
     return 0;
   } else if (
-    props.offset >=
-    props.totalPages - Math.floor(props.pageRange / 2)
+    props.offset + (Math.floor(props.pageRange / 2) - 1) >=
+    props.totalPages
   ) {
-    return props.totalPages - props.pageRange;
+    console.log('else if');
+    return props.totalPages - props.pageRange + 1;
   } else {
+    console.log('else');
     return props.offset - Math.floor(props.pageRange / 2);
   }
 });
@@ -54,10 +57,10 @@ const previousPage = computed(() => {
 
 const selectPage = (e, action) => {
   if (action >= 0 && action < props.totalPages) {
-    emit("selectPage", action);
+    emit('selectPage', action);
   } else if (e) {
     const pageNo = e.target.value;
-    emit("selectPage", pageNo);
+    emit('selectPage', pageNo);
   }
 };
 const hasFirst = () => {
