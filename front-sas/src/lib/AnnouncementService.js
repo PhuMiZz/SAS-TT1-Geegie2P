@@ -43,7 +43,7 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getAnnouncementDetail(id) {
+  async getAnnouncementDetail(id, mode = "admin") {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`
@@ -52,7 +52,8 @@ class AnnouncementService {
         return await response.json();
       } else if (response.status === 404 || response.status === 400) {
         alert("The request page is not available");
-        window.location = "/admin/announcement";
+        window.location =
+          mode === "admin" ? "/admin/announcement" : "/announcement";
       } else {
         return Promise.reject(response.statusText);
       }
