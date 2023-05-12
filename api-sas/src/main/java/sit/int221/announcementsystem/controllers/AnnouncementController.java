@@ -24,8 +24,8 @@ import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
 import java.util.List;
 
-@Validated
 @RestController
+@Validated
 @RequestMapping("/api/announcements")
 @CrossOrigin("${CORS_ORIGIN:http://localhost:5173}")
 public class AnnouncementController {
@@ -55,7 +55,7 @@ public class AnnouncementController {
 
 
     @PostMapping("")
-    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
+    public AnnouncementCreateUpdateViewDto createAnnouncement(@Valid @RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
         return announcementService.createAnnouncement(newAnnouncement);
     }
 
