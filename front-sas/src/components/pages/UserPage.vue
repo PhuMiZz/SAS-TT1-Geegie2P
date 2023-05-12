@@ -9,12 +9,17 @@ import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
 import PaginationTemplate from "../templates/PaginationTemplate.vue";
 import { usePageStore } from "../../stores/pageStore";
 import { storeToRefs } from "pinia";
+import { onBeforeMount } from "vue";
 
 const pageStore = usePageStore();
 const { changeCategory, refreshAnnouncement, getTotalIndex } = pageStore;
 const { currentStatus, allAnnouncement, isAnnouncementEmpty, isLoading } =
   storeToRefs(pageStore);
 const router = useRouter();
+
+onBeforeMount(() => {
+  currentStatus.value.categoryId = 0;
+});
 </script>
 
 <template>
