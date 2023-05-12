@@ -85,21 +85,29 @@ const onClickMenuHandler = () => {
       class="w-full absolute flex z-50 bg-[#F5F5F5] xl:hidden flex-col items-center pb-3 gap-3"
       v-if="isOpenMenu"
     >
-      <RouterLink to="/admin/announcement">
-        <div class="flex items-center gap-2">
-          <HomeIcon class="w-10" />
-          <button class="w-20">Home</button>
-        </div>
+      <RouterLink to="/admin/announcement" class="flex items-center gap-2">
+        <AdminIcon class="w-10 icon" />
+        <span
+          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
+          >Home</span
+        >
       </RouterLink>
 
-      <div class="flex items-center gap-2">
-        <UserViewIcon class="w-10" />
-        <button class="w-20">User View</button>
-      </div>
-      <div class="flex items-center gap-2">
-        <AboutUsIcon class="w-10" />
-        <button class="w-20">About Us</button>
-      </div>
+      <RouterLink to="/announcement" class="flex items-center gap-2">
+        <UserViewIcon class="w-10 icon" />
+        <span
+          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
+          >User View</span
+        >
+      </RouterLink>
+
+      <RouterLink to="/aboutus" class="flex items-center gap-2">
+        <AboutUsIcon class="w-10 icon" />
+        <span
+          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
+          >About Us</span
+        >
+      </RouterLink>
     </div>
   </nav>
 </template>
