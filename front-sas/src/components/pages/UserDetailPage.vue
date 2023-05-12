@@ -18,7 +18,8 @@ const isLoading = ref(true);
 watchEffect(async () => {
   isLoading.value = true;
   announcementDetail.value = await announcementService.getAnnouncementDetail(
-    announcementId
+    announcementId,
+    "user"
   );
   if (announcementDetail.value) {
     isLoading.value = false;
@@ -31,6 +32,7 @@ watchEffect(async () => {
   <PageTemplate class="my-10">
     <LoadingPage v-if="isLoading" />
     <AnnouncementCard
+      v-else
       @router-page="$router.push('/announcement')"
       :user-component="true"
       :announcement-detail="announcementDetail"
