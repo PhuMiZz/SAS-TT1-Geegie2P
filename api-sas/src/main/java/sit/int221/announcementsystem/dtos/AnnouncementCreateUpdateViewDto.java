@@ -1,8 +1,8 @@
 package sit.int221.announcementsystem.dtos;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
 
+import java.time.ZonedDateTime;
 @Data
 public class AnnouncementCreateUpdateViewDto {
     private int id;
