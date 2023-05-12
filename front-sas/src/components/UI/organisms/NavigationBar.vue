@@ -1,5 +1,5 @@
 <script setup>
-import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import AdminIcon from "@/components/UI/atoms/AdminIcon.vue";
 import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
 import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
 // import UserIcon from "@/components/UI/atoms/UserIcon.vue";
@@ -38,7 +38,7 @@ const onClickMenuHandler = () => {
           to="/admin/announcement"
           class="flex items-center text-xl gap-x-3"
         >
-          <HomeIcon class="icon" />
+          <AdminIcon class="icon" />
           <span class="text-page">Admin View</span>
         </RouterLink>
 
