@@ -1,12 +1,13 @@
 package sit.int221.announcementsystem.controllers;
 
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
 import java.util.List;
 
-
+@Validated
 @RestController
 @RequestMapping("/api/announcements")
 @CrossOrigin("${CORS_ORIGIN:http://localhost:5173}")
@@ -54,7 +55,7 @@ public class AnnouncementController {
 
 
     @PostMapping("")
-    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
+    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
         return announcementService.createAnnouncement(newAnnouncement);
     }
 
@@ -63,7 +64,7 @@ public class AnnouncementController {
             announcementService.DeleteAnnouncement(id);
     }
     @PutMapping("/{id}")
-    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){
+    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
         try {
             AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);

@@ -29,19 +29,18 @@ public class AnnouncementService {
     private ModelMapper modelMapper;
     @Autowired
     private ListMapper listMapper = ListMapper.getInstance();
+    ZonedDateTime now = ZonedDateTime.now();
 
     public List<Announcement> getAnnouncements() {
         return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc();
     }
 
     public List<Announcement> getActiveAnnouncements() {
-        ZonedDateTime now = ZonedDateTime.now();
         return announcementRepository.findActiveAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y, now);
     }
 
     public List<Announcement> getClosedAnnouncements() {
-        ZonedDateTime now = ZonedDateTime.now();
-        return announcementRepository.findClosedAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y);
+        return announcementRepository.findClosedAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y,now);
     }
 
 
@@ -92,9 +91,9 @@ public class AnnouncementService {
             case "admin" ->
                     categoryId != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(categoryId, pageable) : announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
             case "close" ->
-                    categoryId != null ? announcementRepository.findClosedAnnouncementsByCategory(categoryId, pageable) : announcementRepository.findClosedAnnouncements(pageable);
+                    categoryId != null ? announcementRepository.findClosedAnnouncementsByCategory(categoryId, pageable,now) : announcementRepository.findClosedAnnouncements(pageable,now);
             default -> // active
-                    categoryId != null ? announcementRepository.findActiveAnnouncementsByCategory(categoryId, pageable) : announcementRepository.findActiveAnnouncements(pageable);
+                    categoryId != null ? announcementRepository.findActiveAnnouncementsByCategory(categoryId, pageable,now) : announcementRepository.findActiveAnnouncements(pageable,now);
         };
     }
 
