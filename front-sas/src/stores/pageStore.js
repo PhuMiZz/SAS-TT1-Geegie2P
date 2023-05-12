@@ -30,7 +30,6 @@ export const usePageStore = defineStore("page", () => {
       currentStatus.statusMode = "close";
     }
     currentStatus.pageNo = 0;
-    currentStatus.categoryId = 0;
   };
 
   watchEffect(async () => {

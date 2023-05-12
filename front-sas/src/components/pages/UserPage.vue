@@ -9,17 +9,12 @@ import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
 import PaginationTemplate from "../templates/PaginationTemplate.vue";
 import { usePageStore } from "../../stores/pageStore";
 import { storeToRefs } from "pinia";
-import { onBeforeMount } from "vue";
 
 const pageStore = usePageStore();
 const { changeCategory, refreshAnnouncement, getTotalIndex } = pageStore;
 const { currentStatus, allAnnouncement, isAnnouncementEmpty, isLoading } =
   storeToRefs(pageStore);
 const router = useRouter();
-
-onBeforeMount(() => {
-  currentStatus.value.categoryId = 0;
-});
 </script>
 
 <template>
@@ -36,9 +31,7 @@ onBeforeMount(() => {
       <AnnouncementUserTemplate :header="true" class="hidden xl:flex">
         <template #announcementNo>No.</template>
         <template #title>Title</template>
-        <template #closeDate v-if="!currentStatus.isActive"
-          >Close Date</template
-        >
+        <template #closeDate v-if="currentStatus.isActive">Close Date</template>
         <template #category>Category</template>
       </AnnouncementUserTemplate>
     </div>
@@ -50,7 +43,7 @@ onBeforeMount(() => {
         @announcementId="
           (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
         "
-        :isActive="!currentStatus.isActive"
+        :isActive="currentStatus.isActive"
         :index="getTotalIndex(announcement.index)"
         :announcementItem="announcement.announcementItem"
         class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
