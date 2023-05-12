@@ -56,10 +56,9 @@ public class AnnouncementController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<AnnouncementCreateUpdateViewDto> createAnnouncement(@Valid @RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
-        AnnouncementCreateUpdateViewDto savedAnnouncement = announcementService.createAnnouncement(newAnnouncement);
-        return new ResponseEntity<>(savedAnnouncement, HttpStatus.CREATED);
+    @PostMapping("")
+    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
+        return announcementService.createAnnouncement(newAnnouncement);
     }
     @DeleteMapping("/{id}")
     public void deleteAnnouncement(@PathVariable Integer id) {

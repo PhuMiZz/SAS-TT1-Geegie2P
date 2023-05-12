@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import sit.int221.announcementsystem.validDate.ValidCloseDate;
-import sit.int221.announcementsystem.validDate.ValidPublishDate;
+
 
 import java.time.ZonedDateTime;
 @Data
@@ -22,7 +22,7 @@ public class AnnouncementCreateUpdateDto {
     @NotNull(message = "categoryId must not be null")
     private int categoryId;
 
-    @ValidPublishDate
+    @FutureOrPresent(message = "publishDate must be in the future")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime publishDate;
 
