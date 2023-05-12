@@ -3,7 +3,7 @@ import NavigationBar from "./components/UI/organisms/NavigationBar.vue";
 </script>
 
 <template>
-  <!-- <NavigationBar /> -->
+  <NavigationBar />
   <RouterView />
 </template>
 
