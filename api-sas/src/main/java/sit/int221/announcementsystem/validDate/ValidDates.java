@@ -11,8 +11,8 @@ import static java.lang.annotation.ElementType.*;
 
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = CloseDateValidator.class)
-public @interface ValidCloseDate {
+@Constraint(validatedBy = DatesValidator.class)
+public @interface ValidDates {
     String message() default "Close date must be after publish date";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

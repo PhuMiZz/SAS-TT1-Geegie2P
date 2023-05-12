@@ -4,14 +4,13 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
-import sit.int221.announcementsystem.validDate.ValidCloseDate;
-import sit.int221.announcementsystem.validDate.ValidPublishDate;
+import sit.int221.announcementsystem.validDate.ValidDates;
 
 import java.time.ZonedDateTime;
 @Data
 @DateTimeConstraints
 @Validated
-@ValidCloseDate
+@ValidDates
 public class AnnouncementCreateUpdateDto {
     private int id;
     @Size(min = 1,max = 200, message = "Title size must be between 1 and 200")
@@ -23,7 +22,7 @@ public class AnnouncementCreateUpdateDto {
     @NotNull(message = "categoryId must not be null")
     private int categoryId;
 
-    @ValidPublishDate
+    @FutureOrPresent(message = "publishDate must be in the present or future")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime publishDate;
 

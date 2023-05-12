@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
 
-public class CloseDateValidator implements ConstraintValidator<ValidCloseDate, AnnouncementCreateUpdateDto> {
+public class DatesValidator implements ConstraintValidator<ValidDates, AnnouncementCreateUpdateDto> {
     @Override
     public boolean isValid(AnnouncementCreateUpdateDto dto, ConstraintValidatorContext context) {
         if (dto.getPublishDate() == null || dto.getCloseDate() == null) {
