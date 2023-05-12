@@ -8,7 +8,6 @@ import sit.int221.announcementsystem.validDate.ValidDates;
 
 import java.time.ZonedDateTime;
 @Data
-@DateTimeConstraints
 @Validated
 @ValidDates
 public class AnnouncementCreateUpdateDto {
@@ -31,10 +30,4 @@ public class AnnouncementCreateUpdateDto {
 
     private String announcementDisplay;
 
-    // @Future(message = "publishDate must be in the future")
-    // private ZonedDateTime publishDate;
-    // @Past(message = "closeDate must be a future date")
-    // private ZonedDateTime closeDate;
-
-    // private String announcementDisplay;
 }
