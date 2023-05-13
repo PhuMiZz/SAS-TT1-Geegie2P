@@ -30,6 +30,7 @@ export const usePageStore = defineStore("page", () => {
       currentStatus.statusMode = "close";
     }
     currentStatus.pageNo = 0;
+    currentStatus.categoryId = 0;
   };
 
   watchEffect(async () => {
@@ -43,7 +44,6 @@ export const usePageStore = defineStore("page", () => {
       Object.keys(allAnnouncement.value.content).length === 0;
     isLoading.value = false;
   });
-  console.log(allAnnouncement.value)
 
   const refreshAnnouncement = async (pageNo) => {
     currentStatus.pageNo = pageNo;

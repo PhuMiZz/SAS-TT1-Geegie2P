@@ -69,16 +69,24 @@ const createAnnouncement = () => {
         </InputTemplate>
       </div>
       <div class="flex h-full xl:h-3/5 items-center">
+        <div v-if="isUserPage" class="px-3 py-2 text-[#737373] text-xl">
+          Toggle to:
+        </div>
         <button
           v-if="isUserPage"
           @click="toggleStatusAnnouncement"
-          class="ann-button bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] text-white px-5 py-2 rounded-md h-full truncate ease-linear transition-all duration-150"
+          class="ann-button text-white px-5 py-2 rounded-md h-full truncate ease-linear transition-all duration-150"
+          :class="
+            currentStatus.isActive
+              ? 'bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C]'
+              : 'bg-[#22C55E] hover:bg-[#15803D] active:bg-[#15803D]'
+          "
         >
           <div class="flex gap-1 items-center text-[#00000] text-xl">
             {{
               currentStatus.isActive
-                ? "Active Announcements"
-                : "Closed Announcements"
+                ? "Closed Announcements"
+                : "Active Announcements"
             }}
           </div>
         </button>

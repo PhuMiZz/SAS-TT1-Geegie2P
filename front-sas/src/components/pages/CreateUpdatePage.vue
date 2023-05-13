@@ -100,6 +100,23 @@ const submitAnnouncement = async () => {
         newAnnouncementData.closeDate ? "close time" : "close date"
       }`
     );
+  } else if (newAnnouncementData.announcementTitle.length > 200) {
+    alert("Announcement title is max!");
+  } else if (newAnnouncementData.announcementTitle.length > 10000) {
+    alert("Announcement description is max!!");
+  } else if (
+    newAnnouncementData.publishDate < currentDate.value ||
+    newAnnouncementData.closeDate < currentDate.value
+  ) {
+    alert(
+      `${
+        newAnnouncementData.publishDate < currentDate.value
+          ? "publish"
+          : "close"
+      } date cannot be past!!`
+    );
+  } else if (newAnnouncementData.publishDate > newAnnouncementData.closeDate) {
+    alert("Publish date must before close date");
   } else {
     const newAnnouncement = {
       announcementTitle: newAnnouncementData.announcementTitle,
