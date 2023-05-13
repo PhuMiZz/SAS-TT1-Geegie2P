@@ -1,8 +1,8 @@
 <script setup>
-import DeleteIcon from '../UI/atoms/DeleteIcon.vue';
-import EditIcon from '../UI/atoms/EditIcon.vue';
-import BackIcon from '../UI/atoms/BackIcon.vue';
-import { useRouter } from 'vue-router';
+import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
+import EditIcon from "../UI/atoms/EditIcon.vue";
+import BackIcon from "../UI/atoms/BackIcon.vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const props = defineProps({
@@ -18,16 +18,20 @@ const props = defineProps({
     type: Object,
     required: false,
   },
+  userComponent: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 const editAnnouncement = () => {
   router.push({
-    name: 'UpdateAnnouncement',
+    name: "UpdateAnnouncement",
     params: { id: props.announcementId },
   });
 };
 
-defineEmits(['routerPage']);
+defineEmits(["routerPage"]);
 </script>
 
 <template>
@@ -42,7 +46,7 @@ defineEmits(['routerPage']);
     </button>
 
     <button
-      v-if="viewComponent"
+      v-if="!userComponent && viewComponent"
       @click="editAnnouncement"
       class="ann-button flex gap-2 bg-[#F59E0B] hover:bg-[#d68d0e] active:bg-[#d68d0e] text-white items-center justify-center w-[30%] md:w-[15%] h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
     >
@@ -59,25 +63,21 @@ defineEmits(['routerPage']);
   <!-- Detail -->
 
   <div
-    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-10 text-2xl items-center xl:flex-row xl:h-full"
+    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-3 text-2xl items-center xl:h-full"
   >
-    <div class="w-full h-full flex flex-col gap-y-5 md:w-3/5">
+    <div class="w-full h-full flex flex-col gap-y-2 md:w-3/5">
       <slot name="title"></slot>
-      <div class="">
-        <slot name="description"></slot>
-      </div>
+    </div>
+    <div class="w-full h-full flex flex-col gap-y-2 md:w-3/5 md:break-keep">
+      <slot name="description"></slot>
     </div>
     <div
-      class="w-full md:w-3/5 xl:w-3/5 h-full p-5 rounded-xl bg-[#E5E5E5] xl:self-start"
+      v-if="!userComponent || !viewComponent"
+      class="w-full md:w-3/5 xl:w-3/5 h-full p-5 my-7 rounded-xl bg-[#E5E5E5] xl:self-center"
     >
       <slot name="detail"></slot>
     </div>
   </div>
-  <!-- <div
-      class="w-full break-words h-full flex flex-col gap-y-5 md:px-10 md:break-keep"
-    >
-      <slot name="description"></slot>
-    </div> -->
 </template>
 
 <style scoped></style>

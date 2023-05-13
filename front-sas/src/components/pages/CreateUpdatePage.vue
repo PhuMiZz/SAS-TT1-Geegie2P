@@ -1,37 +1,37 @@
 <script setup>
-import TextDescription from '@/components/UI/molecules/TextDescription.vue';
-import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
-import SuccessModal from '../UI/organisms/SuccessModal.vue';
-import OverlayTemplate from '../templates/OverlayTemplate.vue';
-import { watchEffect, ref, reactive, computed } from 'vue';
-import PageTemplate from '@/components/templates/PageTemplate.vue';
-import { useRoute } from 'vue-router';
+import TextDescription from "@/components/UI/molecules/TextDescription.vue";
+import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
+import AnnouncementService from "@/lib/AnnouncementService.js";
+import SuccessModal from "../UI/organisms/SuccessModal.vue";
+import OverlayTemplate from "../templates/OverlayTemplate.vue";
+import { watchEffect, ref, reactive, computed } from "vue";
+import PageTemplate from "@/components/templates/PageTemplate.vue";
+import { useRoute } from "vue-router";
 import {
   extractDateAndTime,
   getISODateTime,
-} from '@/lib/DateTimeManagement.js';
+} from "@/lib/DateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const router = useRoute();
 const categories = ref([]);
-// const currentDate = ref();
-// const currentTime = ref();
+const currentDate = ref();
+const currentTime = ref();
 const announcement = ref();
 const showModal = ref(false);
 const newAnnouncementData = reactive({
-  announcementTitle: '',
-  announcementDescription: '',
+  announcementTitle: "",
+  announcementDescription: "",
   announcementCategory: 1,
-  publishDate: '',
-  publishTime: '',
-  closeDate: '',
-  closeTime: '',
+  publishDate: "",
+  publishTime: "",
+  closeDate: "",
+  closeTime: "",
   display: false,
 });
 const originalAnnouncementData = reactive({});
 const checkUpdate = computed(() => {
-  if (router.name === 'UpdateAnnouncement') {
+  if (router.name === "UpdateAnnouncement") {
     return (
       JSON.stringify(newAnnouncementData) !==
         JSON.stringify(originalAnnouncementData) &&
@@ -51,7 +51,7 @@ const checkUpdate = computed(() => {
 
 //function
 const fetchAnnouncement = async () => {
-  if (router.name === 'UpdateAnnouncement') {
+  if (router.name === "UpdateAnnouncement") {
     const announcementId = router.params.id;
 
     announcement.value = await announcementService.getAnnouncementDetail(
@@ -75,7 +75,7 @@ const fetchAnnouncement = async () => {
       publishTime,
       closeDate,
       closeTime,
-      display: announcement.value.announcementDisplay === 'Y',
+      display: announcement.value.announcementDisplay === "Y",
     });
 
     Object.assign(newAnnouncementData, originalAnnouncementData);
@@ -88,7 +88,7 @@ const submitAnnouncement = async () => {
   ) {
     alert(
       `please insert ${
-        newAnnouncementData.publishDate ? 'publish time' : 'publish date'
+        newAnnouncementData.publishDate ? "publish time" : "publish date"
       }`
     );
   } else if (
@@ -97,9 +97,26 @@ const submitAnnouncement = async () => {
   ) {
     alert(
       `please insert ${
-        newAnnouncementData.closeDate ? 'close time' : 'close date'
+        newAnnouncementData.closeDate ? "close time" : "close date"
       }`
     );
+  } else if (newAnnouncementData.announcementTitle.length > 200) {
+    alert("Announcement title is max!");
+  } else if (newAnnouncementData.announcementTitle.length > 10000) {
+    alert("Announcement description is max!!");
+  } else if (
+    newAnnouncementData.publishDate < currentDate.value ||
+    newAnnouncementData.closeDate < currentDate.value
+  ) {
+    alert(
+      `${
+        newAnnouncementData.publishDate < currentDate.value
+          ? "publish"
+          : "close"
+      } date cannot be past!!`
+    );
+  } else if (newAnnouncementData.publishDate > newAnnouncementData.closeDate) {
+    alert("Publish date must before close date");
   } else {
     const newAnnouncement = {
       announcementTitle: newAnnouncementData.announcementTitle,
@@ -113,14 +130,14 @@ const submitAnnouncement = async () => {
         newAnnouncementData.closeDate,
         newAnnouncementData.closeTime
       ),
-      announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
+      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
     };
     await createOrUpdateAnnouncement(newAnnouncement);
   }
 };
 const createOrUpdateAnnouncement = async (announcement) => {
   try {
-    if (router.name === 'UpdateAnnouncement') {
+    if (router.name === "UpdateAnnouncement") {
       await announcementService.updateAnnouncement(
         router.params.id,
         announcement
@@ -135,8 +152,8 @@ const createOrUpdateAnnouncement = async (announcement) => {
       toggleModal();
     }
   } catch (error) {
-    console.error('Error submitting announcement:', error);
-    alert('There is an error');
+    console.error("Error submitting announcement:", error);
+    alert("There is an error");
   }
 };
 const updateCheck = () => {
@@ -149,9 +166,23 @@ const toggleModal = () => {
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
-  // currentDate.value = new Date().toISOString().split("T")[0];
-  // currentTime.value = new Date().toISOString().split("T")[1].substring(0, 5);
+  currentDate.value = new Date().toISOString().split("T")[0];
+  currentTime.value = new Date().toISOString().split("T")[1].substring(0, 5);
 });
+
+const setTimeDefault = (event) => {
+  if (event.currentTarget.id === "publishDate") {
+    newAnnouncementData.publishTime = newAnnouncementData.publishDate
+      ? "06:00"
+      : "";
+  } else {
+    newAnnouncementData.closeTime = newAnnouncementData.closeDate
+      ? "18:00"
+      : "";
+  }
+
+  updateCheck();
+};
 </script>
 
 <template>
@@ -167,23 +198,65 @@ watchEffect(async () => {
       "
     >
       <template #title>
-        <div class="text-[#336699]">Title</div>
+        <div class="text-[#336699] flex place-content-between">
+          <label for="announcementTitle"> Title </label>
+          <label
+            for="announcementTitle"
+            class="text-lg text-[#404040] place-self-end"
+            :class="
+              newAnnouncementData.announcementTitle.length < 180
+                ? 'hidden'
+                : newAnnouncementData.announcementTitle.length === 200
+                ? 'text-[#EF4444]'
+                : 'text-[#F59B0E]'
+            "
+          >
+            {{
+              newAnnouncementData.announcementTitle.length === 200
+                ? "max length!!"
+                : `${newAnnouncementData.announcementTitle.length}/200`
+            }}
+          </label>
+        </div>
         <input
           @input="updateCheck"
+          id="announcementTitle"
           v-model="newAnnouncementData.announcementTitle"
           type="text"
           placeholder="insert title here..."
           class="ann-title w-full rounded-lg p-1 text-[#404040]"
+          maxlength="200"
       /></template>
       <template #description>
-        <div class="text-[#336699]">Description</div>
+        <div class="text-[#336699] flex place-content-between">
+          <label for="announcementDescription">Description</label>
+          <label
+            for="announcementDescription"
+            class="text-lg text-[#404040] place-self-end"
+            :class="
+              newAnnouncementData.announcementDescription.length < 9980
+                ? 'hidden'
+                : newAnnouncementData.announcementDescription.length === 10000
+                ? 'text-[#EF4444]'
+                : 'text-[#F59B0E]'
+            "
+          >
+            {{
+              newAnnouncementData.announcementDescription.length === 10000
+                ? "max length!!"
+                : `${newAnnouncementData.announcementDescription.length}/10000`
+            }}
+          </label>
+        </div>
         <textarea
           @input="updateCheck"
+          id="announcementDescription"
           v-model="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
           class="ann-description w-full rounded-lg p-1 text-[#404040]"
           rows="4"
           cols="50"
+          maxlength="10000"
         ></textarea>
       </template>
       <template #detail>
@@ -207,12 +280,18 @@ watchEffect(async () => {
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
               <input
-                @change="updateCheck"
+                @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.publishDate"
                 type="date"
                 id="publishDate"
                 name="publishDate"
                 class="ann-publish-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :min="currentDate"
+                :max="
+                  newAnnouncementData.closeDate
+                    ? newAnnouncementData.closeDate
+                    : ' '
+                "
               />
               <input
                 @change="updateCheck"
@@ -220,7 +299,8 @@ watchEffect(async () => {
                 type="time"
                 id="publishTime"
                 name="publishTime"
-                class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full"
+                class="ann-publish-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full disabled:opacity-60"
+                :disabled="newAnnouncementData.publishDate === ''"
               /></div
           ></template>
         </TextDescription>
@@ -230,12 +310,17 @@ watchEffect(async () => {
           <template #default>
             <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
               <input
-                @change="updateCheck"
+                @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.closeDate"
                 type="date"
                 id="closeDate"
                 name="closeDate"
                 class="ann-close-date bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                :min="
+                  newAnnouncementData.publishDate
+                    ? newAnnouncementData.publishDate
+                    : currentDate
+                "
               />
               <input
                 @change="updateCheck"
@@ -243,7 +328,8 @@ watchEffect(async () => {
                 type="time"
                 id="closeTime"
                 name="closeTime"
-                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040]"
+                class="ann-close-time bg-[#FAFAFA] p-1 h-9 rounded-lg w-full text-[#404040] disabled:opacity-60"
+                :disabled="newAnnouncementData.closeDate === ''"
               /></div
           ></template>
         </TextDescription>

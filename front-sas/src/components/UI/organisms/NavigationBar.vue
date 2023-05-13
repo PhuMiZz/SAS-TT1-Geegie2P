@@ -1,5 +1,5 @@
 <script setup>
-import HomeIcon from "@/components/UI/atoms/HomeIcon.vue";
+import AdminIcon from "@/components/UI/atoms/AdminIcon.vue";
 import UserViewIcon from "@/components/UI/atoms/UserViewIcon.vue";
 import AboutUsIcon from "@/components/UI/atoms/AboutUsIcon.vue";
 // import UserIcon from "@/components/UI/atoms/UserIcon.vue";
@@ -38,11 +38,14 @@ const onClickMenuHandler = () => {
           to="/admin/announcement"
           class="flex items-center text-xl gap-x-3"
         >
-          <HomeIcon class="icon" />
-          <span class="text-page">Home</span>
+          <AdminIcon class="icon" />
+          <span class="text-page">Admin View</span>
         </RouterLink>
 
-        <RouterLink to="/userview" class="flex items-center text-xl gap-x-3">
+        <RouterLink
+          to="/announcement"
+          class="flex items-center text-xl gap-x-3"
+        >
           <UserViewIcon class="icon" />
           <span class="text-page">User View</span>
         </RouterLink>
@@ -82,21 +85,29 @@ const onClickMenuHandler = () => {
       class="w-full absolute flex z-50 bg-[#F5F5F5] xl:hidden flex-col items-center pb-3 gap-3"
       v-if="isOpenMenu"
     >
-      <RouterLink to="/admin/announcement">
-        <div class="flex items-center gap-2">
-          <HomeIcon class="w-10" />
-          <button class="w-20">Home</button>
-        </div>
+      <RouterLink to="/admin/announcement" class="flex items-center gap-2">
+        <AdminIcon class="w-10 icon" />
+        <span
+          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
+          >Home</span
+        ></RouterLink
+      >
+
+      <RouterLink to="/announcement" class="flex items-center gap-2">
+        <UserViewIcon class="w-10 icon" />
+        <span
+          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
+          >User View</span
+        >
       </RouterLink>
 
-      <div class="flex items-center gap-2">
-        <UserViewIcon class="w-10" />
-        <button class="w-20">User View</button>
-      </div>
-      <div class="flex items-center gap-2">
-        <AboutUsIcon class="w-10" />
-        <button class="w-20">About Us</button>
-      </div>
+      <RouterLink to="/aboutus" class="flex items-center gap-2">
+        <AboutUsIcon class="w-10 icon" />
+        <span
+          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
+          >About Us</span
+        >
+      </RouterLink>
     </div>
   </nav>
 </template>

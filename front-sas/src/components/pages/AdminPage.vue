@@ -5,6 +5,7 @@ import AnnouncementService from "@/lib/AnnouncementService";
 import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
 import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";
+import SingleAnnouncement from "../UI/molecules/SingleAnnouncement.vue";
 import LoadingPage from "../UI/organisms/LoadingPage.vue";
 
 const announcementService = new AnnouncementService();
@@ -26,12 +27,18 @@ watchEffect(async () => {
   isAnnouncementEmpty.value = Object.keys(allAnnouncement.value).length === 0;
   isLoading.value = false;
 });
+
+const changeCategory = async (id) => {
+  allAnnouncement.value =
+    await announcementService.getAllAnnouncementByCategory(id);
+  isAnnouncementEmpty.value = Object.keys(allAnnouncement.value).length === 0;
+};
 </script>
 
 <template>
   <LoadingPage v-if="isLoading" />
   <PageTemplate v-else>
-    <AnnouncementTitle />
+    <AnnouncementTitle @changeCategory="changeCategory" />
     <div
       v-if="isAnnouncementEmpty"
       class="text-[#737373] w-full h-96 flex items-center justify-center text-2xl"
@@ -48,9 +55,15 @@ watchEffect(async () => {
         <template #action>Action</template>
       </AnnouncementTemplate>
       <AnnouncementList
-        @refresh-data="filterDeletedData"
         :announcement-list="allAnnouncement"
-      />
+        v-slot="announcement"
+      >
+        <SingleAnnouncement
+          @refresh-data="filterDeletedData"
+          :index="announcement.index"
+          :announcement-item="announcement.announcementItem"
+        />
+      </AnnouncementList>
     </div>
   </PageTemplate>
 </template>

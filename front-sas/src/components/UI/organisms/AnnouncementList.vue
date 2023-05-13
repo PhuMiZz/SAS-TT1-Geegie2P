@@ -6,10 +6,6 @@ const props = defineProps({
     required: true,
   },
 });
-const emit = defineEmits(['refreshData']);
-const getIdToFilterData = (announcementId) => {
-  emit('refreshData', announcementId);
-};
 </script>
 
 <template>
@@ -19,11 +15,13 @@ const getIdToFilterData = (announcementId) => {
     :id="announcement.id"
     class="ann-item"
   >
-    <SingleAnnouncement
+    <slot :index="index" :announcement-item="announcement"></slot>
+
+    <!-- <SingleAnnouncement
       @refresh-data="getIdToFilterData"
       :index="index"
       :announcement-item="announcement"
-    />
+    /> -->
   </div>
 </template>
 

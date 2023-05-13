@@ -1,32 +1,34 @@
 package sit.int221.announcementsystem.controllers;
 
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
-import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateViewDto;
-import sit.int221.announcementsystem.dtos.AnnouncementDetailDto;
+import sit.int221.announcementsystem.dtos.*;
 
 import org.springframework.web.bind.annotation.*;
 
-import sit.int221.announcementsystem.dtos.AnnouncementsViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
-import sit.int221.announcementsystem.entities.Category;
 import sit.int221.announcementsystem.exceptions.BadRequestException;
 
 import sit.int221.announcementsystem.services.AnnouncementService;
 import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
-
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/api")
+@Validated
+@RequestMapping("/api/announcements")
 @CrossOrigin("${CORS_ORIGIN:http://localhost:5173}")
 public class AnnouncementController {
     @Autowired
@@ -35,38 +37,48 @@ public class AnnouncementController {
     private CategoryService categoryService;
     @Autowired
     private ModelMapper modelMapper;
-
-    @GetMapping("/announcements")
-    public List<AnnouncementsViewDto> getAnnouncements() {
-        List<Announcement> announcements = announcementService.getAnnouncements();
-        return ListMapper.getInstance().mapList(announcements, AnnouncementsViewDto.class, modelMapper);
+    @Autowired
+    private ListMapper listMapper = ListMapper.getInstance();
+    @GetMapping("")
+    public List<AnnouncementsViewDto> getAnnouncements(
+            @RequestParam(value = "mode", defaultValue = "admin") String mode){
+        List<Announcement> announcements = switch (mode.toLowerCase()){
+            case "admin" -> announcementService.getAnnouncements();
+            case "close" -> announcementService.getClosedAnnouncements();
+            default -> announcementService.getActiveAnnouncements();
+        };
+        return listMapper.mapList(announcements, AnnouncementsViewDto.class, modelMapper);
     }
 
-    @GetMapping("/announcements/{id}")
-    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable String id) {
-        try {
-            int announcementId = Integer.parseInt(id);
-            return modelMapper.map(announcementService.getAnnouncementDetail(announcementId), AnnouncementDetailDto.class);
-        } catch (NumberFormatException ex) {
-            throw new BadRequestException("Invalid announcement ID: " + id);
-        }
+    @GetMapping("/{id}")
+    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id) {
+        return modelMapper.map(announcementService.getAnnouncementDetail(id), AnnouncementDetailDto.class);
     }
 
-    @PostMapping("/announcements")
+
+//    @PostMapping("")
+//    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
+//        return announcementService.createAnnouncement(newAnnouncement);
+//    }
+    @PostMapping("")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
-        try {
-            return announcementService.createAnnouncement(newAnnouncement);
-        } catch (DataIntegrityViolationException e){
-            throw new BadRequestException("Data incorrect");
-        }
+        return announcementService.createAnnouncement(newAnnouncement);
     }
-
-    @DeleteMapping("/announcements/{id}")
+    @DeleteMapping("/{id}")
     public void deleteAnnouncement(@PathVariable Integer id) {
             announcementService.DeleteAnnouncement(id);
     }
-    @PutMapping("/announcements/{id}")
-    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){
+//    @PutMapping("/{id}")
+//    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
+//        try {
+//            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
+//            return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
+//        } catch (DataIntegrityViolationException e){
+//            throw new BadRequestException("Announcement not found");
+//        }
+//    }
+    @PutMapping("/{id}")
+    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
         try {
             AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
@@ -74,16 +86,24 @@ public class AnnouncementController {
             throw new BadRequestException("Announcement not found");
         }
     }
-    // Category
-    @GetMapping("/categories")
-    public List<Category> getCategories() {
-        return categoryService.getCategories();
+    @GetMapping("/category/{categoryId}")
+    public List<AnnouncementsViewDto> getAllAnnouncementByCategory(@PathVariable Integer categoryId){
+        return listMapper.mapList(announcementService.getAnnouncementByCategory(categoryId), AnnouncementsViewDto.class, modelMapper);
     }
 
-    @GetMapping("/categories/find/{categoryName}")
-    public Integer findCategoryIdByName(@PathVariable String categoryName) {
-            return categoryService.FindCategoryByName(categoryName);
+    @GetMapping("/pages")
+    public PageDto<AnnouncementsViewDto> getAnnouncementsPages(
+            @RequestParam(value = "mode", defaultValue = "admin") String mode,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "category", required = false) Integer categoryId) {
+        Pageable pageable = PageRequest.of(page, size);
+        if (mode.equals("admin")) pageable = Pageable.unpaged();
+        Page<Announcement> announcements = announcementService.getAnnouncementsByModeAndCategory(mode, categoryId, pageable);
+        return listMapper.toPageDTO(announcements, AnnouncementsViewDto.class, modelMapper);
     }
+
+
 
 
 }

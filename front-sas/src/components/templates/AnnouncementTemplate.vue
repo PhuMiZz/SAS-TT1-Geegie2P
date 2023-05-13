@@ -16,7 +16,7 @@ const props = defineProps({
       :class="
         props.header
           ? 'bg-transparent text-xl'
-          : 'bg-[#336699] text-white text-2xl'
+          : 'bg-[#336699] text-white text-xl'
       "
       class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-1/5 xl:rounded-none xl:rounded-l-xl"
     >

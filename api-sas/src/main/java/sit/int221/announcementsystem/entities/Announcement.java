@@ -13,13 +13,15 @@ import java.time.ZonedDateTime;
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "announcementId", nullable = true)
+    @Column(name = "announcementId", nullable = true )
     private Integer id;
 
-    @Column(name = "announcementTitle", nullable = false )
+
+    @Column(name = "announcementTitle", nullable = false ,length = 200)
     private String announcementTitle;
 
-    @Column(name = "announcementDescription", nullable = false)
+
+    @Column(name = "announcementDescription", nullable = false , length = 10000)
     private String announcementDescription;
 
     @ManyToOne

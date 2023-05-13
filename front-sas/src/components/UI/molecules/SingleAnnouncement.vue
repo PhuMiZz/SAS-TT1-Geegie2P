@@ -1,12 +1,12 @@
 <script setup>
-import BadgeCategories from "./BadgeCategories.vue";
-import AnnouncementTemplate from "../../templates/AnnouncementTemplate.vue";
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import ConfirmModal from "@/components/UI/organisms/ConfirmModal.vue";
-import OverlayTemplate from "../../templates/OverlayTemplate.vue";
-import AnnouncementService from "../../../lib/AnnouncementService";
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import BadgeCategories from './BadgeCategories.vue';
+import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
+import ConfirmModal from '@/components/UI/organisms/ConfirmModal.vue';
+import OverlayTemplate from '../../templates/OverlayTemplate.vue';
+import AnnouncementService from '../../../lib/AnnouncementService';
 
 const showModal = ref(false);
 const selectedAnnouncement = ref();
@@ -22,10 +22,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["refreshData"]);
+const emit = defineEmits(['refreshData']);
 const router = useRouter();
 const getAnnouncementDetail = (id) => {
-  router.push({ name: "DetailPage", params: { id: id } });
+  router.push({ name: 'DetailPage', params: { id: id } });
 };
 
 const toggleModal = (id) => {
@@ -38,7 +38,7 @@ const toggleModal = (id) => {
 const deleteAnnouncement = async () => {
   // console.log('delete: ' + selectedAnnouncement.value);
   await announcementService.deleteAnnouncement(selectedAnnouncement.value);
-  emit("refreshData", selectedAnnouncement.value);
+  emit('refreshData', selectedAnnouncement.value);
   toggleModal();
 };
 </script>
@@ -64,21 +64,13 @@ const deleteAnnouncement = async () => {
     <template #publishDate>
       <div class="text-[#737373] w-1/3 xl:hidden block">Publish Date</div>
       <p class="ann-publish-date">
-        {{
-          announcementItem.publishDate === null
-            ? "-"
-            : getLocaleDateTime(announcementItem.publishDate)
-        }}
+        {{ getLocaleDateTime(announcementItem.publishDate) }}
       </p>
     </template>
     <template #closeDate>
       <div class="text-[#737373] w-1/3 xl:hidden block">Close Date</div>
       <p class="ann-close-date">
-        {{
-          announcementItem.closeDate === null
-            ? "-"
-            : getLocaleDateTime(announcementItem.closeDate)
-        }}
+        {{ getLocaleDateTime(announcementItem.closeDate) }}
       </p>
     </template>
     <template #display>
