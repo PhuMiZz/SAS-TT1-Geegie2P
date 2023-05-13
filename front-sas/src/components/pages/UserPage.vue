@@ -1,15 +1,15 @@
 <script setup>
-import { useRouter } from "vue-router";
-import PageTemplate from "../templates/PageTemplate.vue";
-import AnnouncementTitle from "../UI/organisms/AnnouncementTitle.vue";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
-import PaginationTemplate from "../templates/PaginationTemplate.vue";
-import { usePageStore } from "../../stores/pageStore";
-import { storeToRefs } from "pinia";
-import { onBeforeMount } from "vue";
+import { useRouter } from 'vue-router';
+import PageTemplate from '../templates/PageTemplate.vue';
+import AnnouncementTitle from '../UI/organisms/AnnouncementTitle.vue';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementUserTemplate from '../templates/AnnouncementUserTemplate.vue';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import SingleUserAnnouncement from '../UI/molecules/SingleUserAnnouncement.vue';
+import PaginationTemplate from '../templates/PaginationTemplate.vue';
+import { usePageStore } from '../../stores/pageStore';
+import { storeToRefs } from 'pinia';
+import { onBeforeMount } from 'vue';
 
 const pageStore = usePageStore();
 const { changeCategory, refreshAnnouncement, getTotalIndex } = pageStore;
@@ -56,7 +56,7 @@ onBeforeMount(() => {
       />
     </AnnouncementList>
     <PaginationTemplate
-      v-if="!isAnnouncementEmpty"
+      v-if="!isAnnouncementEmpty && currentStatus.showPaginate"
       @select-page="refreshAnnouncement"
       :total-pages="allAnnouncement.totalPages"
       :offset="allAnnouncement.page"
