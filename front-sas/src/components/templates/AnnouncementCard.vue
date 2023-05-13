@@ -1,8 +1,8 @@
 <script setup>
-import DeleteIcon from "../UI/atoms/DeleteIcon.vue";
-import EditIcon from "../UI/atoms/EditIcon.vue";
-import BackIcon from "../UI/atoms/BackIcon.vue";
-import { useRouter } from "vue-router";
+import DeleteIcon from '../UI/atoms/DeleteIcon.vue';
+import EditIcon from '../UI/atoms/EditIcon.vue';
+import BackIcon from '../UI/atoms/BackIcon.vue';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const props = defineProps({
@@ -26,23 +26,23 @@ const props = defineProps({
 
 const editAnnouncement = () => {
   router.push({
-    name: "UpdateAnnouncement",
+    name: 'UpdateAnnouncement',
     params: { id: props.announcementId },
   });
 };
 
-defineEmits(["routerPage"]);
+defineEmits(['routerPage']);
 </script>
 
 <template>
   <!-- Button -->
   <div class="flex w-full h-12 text-xl gap-5">
     <button
-      class="ann-button flex bg-[#336699] hover:bg-[#23476b] active:bg-[#23476b] item-center w-14 h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
+      class="ann-button flex bg-[#336699] hover:bg-[#23476b] text-white active:bg-[#23476b] item-center w-18 h-full p-3 rounded-t-lg ease-linear transition-all duration-150"
       @click="$emit('routerPage')"
     >
-      <BackIcon />
-      <p class="hidden">Back</p>
+      Back
+      <!-- <BackIcon /> -->
     </button>
 
     <button
