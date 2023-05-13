@@ -33,7 +33,7 @@ const pageStart = computed(() => {
   } else if (currentPage === props.totalPages) {
     return currentPage - props.pageRange;
   } else {
-    return currentPage - props.pageRange + 1;
+    return currentPage - props.pageRange;
   }
 });
 
