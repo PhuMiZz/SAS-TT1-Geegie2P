@@ -56,14 +56,27 @@ public class AnnouncementController {
     }
 
 
+//    @PostMapping("")
+//    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
+//        return announcementService.createAnnouncement(newAnnouncement);
+//    }
     @PostMapping("")
-    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
+    public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody AnnouncementCreateUpdateDto newAnnouncement) {
         return announcementService.createAnnouncement(newAnnouncement);
     }
     @DeleteMapping("/{id}")
     public void deleteAnnouncement(@PathVariable Integer id) {
             announcementService.DeleteAnnouncement(id);
     }
+//    @PutMapping("/{id}")
+//    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
+//        try {
+//            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
+//            return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
+//        } catch (DataIntegrityViolationException e){
+//            throw new BadRequestException("Announcement not found");
+//        }
+//    }
     @PutMapping("/{id}")
     public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
         try {
@@ -73,7 +86,6 @@ public class AnnouncementController {
             throw new BadRequestException("Announcement not found");
         }
     }
-
     @GetMapping("/category/{categoryId}")
     public List<AnnouncementsViewDto> getAllAnnouncementByCategory(@PathVariable Integer categoryId){
         return listMapper.mapList(announcementService.getAnnouncementByCategory(categoryId), AnnouncementsViewDto.class, modelMapper);
@@ -86,6 +98,7 @@ public class AnnouncementController {
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "category", required = false) Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
+        if (mode.equals("admin")) pageable = Pageable.unpaged();
         Page<Announcement> announcements = announcementService.getAnnouncementsByModeAndCategory(mode, categoryId, pageable);
         return listMapper.toPageDTO(announcements, AnnouncementsViewDto.class, modelMapper);
     }

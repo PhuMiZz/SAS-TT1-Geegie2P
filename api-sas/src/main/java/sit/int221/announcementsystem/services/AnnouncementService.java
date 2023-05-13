@@ -89,7 +89,7 @@ public class AnnouncementService {
     public Page<Announcement> getAnnouncementsByModeAndCategory(String mode, Integer categoryId, Pageable pageable) {
         return switch (mode.toLowerCase()) {
             case "admin" ->
-                    categoryId != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(categoryId, pageable) : announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc(pageable);
+                    categoryId != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(categoryId, pageable) : announcementRepository.findAllByOrderById(pageable);
             case "close" ->
                     categoryId != null ? announcementRepository.findClosedAnnouncementsByCategory(categoryId, pageable,now) : announcementRepository.findClosedAnnouncements(pageable,now);
             default -> // active
