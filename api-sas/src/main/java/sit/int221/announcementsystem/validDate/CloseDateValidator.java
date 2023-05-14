@@ -11,32 +11,43 @@ import java.time.ZonedDateTime;
 public class CloseDateValidator implements ConstraintValidator<ValidCloseDate, AnnouncementCreateUpdateDto> {
     @Override
     public boolean isValid(AnnouncementCreateUpdateDto dto, ConstraintValidatorContext context) {
-        if (dto.getPublishDate() == null || dto.getCloseDate() == null) {
+        if (dto.getPublishDate() != null && dto.getCloseDate() != null) {
+            ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+            boolean isFutureDate = dto.getCloseDate().isAfter(now);
+            boolean isAfterPublishDate = dto.getCloseDate().isAfter(dto.getPublishDate());
+
+            if (!isAfterPublishDate) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate("must be later than publish date")
+                        .addPropertyNode("closeDate")
+                        .addConstraintViolation();
+                return false;
+            }
+
+            else if (!isFutureDate) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate("must be a future date")
+                        .addPropertyNode("closeDate")
+                        .addConstraintViolation();
+                return false;
+            }
+
             return true;
         }
-        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-        boolean isFutureDate = dto.getCloseDate().isAfter(now);
-        boolean isAfterPublishDate = dto.getCloseDate().isAfter(dto.getPublishDate());
 
-        if (!isAfterPublishDate) {
-            System.out.println("must be later than publish date");
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("must be later than publish date")
-                    .addPropertyNode("closeDate")
-                    .addConstraintViolation();
-            return false;
+        if (dto.getCloseDate() != null) {
+            ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+            boolean isFutureDate = dto.getCloseDate().isAfter(now);
+
+            if (!isFutureDate) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate("must be a future date")
+                        .addPropertyNode("closeDate")
+                        .addConstraintViolation();
+                return false;
+            }
         }
-
-        else if (!isFutureDate) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("must be a future date")
-                    .addPropertyNode("closeDate")
-                    .addConstraintViolation();
-            System.out.println("must be a future date");
-            return false;
-        }
-
-
         return true;
+
     }
 }
