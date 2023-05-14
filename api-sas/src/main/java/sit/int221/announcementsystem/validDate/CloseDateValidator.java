@@ -15,12 +15,10 @@ public class CloseDateValidator implements ConstraintValidator<ValidCloseDate, A
             return true;
         }
         ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-        boolean isBeforeDate = dto.getCloseDate().isBefore(now);
         boolean isFutureDate = dto.getCloseDate().isAfter(now);
         boolean isAfterPublishDate = dto.getCloseDate().isAfter(dto.getPublishDate());
-        boolean isBeforePublishDate = dto.getCloseDate().isBefore(dto.getPublishDate());
 
-        if (isBeforePublishDate) {
+        if (!isAfterPublishDate) {
             System.out.println("must be later than publish date");
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("must be later than publish date")
@@ -29,7 +27,7 @@ public class CloseDateValidator implements ConstraintValidator<ValidCloseDate, A
             return false;
         }
 
-        else if (isBeforeDate) {
+        else if (!isFutureDate) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("must be a future date")
                     .addPropertyNode("closeDate")
