@@ -16,7 +16,6 @@ const props = defineProps({
     class="ann-item"
   >
     <slot :index="index" :announcement-item="announcement"></slot>
-
     <!-- <SingleAnnouncement
       @refresh-data="getIdToFilterData"
       :index="index"

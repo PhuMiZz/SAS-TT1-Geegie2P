@@ -1,12 +1,12 @@
 <script setup>
-import AddIcon from "../atoms/AddIcon.vue";
-import CategoryIcon from "../atoms/CategoryIcon.vue";
-import InputTemplate from "../../templates/InputTemplate.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
-import { ref, watchEffect } from "vue";
-import router from "@/router";
-import { usePageStore } from "@/stores/pageStore";
-import { storeToRefs } from "pinia";
+import AddIcon from '../atoms/AddIcon.vue';
+import CategoryIcon from '../atoms/CategoryIcon.vue';
+import InputTemplate from '../../templates/InputTemplate.vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
+import { ref, watchEffect } from 'vue';
+import router from '@/router';
+import { usePageStore } from '@/stores/pageStore';
+import { storeToRefs } from 'pinia';
 
 const pageStore = usePageStore();
 const { currentStatus } = storeToRefs(pageStore);
@@ -28,7 +28,7 @@ watchEffect(async () => {
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const createAnnouncement = () => {
-  router.push({ name: "CreateAnnouncement" });
+  router.push({ name: 'CreateAnnouncement' });
 };
 </script>
 
@@ -68,7 +68,7 @@ const createAnnouncement = () => {
           </select>
         </InputTemplate>
       </div>
-      <div class="flex h-full xl:h-3/5 items-center">
+      <div class="flex flex-col h-full xl:h-3/5 md:flex-row items-center">
         <div v-if="isUserPage" class="px-3 py-2 text-[#737373] text-xl">
           Toggle to:
         </div>
@@ -85,8 +85,8 @@ const createAnnouncement = () => {
           <div class="flex gap-1 items-center text-[#00000] text-xl">
             {{
               currentStatus.isActive
-                ? "Closed Announcements"
-                : "Active Announcements"
+                ? 'Closed Announcements'
+                : 'Active Announcements'
             }}
           </div>
         </button>

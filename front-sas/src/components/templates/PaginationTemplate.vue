@@ -77,14 +77,14 @@ const hasLast = () => {
       </button>
 
       <button
-        v-for="page in pages"
+        v-for="(page, index) in pages"
         v-on="page === offset ? {} : { click: selectPage }"
         :key="page"
         :value="page"
         :class="
           page === offset
-            ? `bg-[#336699] text-white ann-page-${page}`
-            : `bg-white ann-page-${page}`
+            ? `bg-[#336699] text-white ann-page-${index}`
+            : `bg-white ann-page-${index} `
         "
         class="relative z-10 inline-flex items-center px-2 md:px-4 md:py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-[#336699] hover:text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#336699]"
       >

@@ -1,15 +1,15 @@
 <script setup>
-import { useRouter } from "vue-router";
-import PageTemplate from "../templates/PageTemplate.vue";
-import AnnouncementTitle from "../UI/organisms/AnnouncementTitle.vue";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementUserTemplate from "../templates/AnnouncementUserTemplate.vue";
-import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
-import SingleUserAnnouncement from "../UI/molecules/SingleUserAnnouncement.vue";
-import PaginationTemplate from "../templates/PaginationTemplate.vue";
-import { usePageStore } from "../../stores/pageStore";
-import { storeToRefs } from "pinia";
-import { onBeforeMount } from "vue";
+import { useRouter } from 'vue-router';
+import PageTemplate from '../templates/PageTemplate.vue';
+import AnnouncementTitle from '../UI/organisms/AnnouncementTitle.vue';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementUserTemplate from '../templates/AnnouncementUserTemplate.vue';
+import AnnouncementList from '../UI/organisms/AnnouncementList.vue';
+import SingleUserAnnouncement from '../UI/molecules/SingleUserAnnouncement.vue';
+import PaginationTemplate from '../templates/PaginationTemplate.vue';
+import { usePageStore } from '../../stores/pageStore';
+import { storeToRefs } from 'pinia';
+import { onBeforeMount } from 'vue';
 
 const pageStore = usePageStore();
 const { changeCategory, refreshAnnouncement, getTotalIndex } = pageStore;
@@ -41,22 +41,25 @@ onBeforeMount(() => {
         <template #category>Category</template>
       </AnnouncementUserTemplate>
     </div>
-    <AnnouncementList
-      :announcementList="allAnnouncement.content"
-      v-slot="announcement"
-    >
-      <SingleUserAnnouncement
-        @announcementId="
-          (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
-        "
-        :isActive="!currentStatus.isActive"
-        :index="getTotalIndex(announcement.index)"
-        :announcementItem="announcement.announcementItem"
-        class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
-      />
-    </AnnouncementList>
+    <div class="h-full">
+      <AnnouncementList
+        :announcementList="allAnnouncement.content"
+        v-slot="announcement"
+      >
+        <SingleUserAnnouncement
+          @announcementId="
+            (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
+          "
+          :isActive="!currentStatus.isActive"
+          :index="getTotalIndex(announcement.index)"
+          :announcementItem="announcement.announcementItem"
+          class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
+        />
+      </AnnouncementList>
+    </div>
+
     <PaginationTemplate
-      v-if="!isAnnouncementEmpty"
+      v-if="!isAnnouncementEmpty && currentStatus.showPaginate"
       @select-page="refreshAnnouncement"
       :total-pages="allAnnouncement.totalPages"
       :offset="allAnnouncement.page"

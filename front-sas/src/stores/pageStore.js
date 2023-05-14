@@ -1,8 +1,8 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
-import { reactive, ref, watchEffect } from "vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
+import { defineStore, acceptHMRUpdate } from 'pinia';
+import { reactive, ref, watchEffect } from 'vue';
+import AnnouncementService from '@/lib/AnnouncementService.js';
 
-export const usePageStore = defineStore("page", () => {
+export const usePageStore = defineStore('page', () => {
   const isLoading = ref(true);
   const allAnnouncement = ref([]);
   const isAnnouncementEmpty = ref(false);
@@ -11,9 +11,10 @@ export const usePageStore = defineStore("page", () => {
 
   const currentStatus = reactive({
     isActive: true,
-    statusMode: "active",
+    statusMode: 'active',
     categoryId: 0,
     pageNo: 0,
+    showPaginate: false,
   });
 
   const changeCategory = async (id) => {
@@ -25,12 +26,12 @@ export const usePageStore = defineStore("page", () => {
   const toggleStatusAnnouncement = () => {
     currentStatus.isActive = !currentStatus.isActive;
     if (currentStatus.isActive) {
-      currentStatus.statusMode = "active";
+      currentStatus.statusMode = 'active';
     } else {
-      currentStatus.statusMode = "close";
+      currentStatus.statusMode = 'close';
     }
     currentStatus.pageNo = 0;
-    currentStatus.categoryId = 0;
+    // currentStatus.categoryId = 0;
   };
 
   watchEffect(async () => {
@@ -43,6 +44,8 @@ export const usePageStore = defineStore("page", () => {
     isAnnouncementEmpty.value =
       Object.keys(allAnnouncement.value.content).length === 0;
     isLoading.value = false;
+    currentStatus.showPaginate =
+      allAnnouncement.value.totalElements > 5 ? true : false;
   });
 
   const refreshAnnouncement = async (pageNo) => {
