@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div
-    class="flex flex-col items-center w-full gap-5 pb-5 my-2 xl:pb-0 xl:flex-row xl:justify-evenly xl:h-24"
+    class="flex flex-col items-center w-full gap-5 pb-5 my-2 xl:pb-0 xl:flex-row xl:justify-evenly xl:h-full"
     :class="props.header ? 'text-[#737373] ' : 'bg-gray-100 rounded-xl h-full'"
   >
     <div
@@ -18,7 +18,7 @@ const props = defineProps({
           ? 'bg-transparent text-xl '
           : 'bg-[#336699] text-white text-xl '
       "
-      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-fit xl:rounded-none xl:rounded-l-xl"
+      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:max-w-[3rem] xl:rounded-none xl:rounded-l-xl"
     >
       <slot name="announcementNo"></slot>
     </div>
