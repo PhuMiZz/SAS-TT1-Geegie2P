@@ -9,7 +9,6 @@ import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateDto;
 import sit.int221.announcementsystem.dtos.AnnouncementCreateUpdateViewDto;
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.entities.Category;
-import sit.int221.announcementsystem.exceptions.BadRequestException;
 import sit.int221.announcementsystem.exceptions.ItemNotFoundException;
 import sit.int221.announcementsystem.repositories.AnnouncementRepository;
 import sit.int221.announcementsystem.repositories.CategoryRepository;
@@ -60,14 +59,16 @@ public class AnnouncementService {
 
     public AnnouncementCreateUpdateViewDto createAnnouncement(AnnouncementCreateUpdateDto newAnnouncement) {
         Announcement announcement = modelMapper.map(newAnnouncement, Announcement.class);
+
         if (announcement.getAnnouncementDisplay() == null) {
             announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
+        } else if (announcement.getAnnouncementDisplay().describeConstable().isEmpty()) {
+            announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
         }
-        if (announcement.getAnnouncementTitle().isBlank() || announcement.getAnnouncementDescription().isBlank()) {
-            throw new BadRequestException("Not Found");
-        }
+
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
+
 
     public void DeleteAnnouncement(int announcementId) {
         announcementRepository.findById(announcementId).
@@ -76,12 +77,12 @@ public class AnnouncementService {
     }
 
     public AnnouncementCreateUpdateViewDto updateAnnouncement(AnnouncementCreateUpdateDto updateAnnouncement, AnnouncementCreateUpdateDto oldAnnouncement) {
-        oldAnnouncement.setAnnouncementTitle(updateAnnouncement.getAnnouncementTitle().isBlank() ? null : updateAnnouncement.getAnnouncementTitle());
-        oldAnnouncement.setAnnouncementDescription(updateAnnouncement.getAnnouncementDescription().isBlank() ? null : updateAnnouncement.getAnnouncementDescription());
+        oldAnnouncement.setAnnouncementTitle(updateAnnouncement.getAnnouncementTitle());
+        oldAnnouncement.setAnnouncementDescription(updateAnnouncement.getAnnouncementDescription());
         oldAnnouncement.setCategoryId(updateAnnouncement.getCategoryId());
         oldAnnouncement.setPublishDate(updateAnnouncement.getPublishDate());
         oldAnnouncement.setCloseDate(updateAnnouncement.getCloseDate());
-        oldAnnouncement.setAnnouncementDisplay(updateAnnouncement.getAnnouncementDisplay().isBlank() ? "N" : updateAnnouncement.getAnnouncementDisplay());
+        oldAnnouncement.setAnnouncementDisplay(updateAnnouncement.getAnnouncementDisplay());
         Announcement announcement = modelMapper.map(oldAnnouncement, Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
