@@ -11,12 +11,15 @@ import sit.int221.announcementsystem.repositories.CategoryRepository;
 public class CategoryValidator implements ConstraintValidator<ValidCategory, Integer> {
     @Autowired
     CategoryRepository categoryRepository;
+
     @Override
     public boolean isValid(Integer categoryId, ConstraintValidatorContext context) {
-        try {
-            return categoryRepository.existsById(categoryId);
-        }catch (Exception ex){
+
+        if (categoryId == null) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("must not be null").addConstraintViolation();
             return false;
         }
+        return categoryRepository.existsById(categoryId);
     }
 }

@@ -28,9 +28,7 @@ public class AnnouncementCreateUpdateDto {
     private String announcementDescription;
 
     @ValidCategory
-    @NotNull(message = "must not be null")
     private Integer categoryId;
-
 
     @ValidPublishDate
     private ZonedDateTime publishDate;
@@ -38,7 +36,7 @@ public class AnnouncementCreateUpdateDto {
 
     private ZonedDateTime closeDate;
 
-    @ValidDisplay
+    @ValidDisplay(regexp = "Y|N")
     private String announcementDisplay;
 
 }
