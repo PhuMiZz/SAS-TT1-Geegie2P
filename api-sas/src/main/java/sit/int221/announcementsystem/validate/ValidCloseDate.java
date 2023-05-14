@@ -1,4 +1,4 @@
-package sit.int221.announcementsystem.validDate;
+package sit.int221.announcementsystem.validate;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
