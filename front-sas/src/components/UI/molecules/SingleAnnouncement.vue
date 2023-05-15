@@ -1,12 +1,12 @@
 <script setup>
-import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import BadgeCategories from './BadgeCategories.vue';
 import AnnouncementTemplate from '../../templates/AnnouncementTemplate.vue';
 import ConfirmModal from '@/components/UI/organisms/ConfirmModal.vue';
 import OverlayTemplate from '../../templates/OverlayTemplate.vue';
-import AnnouncementService from '../../../lib/AnnouncementService';
+import AnnouncementService from '../../../lib/announcementService';
 
 const showModal = ref(false);
 const selectedAnnouncement = ref();

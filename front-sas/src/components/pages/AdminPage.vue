@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 import PageTemplate from "../templates/PageTemplate.vue";
-import AnnouncementService from "@/lib/AnnouncementService";
+import AnnouncementService from "@/lib/announcementService";
 import AnnouncementList from "../UI/organisms/AnnouncementList.vue";
 import AnnouncementTitle from "@/components/UI/organisms/AnnouncementTitle.vue";
 import AnnouncementTemplate from "../templates/AnnouncementTemplate.vue";

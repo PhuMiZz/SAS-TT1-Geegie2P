@@ -109,7 +109,9 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else {
-        return Promise.reject(response.statusText);
+        const errorResponse = await response.json();
+        console.log(`ERROR CREATING ANNOUNCEMENT: ${JSON.stringify(errorResponse)}`);
+        return JSON.stringify(errorResponse.detail)
       }
     } catch (error) {
       console.error(`ERROR CREATING ANNOUNCEMENT: ${error.message}`);
@@ -149,7 +151,9 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else {
-        return Promise.reject(response.statusText);
+        const errorResponse = await response.json();
+        console.log(`ERROR UPDATING ANNOUNCEMENT: ${JSON.stringify(errorResponse.detail)}`);
+        return JSON.stringify(errorResponse.detail)
       }
     } catch (error) {
       console.error(`ERROR UPDATING ANNOUNCEMENT: ${error.message}`);
