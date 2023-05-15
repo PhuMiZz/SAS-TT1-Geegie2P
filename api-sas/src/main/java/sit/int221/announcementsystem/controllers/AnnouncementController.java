@@ -70,12 +70,8 @@ public class AnnouncementController {
     }
     @PutMapping("/{id}")
     public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
-        try {
             AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
-        } catch (DataIntegrityViolationException e){
-            throw new BadRequestException("Announcement not found");
-        }
     }
 //    @PutMapping("/{id}")
 //    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){

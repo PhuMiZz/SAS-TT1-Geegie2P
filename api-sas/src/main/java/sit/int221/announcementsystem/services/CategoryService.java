@@ -23,10 +23,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category createCategory(Category category){
-        if (category.getCategoryName() == null || category.getCategoryName().isBlank()) throw new BadRequestException("Must insert category name!!");
-        return categoryRepository.saveAndFlush(category);
-    }
+//    public Category createCategory(Category category){
+//        if (category.getCategoryName() == null || category.getCategoryName().isBlank()) throw new BadRequestException("Must insert category name!!");
+//        return categoryRepository.saveAndFlush(category);
+//    }
 
     public Category getCategoryById(Integer categoryId){
         return categoryRepository.findById(categoryId).orElseThrow(

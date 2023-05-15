@@ -28,17 +28,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return new ResponseEntity<>(errorResponse, status);
     }
-    @ExceptionHandler(BadRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleInvalidAnnouncementId(BadRequestException exception, WebRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                status.value(),
-                status.getReasonPhrase(),
-                exception.getMessage(),
-                request.getDescription(false)
-        );
-        return new ResponseEntity<>(errorResponse,status);
-    }
+//    @ExceptionHandler(BadRequestException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ResponseEntity<ErrorResponse> handleInvalidAnnouncementId(BadRequestException exception, WebRequest request) {
+//        HttpStatus status = HttpStatus.BAD_REQUEST;
+//        ErrorResponse errorResponse = new ErrorResponse(
+//                LocalDateTime.now(),
+//                status.value(),
+//                status.getReasonPhrase(),
+//                exception.getMessage(),
+//                request.getDescription(false)
+//        );
+//        return new ResponseEntity<>(errorResponse,status);
+//    }
 }
