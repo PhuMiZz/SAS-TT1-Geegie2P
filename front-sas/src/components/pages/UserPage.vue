@@ -41,20 +41,23 @@ onBeforeMount(() => {
         <template #category>Category</template>
       </AnnouncementUserTemplate>
     </div>
-    <AnnouncementList
-      :announcementList="allAnnouncement.content"
-      v-slot="announcement"
-    >
-      <SingleUserAnnouncement
-        @announcementId="
-          (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
-        "
-        :isActive="!currentStatus.isActive"
-        :index="getTotalIndex(announcement.index)"
-        :announcementItem="announcement.announcementItem"
-        class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
-      />
-    </AnnouncementList>
+    <div class="h-full">
+      <AnnouncementList
+        :announcementList="allAnnouncement.content"
+        v-slot="announcement"
+      >
+        <SingleUserAnnouncement
+          @announcementId="
+            (id) => router.push({ name: 'UserDetailPage', params: { id: id } })
+          "
+          :isActive="!currentStatus.isActive"
+          :index="getTotalIndex(announcement.index)"
+          :announcementItem="announcement.announcementItem"
+          class="cursor-pointer transition duration-300 ease-in-out hover:bg-slate-200 hover:shadow-lg"
+        />
+      </AnnouncementList>
+    </div>
+
     <PaginationTemplate
       v-if="!isAnnouncementEmpty && currentStatus.showPaginate"
       @select-page="refreshAnnouncement"

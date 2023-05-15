@@ -1,9 +1,9 @@
 <script setup>
-import { getLocaleDateTime } from "@/lib/DateTimeManagement.js";
-import AnnouncementUserTemplate from "../../templates/AnnouncementUserTemplate.vue";
-import BadgeCategories from "./BadgeCategories.vue";
+import { getLocaleDateTime } from '@/lib/DateTimeManagement.js';
+import AnnouncementUserTemplate from '../../templates/AnnouncementUserTemplate.vue';
+import BadgeCategories from './BadgeCategories.vue';
 
-defineEmits(["announcementId"]);
+defineEmits(['announcementId']);
 const props = defineProps({
   announcementItem: {
     type: Object,
