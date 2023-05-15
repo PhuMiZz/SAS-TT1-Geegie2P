@@ -22,24 +22,25 @@ services:
       MYSQL_USER: dev
       MYSQL_PASSWORD: SaSTt1_GeeGie2p
       LANG: en_US.UTF-8
-      LC_ALL: en_US.UTF-8
     networks:
       sas_network:
         ipv4_address: 172.20.0.3
     ports:
-       - "3306:3306"
+      - "3306:3306"
     volumes:
-       - ./db/sas_script_create.sql:/docker-entrypoint-initdb.d/init.sql
-       - /home/sysadmin/mysql-data:/var/lib/mysql
+      - ./db/sas_script_create.sql:/docker-entrypoint-initdb.d/init.sql
+      - /home/sysadmin/mysql-data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
   front:
     image: front
     build:
-       context: ./front-sas
-       dockerfile: ../frontDockerfile
+      context: ./front-sas
+      dockerfile: ../frontDockerfile
     ports:
-       - "80:80"
+      - "80:80"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
 networks:
   sas_network:
     ipam:
