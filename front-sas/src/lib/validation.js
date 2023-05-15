@@ -15,9 +15,6 @@ const checkLength = (str, limit, name) => {
 };
 
 const checkDate = (date1, date2, type) => {
-  console.log(date1);
-  console.log(date2);
-  console.log(date1 === null);
   console.log(date1 < date2);
   if (date1 < date2 && date1 !== null) {
     alert(`${type} date cannot be past!!`);
