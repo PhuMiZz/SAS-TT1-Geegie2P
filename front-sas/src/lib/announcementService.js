@@ -13,18 +13,18 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getPagesAllAnnouncement(mode = "admin", categoryId = 0, pageNo = 0) {
-    let modeItem = mode === "admin" ? "" : `?mode=${mode}`;
+  async getPagesAllAnnouncement(mode = 'admin', categoryId = 0, pageNo = 0) {
+    let modeItem = mode === 'admin' ? '' : `?mode=${mode}`;
     let categoryItem =
       categoryId === 0
-        ? ""
-        : mode === "admin"
+        ? ''
+        : mode === 'admin'
         ? `?category=${categoryId}`
         : `&category=${categoryId}`;
     let pageItem =
       pageNo === 0
-        ? ""
-        : mode === "admin" && categoryId === 0
+        ? ''
+        : mode === 'admin' && categoryId === 0
         ? `?page=${pageNo}`
         : `&page=${pageNo}`;
 
@@ -43,7 +43,7 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getAnnouncementDetail(id, mode = "admin") {
+  async getAnnouncementDetail(id, mode = 'admin') {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`
@@ -51,9 +51,19 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else if (response.status === 404 || response.status === 400) {
-        alert("The request page is not available");
+        const errorResponse = await response.json();
+        response.status === 404
+          ? console.error(
+              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
+            )
+          : console.error(
+              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.detail)}`
+            );
+
+        alert('The request page is not available');
         window.location =
-          mode === "admin" ? "/admin/announcement" : "/announcement";
+          mode === 'admin' ? '/admin/announcement' : '/announcement';
+        return JSON.stringify(errorResponse.detail);
       } else {
         return Promise.reject(response.statusText);
       }
@@ -85,8 +95,17 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else if (response.status === 404 || response.status === 400) {
-        alert("The request page is not available");
-        window.location = "/announcement";
+        const errorResponse = await response.json();
+        response.status === 404
+          ? console.error(
+              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
+            )
+          : console.error(
+              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
+            );
+        alert('The request page is not available');
+        window.location = '/announcement';
+        return JSON.stringify(errorResponse.detail);
       } else {
         return Promise.reject(response.statusText);
       }
@@ -101,17 +120,19 @@ class AnnouncementService {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements`,
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify(newAnnouncement),
-          headers: { "Content-Type": "application/json" },
+          headers: { 'Content-Type': 'application/json' },
         }
       );
       if (response.ok) {
         return await response.json();
       } else {
         const errorResponse = await response.json();
-        console.log(`ERROR CREATING ANNOUNCEMENT: ${JSON.stringify(errorResponse)}`);
-        return JSON.stringify(errorResponse.detail)
+        console.error(
+          `ERROR CREATING ANNOUNCEMENT: ${JSON.stringify(errorResponse)}`
+        );
+        return JSON.stringify(errorResponse.detail);
       }
     } catch (error) {
       console.error(`ERROR CREATING ANNOUNCEMENT: ${error.message}`);
@@ -122,8 +143,8 @@ class AnnouncementService {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`,
         {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
         }
       );
       if (response.ok) {
@@ -141,9 +162,9 @@ class AnnouncementService {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(announcementData),
         }
@@ -152,8 +173,10 @@ class AnnouncementService {
         return await response.json();
       } else {
         const errorResponse = await response.json();
-        console.log(`ERROR UPDATING ANNOUNCEMENT: ${JSON.stringify(errorResponse.detail)}`);
-        return JSON.stringify(errorResponse.detail)
+        console.error(
+          `ERROR UPDATING ANNOUNCEMENT: ${JSON.stringify(errorResponse.detail)}`
+        );
+        return JSON.stringify(errorResponse.detail);
       }
     } catch (error) {
       console.error(`ERROR UPDATING ANNOUNCEMENT: ${error.message}`);
