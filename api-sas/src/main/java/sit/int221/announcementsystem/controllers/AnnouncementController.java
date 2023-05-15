@@ -78,7 +78,7 @@ public class AnnouncementController {
         }
     }
 //    @PutMapping("/{id}")
-//    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
+//    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){
 //        try {
 //            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
 //            return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
