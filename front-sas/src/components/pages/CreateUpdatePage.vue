@@ -7,7 +7,7 @@ import OverlayTemplate from "../templates/OverlayTemplate.vue";
 import { watchEffect, ref, reactive, computed } from "vue";
 import PageTemplate from "@/components/templates/PageTemplate.vue";
 import { useRoute } from "vue-router";
-import {checkDateTime,checkLength,checkDate} from "@/lib/validation";
+import { checkDateTime, checkLength, checkDate } from "@/lib/validation";
 import {
   extractDateAndTime,
   getISODateTime,
@@ -83,33 +83,72 @@ const fetchAnnouncement = async () => {
   }
 };
 const submitAnnouncement = async () => {
-  if (!checkDateTime(newAnnouncementData.publishDate, newAnnouncementData.publishTime, 'publish') ||
-      !checkDateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime, 'close') ||
-      !checkLength(newAnnouncementData.announcementTitle, 200, 'Announcement title') ||
-      !checkLength(newAnnouncementData.announcementTitle, 10000, 'Announcement description') ||
-      !checkDate(newAnnouncementData.publishDate, currentDate.value, 'publish') ||
-      !checkDate(newAnnouncementData.closeDate, currentDate.value, 'close')){
-      return;
-  }
-    if (newAnnouncementData.publishDate > newAnnouncementData.closeDate) {
-        alert("Publish date must be before close date");
-        return;
-    }
-    const newAnnouncement = {
-      announcementTitle: newAnnouncementData.announcementTitle,
-      announcementDescription: newAnnouncementData.announcementDescription,
-      categoryId: newAnnouncementData.announcementCategory,
-      publishDate: getISODateTime(
+  if (
+    !checkDateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime,
+      "publish"
+    ) ||
+    !checkDateTime(
+      newAnnouncementData.closeDate,
+      newAnnouncementData.closeTime,
+      "close"
+    ) ||
+    !checkLength(
+      newAnnouncementData.announcementTitle,
+      200,
+      "Announcement title"
+    ) ||
+    !checkLength(
+      newAnnouncementData.announcementTitle,
+      10000,
+      "Announcement description"
+    ) ||
+    !checkDate(
+      getISODateTime(
         newAnnouncementData.publishDate,
         newAnnouncementData.publishTime
       ),
-      closeDate: getISODateTime(
+      new Date().toISOString(),
+      "publish"
+    ) ||
+    !checkDate(
+      getISODateTime(
         newAnnouncementData.closeDate,
         newAnnouncementData.closeTime
       ),
-      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
-    };
-    await createOrUpdateAnnouncement(newAnnouncement);
+      new Date().toISOString(),
+      "close"
+    )
+  ) {
+    return;
+  }
+  if (
+    getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ) >=
+    getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
+  ) {
+    alert("Publish date must be before close date");
+    return;
+  }
+
+  const newAnnouncement = {
+    announcementTitle: newAnnouncementData.announcementTitle,
+    announcementDescription: newAnnouncementData.announcementDescription,
+    categoryId: newAnnouncementData.announcementCategory,
+    publishDate: getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ),
+    closeDate: getISODateTime(
+      newAnnouncementData.closeDate,
+      newAnnouncementData.closeTime
+    ),
+    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+  };
+  await createOrUpdateAnnouncement(newAnnouncement);
 };
 const createOrUpdateAnnouncement = async (announcement) => {
   try {
