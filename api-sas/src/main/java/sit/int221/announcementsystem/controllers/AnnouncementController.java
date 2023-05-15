@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,12 +71,8 @@ public class AnnouncementController {
     }
     @PutMapping("/{id}")
     public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
-        try {
-            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
-            return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
-        } catch (DataIntegrityViolationException e){
-            throw new BadRequestException("Announcement not found");
-        }
+        AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
+        return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
     }
 //    @PutMapping("/{id}")
 //    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody AnnouncementCreateUpdateDto updateAnnouncement){
