@@ -2,7 +2,7 @@
 import AddIcon from '../atoms/AddIcon.vue';
 import CategoryIcon from '../atoms/CategoryIcon.vue';
 import InputTemplate from '../../templates/InputTemplate.vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
+import AnnouncementService from '@/lib/announcementService.js';
 import { ref, watchEffect } from 'vue';
 import router from '@/router';
 import { usePageStore } from '@/stores/pageStore';

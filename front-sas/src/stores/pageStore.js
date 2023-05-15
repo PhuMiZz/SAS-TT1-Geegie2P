@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { reactive, ref, watchEffect } from 'vue';
-import AnnouncementService from '@/lib/AnnouncementService.js';
+import AnnouncementService from '@/lib/announcementService.js';
 
 export const usePageStore = defineStore('page', () => {
   const isLoading = ref(true);

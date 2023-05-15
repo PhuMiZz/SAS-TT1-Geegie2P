@@ -1,6 +1,6 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
+import AnnouncementService from "@/lib/announcementService.js";
 const announcementService = new AnnouncementService();
 const categoryId = ref(0);
 

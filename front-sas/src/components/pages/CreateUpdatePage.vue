@@ -1,16 +1,17 @@
 <script setup>
 import TextDescription from "@/components/UI/molecules/TextDescription.vue";
 import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
-import AnnouncementService from "@/lib/AnnouncementService.js";
+import AnnouncementService from "@/lib/announcementService.js";
 import SuccessModal from "../UI/organisms/SuccessModal.vue";
 import OverlayTemplate from "../templates/OverlayTemplate.vue";
 import { watchEffect, ref, reactive, computed } from "vue";
 import PageTemplate from "@/components/templates/PageTemplate.vue";
 import { useRoute } from "vue-router";
+import { checkDateTime, checkLength, checkDate } from "@/lib/validation";
 import {
   extractDateAndTime,
   getISODateTime,
-} from "@/lib/DateTimeManagement.js";
+} from "@/lib/dateTimeManagement.js";
 
 const announcementService = new AnnouncementService();
 const router = useRoute();
@@ -83,57 +84,89 @@ const fetchAnnouncement = async () => {
 };
 const submitAnnouncement = async () => {
   if (
-    (newAnnouncementData.publishDate && !newAnnouncementData.publishTime) ||
-    (!newAnnouncementData.publishDate && newAnnouncementData.publishTime)
-  ) {
-    alert(
-      `please insert ${
-        newAnnouncementData.publishDate ? "publish time" : "publish date"
-      }`
-    );
-  } else if (
-    (newAnnouncementData.closeDate && !newAnnouncementData.closeTime) ||
-    (!newAnnouncementData.closeDate && newAnnouncementData.closeTime)
-  ) {
-    alert(
-      `please insert ${
-        newAnnouncementData.closeDate ? "close time" : "close date"
-      }`
-    );
-  } else if (newAnnouncementData.announcementTitle.length > 200) {
-    alert("Announcement title is max!");
-  } else if (newAnnouncementData.announcementTitle.length > 10000) {
-    alert("Announcement description is max!!");
-  } else if (
-    newAnnouncementData.publishDate < currentDate.value ||
-    newAnnouncementData.closeDate < currentDate.value
-  ) {
-    alert(
-      `${
-        newAnnouncementData.publishDate < currentDate.value
-          ? "publish"
-          : "close"
-      } date cannot be past!!`
-    );
-  } else if (newAnnouncementData.publishDate > newAnnouncementData.closeDate) {
-    alert("Publish date must before close date");
-  } else {
-    const newAnnouncement = {
-      announcementTitle: newAnnouncementData.announcementTitle,
-      announcementDescription: newAnnouncementData.announcementDescription,
-      categoryId: newAnnouncementData.announcementCategory,
-      publishDate: getISODateTime(
+    !checkDateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime,
+      "publish"
+    ) ||
+    !checkDateTime(
+      newAnnouncementData.closeDate,
+      newAnnouncementData.closeTime,
+      "close"
+    ) ||
+    !checkLength(
+      newAnnouncementData.announcementTitle,
+      200,
+      "Announcement title"
+    ) ||
+    !checkLength(
+      newAnnouncementData.announcementTitle,
+      10000,
+      "Announcement description"
+    ) ||
+    !checkDate(
+      getISODateTime(
         newAnnouncementData.publishDate,
         newAnnouncementData.publishTime
       ),
-      closeDate: getISODateTime(
+      new Date().toISOString(),
+      "publish"
+    ) ||
+    !checkDate(
+      getISODateTime(
         newAnnouncementData.closeDate,
         newAnnouncementData.closeTime
       ),
-      announcementDisplay: newAnnouncementData.display ? "Y" : "N",
-    };
-    await createOrUpdateAnnouncement(newAnnouncement);
+      new Date().toISOString(),
+      "close"
+    )
+  ) {
+    return;
   }
+  if (
+    getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ) >
+    getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
+  ) {
+    alert("Close date must be after publish date");
+    return;
+  }
+  if (
+    getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ) ===
+      getISODateTime(
+        newAnnouncementData.closeDate,
+        newAnnouncementData.closeTime
+      ) &&
+    getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ) &&
+    getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
+  ) {
+    alert("close date must be later than publish date");
+    return;
+  }
+
+  const newAnnouncement = {
+    announcementTitle: newAnnouncementData.announcementTitle,
+    announcementDescription: newAnnouncementData.announcementDescription,
+    categoryId: newAnnouncementData.announcementCategory,
+    publishDate: getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ),
+    closeDate: getISODateTime(
+      newAnnouncementData.closeDate,
+      newAnnouncementData.closeTime
+    ),
+    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+  };
+  await createOrUpdateAnnouncement(newAnnouncement);
 };
 const createOrUpdateAnnouncement = async (announcement) => {
   try {
@@ -142,13 +175,10 @@ const createOrUpdateAnnouncement = async (announcement) => {
         router.params.id,
         announcement
       );
-      // alert("Announcement updated successfully");
-      // window.location = `/admin/announcement/${router.params.id}`;
       toggleModal();
     } else {
       await announcementService.createAnnouncement(announcement);
-      // alert("Announcement created successfully");
-      // window.location = "/admin/announcement";
+
       toggleModal();
     }
   } catch (error) {
