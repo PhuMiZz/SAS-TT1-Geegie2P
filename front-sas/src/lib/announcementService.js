@@ -101,7 +101,7 @@ class AnnouncementService {
               `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
             )
           : console.error(
-              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
+              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.detail)}`
             );
         alert('The request page is not available');
         window.location = '/announcement';
