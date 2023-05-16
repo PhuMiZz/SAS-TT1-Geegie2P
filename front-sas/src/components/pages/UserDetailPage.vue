@@ -7,7 +7,11 @@ import LoadingPage from "../UI/organisms/LoadingPage.vue";
 import AnnouncementCard from "../templates/AnnouncementCard.vue";
 import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
 import PageTemplate from "../templates/PageTemplate.vue";
+import { usePageStore } from "@/stores/pageStore.js";
+import { storeToRefs } from "pinia";
 
+const pageStore = usePageStore();
+const { currentStatus } = storeToRefs(pageStore);
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
@@ -49,7 +53,9 @@ watchEffect(async () => {
             >{{ announcementDetail.announcementCategory }}
           </BadgeCategories>
           <div
-            v-if="announcementDetail.closeDate !== null"
+            v-if="
+              announcementDetail.closeDate !== null && !currentStatus.isActive
+            "
             class="ann-close-date text-lg text-[#737373]"
           >
             <span class="text-red-500">Closed on:</span>
