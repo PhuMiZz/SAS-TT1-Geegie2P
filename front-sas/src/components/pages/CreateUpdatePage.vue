@@ -127,28 +127,10 @@ const submitAnnouncement = async () => {
     getISODateTime(
       newAnnouncementData.publishDate,
       newAnnouncementData.publishTime
-    ) >
+    ) >=
     getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
   ) {
-    alert("Close date must be after publish date");
-    return;
-  }
-  if (
-    getISODateTime(
-      newAnnouncementData.publishDate,
-      newAnnouncementData.publishTime
-    ) ===
-      getISODateTime(
-        newAnnouncementData.closeDate,
-        newAnnouncementData.closeTime
-      ) &&
-    getISODateTime(
-      newAnnouncementData.publishDate,
-      newAnnouncementData.publishTime
-    ) &&
-    getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
-  ) {
-    alert("close date must be later than publish date");
+    alert("Publish date must be before close date");
     return;
   }
 
