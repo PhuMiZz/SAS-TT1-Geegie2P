@@ -1,3 +1,5 @@
+import { useRoute } from 'vue-router';
+
 class AnnouncementService {
   async getAllAnnouncement() {
     try {
@@ -51,19 +53,11 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else if (response.status === 404 || response.status === 400) {
-        const errorResponse = await response.json();
-        response.status === 404
-          ? console.error(
-              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
-            )
-          : console.error(
-              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.detail)}`
-            );
-
         alert('The request page is not available');
         window.location =
-          mode === 'admin' ? '/admin/announcement' : '/announcement';
-        return JSON.stringify(errorResponse.detail);
+          mode === 'admin'
+            ? `${import.meta.env.VITE_BASE_URL}/admin/announcement`
+            : `${import.meta.env.VITE_BASE_URL}/announcement`;
       } else {
         return Promise.reject(response.statusText);
       }
@@ -95,14 +89,6 @@ class AnnouncementService {
       if (response.ok) {
         return await response.json();
       } else if (response.status === 404 || response.status === 400) {
-        const errorResponse = await response.json();
-        response.status === 404
-          ? console.error(
-              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.message)}`
-            )
-          : console.error(
-              `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.detail)}`
-            );
         alert('The request page is not available');
         window.location = '/announcement';
         return JSON.stringify(errorResponse.detail);
