@@ -12,14 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sit.int221.announcementsystem.dtos.*;
-
 import org.springframework.web.bind.annotation.*;
-
 import sit.int221.announcementsystem.entities.Announcement;
 import sit.int221.announcementsystem.exceptions.BadRequestException;
-
 import sit.int221.announcementsystem.services.AnnouncementService;
-import sit.int221.announcementsystem.services.CategoryService;
 import sit.int221.announcementsystem.utils.ListMapper;
 import java.util.List;
 
@@ -37,11 +33,7 @@ public class AnnouncementController {
     @GetMapping("")
     public List<AnnouncementsViewDto> getAnnouncements(
             @RequestParam(value = "mode", defaultValue = "admin") String mode){
-        List<Announcement> announcements = switch (mode.toLowerCase()){
-            case "admin" -> announcementService.getAnnouncements();
-            case "close" -> announcementService.getClosedAnnouncements();
-            default -> announcementService.getActiveAnnouncements();
-        };
+        List<Announcement> announcements = announcementService.getAnnouncementsByAdmin(mode);
         return listMapper.mapList(announcements, AnnouncementsViewDto.class, modelMapper);
     }
 
@@ -49,7 +41,6 @@ public class AnnouncementController {
     public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id) {
         return modelMapper.map(announcementService.getAnnouncementDetail(id), AnnouncementDetailDto.class);
     }
-
 
     @PostMapping("")
     public AnnouncementCreateUpdateViewDto createAnnouncement(@RequestBody @Valid AnnouncementCreateUpdateDto newAnnouncement) {
@@ -78,12 +69,7 @@ public class AnnouncementController {
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "category", required = false) Integer categoryId) {
         Pageable pageable = PageRequest.of(page, size);
-        if (mode.equals("admin")) pageable = Pageable.unpaged();
         Page<Announcement> announcements = announcementService.getAnnouncementsByModeAndCategory(mode, categoryId, pageable);
         return listMapper.toPageDTO(announcements, AnnouncementsViewDto.class, modelMapper);
     }
-
-
-
-
 }
