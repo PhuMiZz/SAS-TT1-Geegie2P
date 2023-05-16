@@ -31,8 +31,6 @@ public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
     @Autowired
-    private CategoryService categoryService;
-    @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private ListMapper listMapper = ListMapper.getInstance();
@@ -64,12 +62,8 @@ public class AnnouncementController {
     }
     @PutMapping("/{id}")
     public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
-        try {
             AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
-        } catch (DataIntegrityViolationException e){
-            throw new BadRequestException("Announcement not found");
-        }
     }
 
     @GetMapping("/category/{categoryId}")
