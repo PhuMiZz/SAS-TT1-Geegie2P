@@ -49,10 +49,6 @@ const onClickMenuHandler = () => {
           <UserViewIcon class="icon" />
           <span class="text-page">User View</span>
         </RouterLink>
-        <RouterLink to="/aboutus" class="flex items-center text-xl gap-x-3">
-          <AboutUsIcon class="icon" />
-          <span class="text-page">About Us</span>
-        </RouterLink>
       </div>
 
       <div class="w-[10%] flex justify-center">
@@ -98,14 +94,6 @@ const onClickMenuHandler = () => {
         <span
           class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
           >User View</span
-        >
-      </RouterLink>
-
-      <RouterLink to="/aboutus" class="flex items-center gap-2">
-        <AboutUsIcon class="w-10 icon" />
-        <span
-          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
-          >About Us</span
         >
       </RouterLink>
     </div>
