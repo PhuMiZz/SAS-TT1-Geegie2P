@@ -211,7 +211,7 @@ const setTimeDefault = (event) => {
 <template>
   <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
 
-  <PageTemplate class="my-10">
+  <PageTemplate class="mt-10">
     <AnnouncementCard
       :viewComponent="false"
       @routerPage="
@@ -388,7 +388,7 @@ const setTimeDefault = (event) => {
       </template>
     </AnnouncementCard>
 
-    <div class="flex row gap-5 justify-end mt-10">
+    <div class="flex gap-5 justify-end py-5">
       <button
         class="ann-button w-48 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white text-xl p-3 rounded ease-linear transition-all duration-150"
         @click="
