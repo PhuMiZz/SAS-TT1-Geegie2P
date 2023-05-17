@@ -1,13 +1,15 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
+
 import AnnouncementService from "@/lib/announcementService";
 import LoadingPage from "../UI/organisms/LoadingPage.vue";
 import AnnouncementCard from "../templates/AnnouncementCard.vue";
 import TextDescription from "../UI/molecules/TextDescription.vue";
-import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
 import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
 import PageTemplate from "../templates/PageTemplate.vue";
+import ViewCount from "../UI/molecules/ViewCount.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -26,12 +28,7 @@ watchEffect(async () => {
   if (announcementDetail.value) {
     isLoading.value = false;
     rawDescription.value = announcementDetail.value.announcementDescription;
-
-    // console.log(
-    //   (rawDescription.value = JSON.parse(
-    //     announcementDetail.value.announcementDescription
-    //   ))
-    // );
+    // console.log(rawDescription.value);
   }
   isLoading.value = false;
 });
@@ -46,15 +43,20 @@ watchEffect(async () => {
       :announcementDetail="announcementDetail"
       @routerPage="$router.push('/admin/announcement')"
     >
-      <template #title
-        ><div class="ann-title text-3xl">
-          {{ announcementDetail.announcementTitle }}
-        </div></template
-      >
+      <template #title>
+        <div class="flex w-full justify-between">
+          <div class="ann-title text-3xl">
+            {{ announcementDetail.announcementTitle }}
+          </div>
+          <div>
+            <ViewCount :viewCount="announcementDetail.viewCount" />
+          </div>
+        </div>
+      </template>
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
         <div class="ann-description text-lg ql-editor">
-          <span v-html="rawDescription"></span>
+          <div v-html="rawDescription"></div>
         </div>
       </template>
       <template #detail>
