@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
 const editor = ref("");
 </script>
 
@@ -12,7 +13,7 @@ const editor = ref("");
     ref="editor"
     toolbar="#my-toolbar"
     class="quil-container border-hidden bg-white"
-    style="min-height: 300px"
+    style="min-height: 300px; border: none"
     contentType="html"
   >
     <template #toolbar>
@@ -47,8 +48,4 @@ const editor = ref("");
   </QuillEditor>
 </template>
 
-<style scoped>
-.quil-container {
-  border: 0px;
-}
-</style>
+<style scoped></style>
