@@ -204,6 +204,20 @@ const setTimeDefault = (event) => {
 
   updateCheck();
 };
+
+const checkDescriptionLength = (editor) => {
+  const quill = editor.getQuill();
+  const maxLength = 50;
+  console.log(quill.getText()); //getOnlyInnerHTML
+  console.log(newAnnouncementData.announcementDescription.length);
+  // if (newAnnouncementData.announcementDescription.length > maxLength) {
+  //   quill.deleteText(
+  //     maxLength,
+  //     newAnnouncementData.announcementDescription.length
+  //   );
+  // }
+  updateCheck();
+};
 </script>
 
 <template>
@@ -280,7 +294,7 @@ const setTimeDefault = (event) => {
           maxlength="10000"
         ></textarea> -->
         <TextEditor
-          @textChange="updateCheck"
+          @checkDescriptionLength="checkDescriptionLength"
           id="announcementDescription"
           v-model:content="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
