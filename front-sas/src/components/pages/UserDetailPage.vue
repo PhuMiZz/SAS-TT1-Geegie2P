@@ -18,6 +18,7 @@ const announcementService = new AnnouncementService();
 const announcementId = params.id;
 const announcementDetail = ref({});
 const isLoading = ref(true);
+const rawDescription = ref("");
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -27,6 +28,9 @@ watchEffect(async () => {
   );
   if (announcementDetail.value) {
     isLoading.value = false;
+    rawDescription.value = JSON.parse(
+      announcementDetail.value.announcementDescription
+    );
   }
   isLoading.value = false;
 });
@@ -65,10 +69,7 @@ watchEffect(async () => {
       </template>
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div
-          class="ann-description text-lg"
-          :v-html="JSON.parse(announcementDetail.announcementDescription)"
-        ></div>
+        <div class="ann-description text-lg" v-html="rawDescription"></div>
       </template>
     </AnnouncementCard>
   </PageTemplate>

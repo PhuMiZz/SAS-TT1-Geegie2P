@@ -16,6 +16,7 @@ const announcementId = params.id;
 // const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
+const rawDescription = ref("");
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -24,6 +25,14 @@ watchEffect(async () => {
   );
   if (announcementDetail.value) {
     isLoading.value = false;
+    rawDescription.value = JSON.parse(
+      announcementDetail.value.announcementDescription
+    );
+    // console.log(
+    //   (rawDescription.value = JSON.parse(
+    //     announcementDetail.value.announcementDescription
+    //   ))
+    // );
   }
   isLoading.value = false;
 });
@@ -45,9 +54,7 @@ watchEffect(async () => {
       >
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div class="ann-description text-lg">
-          {{ JSON.parse(announcementDetail.announcementDescription) }}
-        </div>
+        <div class="ann-description text-lg" v-html="rawDescription"></div>
       </template>
       <template #detail>
         <TextDescription>

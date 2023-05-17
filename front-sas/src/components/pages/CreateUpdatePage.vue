@@ -183,7 +183,6 @@ const createOrUpdateAnnouncement = async (announcement) => {
 };
 const updateCheck = () => {
   checkUpdate.value;
-  console.log(newAnnouncementData.announcementDescription);
 };
 const toggleModal = () => {
   showModal.value = !showModal.value;
