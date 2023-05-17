@@ -34,6 +34,7 @@ watchEffect(async () => {
       props.isClicked
     );
     console.log('userClick: ' + props.isClicked);
+    console.log(announcementDetail.value.viewCount);
   } else {
     announcementDetail.value = await announcementService.getAnnouncementDetail(
       announcementId,
