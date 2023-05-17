@@ -38,7 +38,7 @@ public class AnnouncementController {
 
     @GetMapping("/{id}")
     public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id,
-                                                       @RequestParam(defaultValue = "false") boolean incrementViewCount) {
+                                                       @RequestParam(value = "count",defaultValue = "false") boolean incrementViewCount) {
         return modelMapper.map(announcementService.getAnnouncementDetail(id, incrementViewCount), AnnouncementDetailDto.class);
     }
 
