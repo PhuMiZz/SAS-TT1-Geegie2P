@@ -30,7 +30,7 @@ public class AnnouncementCreateUpdateDto {
     @ValidPublishDate
     private ZonedDateTime publishDate;
 
-
+    private Integer viewCount;
     private ZonedDateTime closeDate;
 
     @ValidDisplay(regexp = "Y|N")

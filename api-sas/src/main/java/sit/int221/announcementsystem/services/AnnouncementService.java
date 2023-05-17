@@ -34,7 +34,7 @@ public class AnnouncementService {
         );
         if (incrementViewCount) {
             announcement.setViewCount(announcement.getViewCount() != null ? announcement.getViewCount() + 1 : 1);
-            announcementRepository.save(announcement);
+            announcementRepository.saveAndFlush(announcement);
         }
 
         return announcement;
@@ -49,9 +49,7 @@ public class AnnouncementService {
 
     public AnnouncementCreateUpdateViewDto createAnnouncement(AnnouncementCreateUpdateDto newAnnouncement) {
         Announcement announcement = modelMapper.map(newAnnouncement, Announcement.class);
-        if (announcement.getViewCount() == null){
             announcement.setViewCount(0);
-        }
         if (announcement.getAnnouncementDisplay() == null) {
             announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
         } else if (announcement.getAnnouncementDisplay().describeConstable().isEmpty()) {
@@ -73,6 +71,7 @@ public class AnnouncementService {
         oldAnnouncement.setAnnouncementTitle(updateAnnouncement.getAnnouncementTitle());
         oldAnnouncement.setAnnouncementDescription(updateAnnouncement.getAnnouncementDescription());
         oldAnnouncement.setCategoryId(updateAnnouncement.getCategoryId());
+        oldAnnouncement.setViewCount(oldAnnouncement.getViewCount());
         oldAnnouncement.setPublishDate(updateAnnouncement.getPublishDate());
         oldAnnouncement.setCloseDate(updateAnnouncement.getCloseDate());
         oldAnnouncement.setAnnouncementDisplay(updateAnnouncement.getAnnouncementDisplay());

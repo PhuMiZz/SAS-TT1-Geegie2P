@@ -55,7 +55,7 @@ public class AnnouncementController {
     public AnnouncementCreateUpdateViewDto updateAnnouncement(
             @PathVariable Integer id,
             @RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
-            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id,true),AnnouncementCreateUpdateDto.class);
+            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id,false),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
     }
 
