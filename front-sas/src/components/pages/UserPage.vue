@@ -17,6 +17,7 @@ const { currentStatus, allAnnouncement, isAnnouncementEmpty, isLoading } =
   storeToRefs(pageStore);
 const router = useRouter();
 const emit = defineEmits(['userClick']);
+
 const isClicked = ref(false);
 
 const onClickDetailPageHandler = (id) => {
@@ -45,7 +46,7 @@ onBeforeMount(() => {
       No Announcement
     </div>
     <div v-else>
-      <AnnouncementUserTemplate :header="true" class="hidden xl:flex">
+      <AnnouncementUserTemplate :header="true" class="hidden lg:flex">
         <template #announcementNo>No.</template>
         <template #title>Title</template>
         <template #closeDate v-if="!currentStatus.isActive"
