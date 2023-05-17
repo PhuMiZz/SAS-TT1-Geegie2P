@@ -43,7 +43,7 @@ class AnnouncementService {
       console.error(`ERROR FETCHING DATA: ${error.message}`);
     }
   }
-  async getAnnouncementDetail(id, mode = 'admin') {
+  async getAnnouncementDetail(id, mode = 'admin', count) {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/announcements/${id}`

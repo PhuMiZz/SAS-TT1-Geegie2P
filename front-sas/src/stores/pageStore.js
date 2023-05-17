@@ -15,6 +15,7 @@ export const usePageStore = defineStore('page', () => {
     categoryId: 0,
     pageNo: 0,
     showPaginate: false,
+    isClicked : false
   });
 
   const changeCategory = async (id) => {

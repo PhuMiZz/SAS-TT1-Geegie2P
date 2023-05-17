@@ -1,31 +1,48 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
-import AnnouncementService from "@/lib/announcementService";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementCard from "../templates/AnnouncementCard.vue";
-import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
-import PageTemplate from "../templates/PageTemplate.vue";
-import { usePageStore } from "@/stores/pageStore.js";
-import { storeToRefs } from "pinia";
+import { ref, watchEffect, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
+import AnnouncementService from '@/lib/announcementService';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementCard from '../templates/AnnouncementCard.vue';
+import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import { usePageStore } from '@/stores/pageStore.js';
+import { storeToRefs } from 'pinia';
 
+const props = defineProps({
+  isClicked: {
+    type: Boolean,
+  },
+});
 const pageStore = usePageStore();
 const { currentStatus } = storeToRefs(pageStore);
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
-
 const announcementId = params.id;
 const announcementDetail = ref({});
+
 const isLoading = ref(true);
-const rawDescription = ref("");
+const rawDescription = ref('');
 
 watchEffect(async () => {
   isLoading.value = true;
-  announcementDetail.value = await announcementService.getAnnouncementDetail(
-    announcementId,
-    "user"
-  );
+  if (props.isClicked) {
+    announcementDetail.value = await announcementService.getAnnouncementDetail(
+      announcementId,
+      'user',
+      props.isClicked
+    );
+    console.log('userClick: ' + props.isClicked);
+  } else {
+    announcementDetail.value = await announcementService.getAnnouncementDetail(
+      announcementId,
+      'user',
+      props.isClicked
+    );
+    console.log('userClick: ' + props.isClicked);
+  }
+
   if (announcementDetail.value) {
     isLoading.value = false;
     rawDescription.value = announcementDetail.value.announcementDescription;
