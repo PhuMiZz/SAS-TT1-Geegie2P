@@ -46,7 +46,7 @@ const changeCategory = async (id) => {
       No Announcement
     </div>
     <div v-else>
-      <AnnouncementTemplate :header="true" class="hidden xl:flex">
+      <AnnouncementTemplate :header="true" class="hidden lg:flex">
         <template #title>Title</template>
         <template #category>Category</template>
         <template #publishDate>Publish Date</template>

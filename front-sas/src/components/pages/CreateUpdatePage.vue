@@ -1,19 +1,21 @@
 <script setup>
-import TextDescription from "@/components/UI/molecules/TextDescription.vue";
-import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
-import TextEditor from "../UI/organisms/TextEditor.vue";
-import AnnouncementService from "@/lib/announcementService.js";
-import SuccessModal from "../UI/organisms/SuccessModal.vue";
-import OverlayTemplate from "../templates/OverlayTemplate.vue";
-import { watchEffect, ref, reactive, computed } from "vue";
-import PageTemplate from "@/components/templates/PageTemplate.vue";
-import { useRoute } from "vue-router";
-import { checkDateTime, checkLength, checkDate } from "@/lib/validation";
+import TextDescription from '@/components/UI/molecules/TextDescription.vue';
+import AnnouncementCard from '@/components/templates/AnnouncementCard.vue';
+import TextEditor from '../UI/organisms/TextEditor.vue';
+import AnnouncementService from '@/lib/announcementService.js';
+import SuccessModal from '../UI/organisms/SuccessModal.vue';
+import OverlayTemplate from '../templates/OverlayTemplate.vue';
+import { watchEffect, ref, reactive, computed } from 'vue';
+import PageTemplate from '@/components/templates/PageTemplate.vue';
+import { useRoute } from 'vue-router';
+import { checkDateTime, checkLength, checkDate } from '@/lib/validation';
 import {
   extractDateAndTime,
   getISODateTime,
-} from "@/lib/dateTimeManagement.js";
+} from '@/lib/dateTimeManagement.js';
 
+const emit = defineEmits(['userClick']);
+const props = defineProps({ isClicked: { type: Boolean, required: false } });
 const announcementService = new AnnouncementService();
 const router = useRoute();
 const categories = ref([]);
@@ -22,18 +24,18 @@ const currentTime = ref();
 const announcement = ref();
 const showModal = ref(false);
 const newAnnouncementData = reactive({
-  announcementTitle: "",
-  announcementDescription: "",
+  announcementTitle: '',
+  announcementDescription: '',
   announcementCategory: 1,
-  publishDate: "",
-  publishTime: "",
-  closeDate: "",
-  closeTime: "",
+  publishDate: '',
+  publishTime: '',
+  closeDate: '',
+  closeTime: '',
   display: false,
 });
 const originalAnnouncementData = reactive({});
 const checkUpdate = computed(() => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     return (
       JSON.stringify(newAnnouncementData) !==
         JSON.stringify(originalAnnouncementData) &&
@@ -53,7 +55,7 @@ const checkUpdate = computed(() => {
 
 //function
 const fetchAnnouncement = async () => {
-  if (router.name === "UpdateAnnouncement") {
+  if (router.name === 'UpdateAnnouncement') {
     const announcementId = router.params.id;
 
     announcement.value = await announcementService.getAnnouncementDetail(
@@ -77,7 +79,7 @@ const fetchAnnouncement = async () => {
       publishTime,
       closeDate,
       closeTime,
-      display: announcement.value.announcementDisplay === "Y",
+      display: announcement.value.announcementDisplay === 'Y',
     });
 
     Object.assign(newAnnouncementData, originalAnnouncementData);
@@ -88,22 +90,22 @@ const submitAnnouncement = async () => {
     !checkDateTime(
       newAnnouncementData.publishDate,
       newAnnouncementData.publishTime,
-      "publish"
+      'publish'
     ) ||
     !checkDateTime(
       newAnnouncementData.closeDate,
       newAnnouncementData.closeTime,
-      "close"
+      'close'
     ) ||
     !checkLength(
       newAnnouncementData.announcementTitle,
       200,
-      "Announcement title"
+      'Announcement title'
     ) ||
     !checkLength(
       newAnnouncementData.announcementDescription,
       10000,
-      "Announcement description"
+      'Announcement description'
     ) ||
     !checkDate(
       getISODateTime(
@@ -111,7 +113,7 @@ const submitAnnouncement = async () => {
         newAnnouncementData.publishTime
       ),
       new Date().toISOString(),
-      "publish"
+      'publish'
     ) ||
     !checkDate(
       getISODateTime(
@@ -119,7 +121,7 @@ const submitAnnouncement = async () => {
         newAnnouncementData.closeTime
       ),
       new Date().toISOString(),
-      "close"
+      'close'
     )
   ) {
     return;
@@ -139,7 +141,7 @@ const submitAnnouncement = async () => {
     ) &&
     getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
   ) {
-    alert("Publish date must be before close date");
+    alert('Publish date must be before close date');
     return;
   }
 
@@ -155,13 +157,13 @@ const submitAnnouncement = async () => {
       newAnnouncementData.closeDate,
       newAnnouncementData.closeTime
     ),
-    announcementDisplay: newAnnouncementData.display ? "Y" : "N",
+    announcementDisplay: newAnnouncementData.display ? 'Y' : 'N',
   };
   await createOrUpdateAnnouncement(newAnnouncement);
 };
 const createOrUpdateAnnouncement = async (announcement) => {
   try {
-    if (router.name === "UpdateAnnouncement") {
+    if (router.name === 'UpdateAnnouncement') {
       await announcementService.updateAnnouncement(
         router.params.id,
         announcement
@@ -173,8 +175,8 @@ const createOrUpdateAnnouncement = async (announcement) => {
       toggleModal();
     }
   } catch (error) {
-    console.error("Error submitting announcement:", error);
-    alert("There is an error");
+    console.error('Error submitting announcement:', error);
+    alert('There is an error');
   }
 };
 const updateCheck = () => {
@@ -187,21 +189,35 @@ const toggleModal = () => {
 watchEffect(async () => {
   categories.value = await announcementService.getAllCategory();
   await fetchAnnouncement();
-  currentDate.value = new Date().toISOString().split("T")[0];
-  currentTime.value = new Date().toISOString().split("T")[1].substring(0, 5);
+  currentDate.value = new Date().toISOString().split('T')[0];
+  currentTime.value = new Date().toISOString().split('T')[1].substring(0, 5);
 });
 
 const setTimeDefault = (event) => {
-  if (event.currentTarget.id === "publishDate") {
+  if (event.currentTarget.id === 'publishDate') {
     newAnnouncementData.publishTime = newAnnouncementData.publishDate
-      ? "06:00"
-      : "";
+      ? '06:00'
+      : '';
   } else {
     newAnnouncementData.closeTime = newAnnouncementData.closeDate
-      ? "18:00"
-      : "";
+      ? '18:00'
+      : '';
   }
 
+  updateCheck();
+};
+
+const checkDescriptionLength = (editor) => {
+  const quill = editor.getQuill();
+  const maxLength = 50;
+  console.log(quill.getText()); //getOnlyInnerHTML
+  console.log(newAnnouncementData.announcementDescription.length);
+  // if (newAnnouncementData.announcementDescription.length > maxLength) {
+  //   quill.deleteText(
+  //     maxLength,
+  //     newAnnouncementData.announcementDescription.length
+  //   );
+  // }
   updateCheck();
 };
 </script>
@@ -209,7 +225,7 @@ const setTimeDefault = (event) => {
 <template>
   <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
 
-  <PageTemplate class="my-10">
+  <PageTemplate class="mt-10">
     <AnnouncementCard
       :viewComponent="false"
       @routerPage="
@@ -234,7 +250,7 @@ const setTimeDefault = (event) => {
           >
             {{
               newAnnouncementData.announcementTitle.length >= 200
-                ? "max length!!"
+                ? 'max length!!'
                 : `${newAnnouncementData.announcementTitle.length}/200`
             }}
           </label>
@@ -264,7 +280,7 @@ const setTimeDefault = (event) => {
           >
             {{
               newAnnouncementData.announcementDescription.length >= 10000
-                ? "max length!!"
+                ? 'max length!!'
                 : `${newAnnouncementData.announcementDescription.length}/10000`
             }}
           </label>
@@ -280,7 +296,7 @@ const setTimeDefault = (event) => {
           maxlength="10000"
         ></textarea> -->
         <TextEditor
-          @textChange="updateCheck"
+          @checkDescriptionLength="checkDescriptionLength"
           id="announcementDescription"
           v-model:content="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
@@ -288,7 +304,7 @@ const setTimeDefault = (event) => {
         />
       </template>
       <template #detail>
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Category</template>
           <template #default>
             <select
@@ -303,10 +319,10 @@ const setTimeDefault = (event) => {
           >
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Publish Date</template>
           <template #default>
-            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+            <div class="flex gap-5 flex-col lg:flex-row lg:w-full">
               <input
                 @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.publishDate"
@@ -333,10 +349,10 @@ const setTimeDefault = (event) => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Close Date</template>
           <template #default>
-            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+            <div class="flex gap-5 flex-col lg:flex-row lg:w-full">
               <input
                 @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.closeDate"
@@ -362,7 +378,7 @@ const setTimeDefault = (event) => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Display</template>
           <template #default
             ><div class="flex gap-x-2">
@@ -386,7 +402,7 @@ const setTimeDefault = (event) => {
       </template>
     </AnnouncementCard>
 
-    <div class="flex row gap-5 justify-end mt-10">
+    <div class="flex gap-5 justify-end py-5">
       <button
         class="ann-button w-48 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white text-xl p-3 rounded ease-linear transition-all duration-150"
         @click="

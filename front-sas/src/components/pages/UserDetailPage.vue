@@ -85,7 +85,7 @@ watchEffect(async () => {
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
         <div class="ann-description text-lg ql-editor">
-          <span v-html="rawDescription"></span>
+          <div v-html="rawDescription"></div>
         </div>
       </template>
     </AnnouncementCard>

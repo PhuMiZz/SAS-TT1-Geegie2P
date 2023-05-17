@@ -1,11 +1,15 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+const editor = ref("");
 </script>
 
 <template>
   <QuillEditor
+    @textChange="$emit('checkDescriptionLength', editor)"
     theme="snow"
+    ref="editor"
     toolbar="#my-toolbar"
     class="quil-container border-hidden bg-white"
     style="min-height: 300px"
