@@ -13,7 +13,6 @@ import sit.int221.announcementsystem.exceptions.BadRequestException;
 import sit.int221.announcementsystem.exceptions.ItemNotFoundException;
 import sit.int221.announcementsystem.repositories.AnnouncementRepository;
 import sit.int221.announcementsystem.repositories.CategoryRepository;
-import sit.int221.announcementsystem.utils.ListMapper;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -27,22 +26,7 @@ public class AnnouncementService {
     private CategoryRepository categoryRepository;
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    private ListMapper listMapper = ListMapper.getInstance();
     ZonedDateTime now = ZonedDateTime.now();
-
-    public List<Announcement> getAnnouncements() {
-        return announcementRepository.findAllByOrderByPublishDateDescCloseDateDesc();
-    }
-
-    public List<Announcement> getActiveAnnouncements() {
-        return announcementRepository.findActiveAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y, now);
-    }
-
-    public List<Announcement> getClosedAnnouncements() {
-        return announcementRepository.findClosedAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y,now);
-    }
-
 
     public Announcement getAnnouncementDetail(int announcementId) {
         return announcementRepository.findById(announcementId).orElseThrow(
@@ -51,7 +35,7 @@ public class AnnouncementService {
     }
 
     public List<Announcement> getAnnouncementByCategory(int categoryId) {
-        if (categoryId == 0) return getAnnouncements();
+        if (categoryId == 0) return announcementRepository.findAllByOrderById();
         Category category = categoryRepository.findById(categoryId).orElseThrow(
                 () -> new ItemNotFoundException("Category ID: " + categoryId + " does not exist!.")
         );
@@ -87,15 +71,23 @@ public class AnnouncementService {
         Announcement announcement = modelMapper.map(oldAnnouncement, Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
-
+    public List<Announcement> getAnnouncementsByAdmin(String mode){
+        return switch (mode.toLowerCase()){
+            case "admin" -> announcementRepository.findAllByOrderById();
+            case "close" -> announcementRepository.findClosedAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y,now);
+            case "active" -> announcementRepository.findActiveAnnouncementsWithDisplayStatus(Announcement.DisplayStatus.Y,now);
+            default -> throw new BadRequestException("Invalid mode parameter. Expected 'admin', 'close', or 'active'.");
+        };
+    }
     public Page<Announcement> getAnnouncementsByModeAndCategory(String mode, Integer categoryId, Pageable pageable) {
         return switch (mode.toLowerCase()) {
             case "admin" ->
-                    categoryId != null ? announcementRepository.findByCategoryOrderByPublishDateDescCloseDateDesc(categoryId, pageable) : announcementRepository.findAllByOrderById(pageable);
+                    categoryId != null ? announcementRepository.findByCategoryOrderById(categoryId, pageable) : announcementRepository.findAllByOrderById(pageable);
             case "close" ->
                     categoryId != null ? announcementRepository.findClosedAnnouncementsByCategory(categoryId, pageable,now) : announcementRepository.findClosedAnnouncements(pageable,now);
-            default -> // active
+            case "active" ->
                     categoryId != null ? announcementRepository.findActiveAnnouncementsByCategory(categoryId, pageable,now) : announcementRepository.findActiveAnnouncements(pageable,now);
+            default -> throw new BadRequestException("Invalid mode parameter. Expected 'admin', 'close', or 'active'.");
         };
     }
 

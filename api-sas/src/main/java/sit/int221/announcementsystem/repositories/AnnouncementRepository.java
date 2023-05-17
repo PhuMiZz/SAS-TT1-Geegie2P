@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 public interface AnnouncementRepository extends JpaRepository<Announcement,Integer> {
-    List<Announcement> findAllByOrderByPublishDateDescCloseDateDesc();
+    List<Announcement> findAllByOrderById();
     List<Announcement> getAnnouncementsByCategory(Category category);
     @Query("SELECT a FROM Announcement a WHERE a.announcementDisplay = :displayStatus AND (a.closeDate IS NULL OR a.closeDate > :currentDate) AND (a.publishDate IS NULL OR a.publishDate <= :currentDate) ORDER BY a.id DESC")
     List<Announcement> findActiveAnnouncementsWithDisplayStatus(@Param("displayStatus") Announcement.DisplayStatus displayStatus, @Param("currentDate") ZonedDateTime currentDate);
@@ -23,8 +23,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement,Integ
     List<Announcement> findClosedAnnouncementsWithDisplayStatus(@Param("displayStatus") Announcement.DisplayStatus displayStatus, @Param("currentDate") ZonedDateTime currentDate);
 
     Page<Announcement> findAllByOrderById(Pageable pageable);
-    @Query("SELECT a FROM Announcement a WHERE a.category.id = :categoryId ORDER BY a.publishDate DESC, a.closeDate DESC")
-    Page<Announcement> findByCategoryOrderByPublishDateDescCloseDateDesc(@Param("categoryId") Integer categoryId, Pageable pageable);
+    @Query("SELECT a FROM Announcement a WHERE a.category.id = :categoryId ORDER BY a.id DESC")
+    Page<Announcement> findByCategoryOrderById(@Param("categoryId") Integer categoryId, Pageable pageable);
 
     @Query("SELECT a FROM Announcement a WHERE a.announcementDisplay = 'Y' AND (a.closeDate IS NULL OR a.closeDate > :currentDate) AND (a.publishDate IS NULL OR a.publishDate <= :currentDate ) ORDER BY a.id DESC ")
     Page<Announcement> findActiveAnnouncements(Pageable pageable, ZonedDateTime currentDate);

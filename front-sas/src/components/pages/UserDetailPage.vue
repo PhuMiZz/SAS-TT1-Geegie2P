@@ -7,13 +7,18 @@ import LoadingPage from "../UI/organisms/LoadingPage.vue";
 import AnnouncementCard from "../templates/AnnouncementCard.vue";
 import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
 import PageTemplate from "../templates/PageTemplate.vue";
+import { usePageStore } from "@/stores/pageStore.js";
+import { storeToRefs } from "pinia";
 
+const pageStore = usePageStore();
+const { currentStatus } = storeToRefs(pageStore);
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
 
 const announcementId = params.id;
 const announcementDetail = ref({});
 const isLoading = ref(true);
+const rawDescription = ref("");
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -23,6 +28,9 @@ watchEffect(async () => {
   );
   if (announcementDetail.value) {
     isLoading.value = false;
+    rawDescription.value = JSON.parse(
+      announcementDetail.value.announcementDescription
+    );
   }
   isLoading.value = false;
 });
@@ -49,7 +57,9 @@ watchEffect(async () => {
             >{{ announcementDetail.announcementCategory }}
           </BadgeCategories>
           <div
-            v-if="announcementDetail.closeDate !== null"
+            v-if="
+              announcementDetail.closeDate !== null && !currentStatus.isActive
+            "
             class="ann-close-date text-lg text-[#737373]"
           >
             <span class="text-red-500">Closed on:</span>
@@ -59,8 +69,8 @@ watchEffect(async () => {
       </template>
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div class="ann-description text-lg">
-          {{ announcementDetail.announcementDescription }}
+        <div class="ann-description text-lg ql-editor">
+          <span v-html="rawDescription"></span>
         </div>
       </template>
     </AnnouncementCard>

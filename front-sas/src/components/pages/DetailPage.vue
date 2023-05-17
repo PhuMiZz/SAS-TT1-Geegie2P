@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import AnnouncementService from '@/lib/announcementService';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
-import AnnouncementCard from '../templates/AnnouncementCard.vue';
-import TextDescription from '../UI/molecules/TextDescription.vue';
-import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
-import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
-import PageTemplate from '../templates/PageTemplate.vue';
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import AnnouncementService from "@/lib/announcementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementCard from "../templates/AnnouncementCard.vue";
+import TextDescription from "../UI/molecules/TextDescription.vue";
+import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
+import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
+import PageTemplate from "../templates/PageTemplate.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -16,6 +16,7 @@ const announcementId = params.id;
 // const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
+const rawDescription = ref("");
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -24,6 +25,14 @@ watchEffect(async () => {
   );
   if (announcementDetail.value) {
     isLoading.value = false;
+    rawDescription.value = JSON.parse(
+      announcementDetail.value.announcementDescription
+    );
+    // console.log(
+    //   (rawDescription.value = JSON.parse(
+    //     announcementDetail.value.announcementDescription
+    //   ))
+    // );
   }
   isLoading.value = false;
 });
@@ -45,8 +54,8 @@ watchEffect(async () => {
       >
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div class="ann-description text-lg">
-          {{ announcementDetail.announcementDescription }}
+        <div class="ann-description text-lg ql-editor">
+          <span v-html="rawDescription"></span>
         </div>
       </template>
       <template #detail>
