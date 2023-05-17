@@ -17,6 +17,7 @@ const { currentStatus, allAnnouncement, isAnnouncementEmpty, isLoading } =
   storeToRefs(pageStore);
 const router = useRouter();
 const emit = defineEmits(['userClick']);
+
 const isClicked = ref(false);
 
 const onClickDetailPageHandler = (id) => {
