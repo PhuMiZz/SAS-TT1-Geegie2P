@@ -104,7 +104,7 @@ class AnnouncementService {
               `ERROR FETCHING DETAIL: ${JSON.stringify(errorResponse.detail)}`
             );
         alert('The request page is not available');
-        window.location = '/announcement';
+        window.location = `${import.meta.env.VITE_BASE_URL}/announcement`;
         return JSON.stringify(errorResponse.detail);
       } else {
         return Promise.reject(response.statusText);
