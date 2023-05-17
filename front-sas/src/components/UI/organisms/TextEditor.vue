@@ -18,31 +18,34 @@ const editor = ref("");
   >
     <template #toolbar>
       <div id="my-toolbar">
-        <select class="ql-font"></select>
-        <select class="ql-size"></select>
-        <button class="ql-bold"></button>
-        <button class="ql-italic"></button>
-        <button class="ql-underline"></button>
+        <span class="ql-formats">
+          <select class="ql-font"></select>
+          <select class="ql-header"></select>
+        </span>
 
-        <select class="ql-color"></select>
-        <select class="ql-background"></select>
+        <span class="ql-formats">
+          <button class="ql-bold"></button>
+          <button class="ql-italic"></button>
+          <button class="ql-underline"></button>
+          <button class="ql-strike"></button>
+          <button class="ql-script" value="sub"></button>
+          <button class="ql-script" value="super"></button>
+        </span>
 
-        <button class="ql-strike"></button>
-        <button class="ql-script" value="sub"></button>
-        <button class="ql-script" value="super"></button>
+        <span class="ql-formats">
+          <select class="ql-size"></select>
+          <select class="ql-color"></select>
+          <select class="ql-background"></select>
+          <select class="ql-align"></select>
+        </span>
 
-        <button class="ql-blockquote"></button>
-        <select class="ql-header"></select>
-        <!-- <button class="ql-indent"></button> -->
-
-        <button class="ql-list" value="ordered"></button>
-        <button class="ql-list" value="bullet"></button>
-
-        <!-- <button class="ql-direction"></button> -->
-        <select class="ql-align"></select>
-
-        <button class="ql-code-block"></button>
-        <button class="ql-link"></button>
+        <span class="ql-formats">
+          <button class="ql-list" value="ordered"></button>
+          <button class="ql-list" value="bullet"></button
+          ><button class="ql-blockquote"></button>
+          <button class="ql-code-block"></button>
+          <button class="ql-link"></button
+        ></span>
       </div>
     </template>
   </QuillEditor>
