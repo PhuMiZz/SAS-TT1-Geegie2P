@@ -1,15 +1,15 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
 
-import AnnouncementService from '@/lib/announcementService';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
-import AnnouncementCard from '../templates/AnnouncementCard.vue';
-import TextDescription from '../UI/molecules/TextDescription.vue';
-import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
-import PageTemplate from '../templates/PageTemplate.vue';
-import ViewCount from '../UI/molecules/ViewCount.vue';
+import AnnouncementService from "@/lib/announcementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementCard from "../templates/AnnouncementCard.vue";
+import TextDescription from "../UI/molecules/TextDescription.vue";
+import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
+import PageTemplate from "../templates/PageTemplate.vue";
+import ViewCount from "../UI/molecules/ViewCount.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -18,7 +18,7 @@ const announcementId = params.id;
 // const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
-const rawDescription = ref('');
+const rawDescription = ref("");
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -55,7 +55,7 @@ watchEffect(async () => {
       </template>
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div class="ann-description ql-editor">
+        <div class="ann-description text-lg ql-editor">
           <div v-html="rawDescription"></div>
         </div>
       </template>
@@ -99,35 +99,4 @@ watchEffect(async () => {
   </PageTemplate>
 </template>
 
-<style scoped>
-h1 {
-  font-size: 3rem;
-  line-height: 1;
-  font-weight: 800;
-}
-h2 {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  font-weight: 700;
-}
-h3 {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  font-weight: 700;
-}
-h4 {
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-weight: 700;
-}
-h5 {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-}
-h6 {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-}
-</style>
+<style scoped></style>
