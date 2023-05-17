@@ -288,7 +288,7 @@ const setTimeDefault = (event) => {
         />
       </template>
       <template #detail>
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Category</template>
           <template #default>
             <select
@@ -303,10 +303,10 @@ const setTimeDefault = (event) => {
           >
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Publish Date</template>
           <template #default>
-            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+            <div class="flex gap-5 flex-col lg:flex-row lg:w-full">
               <input
                 @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.publishDate"
@@ -333,10 +333,10 @@ const setTimeDefault = (event) => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Close Date</template>
           <template #default>
-            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+            <div class="flex gap-5 flex-col lg:flex-row lg:w-full">
               <input
                 @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.closeDate"
@@ -362,7 +362,7 @@ const setTimeDefault = (event) => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Display</template>
           <template #default
             ><div class="flex gap-x-2">

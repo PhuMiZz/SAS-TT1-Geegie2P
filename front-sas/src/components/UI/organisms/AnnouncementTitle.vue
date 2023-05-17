@@ -33,7 +33,7 @@ const createAnnouncement = () => {
 </script>
 
 <template>
-  <div class="h-full xl:h-32 w-full my-5 xl:mt-5">
+  <div class="h-full lg:h-32 w-full my-5 lg:mt-5">
     <div
       class="h-2/3 flex flex-col md:flex-row items-center justify-evenly md:justify-between"
     >
@@ -51,7 +51,7 @@ const createAnnouncement = () => {
     </div>
     <div class="h-3/5 flex flex-col items-center justify-between md:flex-row">
       <div
-        class="flex items-center flex-wrap justify-center md:justify-start xl:gap-10"
+        class="flex items-center flex-wrap justify-center md:justify-start lg:gap-10"
       >
         <InputTemplate>
           <CategoryIcon />
@@ -68,7 +68,7 @@ const createAnnouncement = () => {
           </select>
         </InputTemplate>
       </div>
-      <div class="flex flex-col h-full xl:h-3/5 md:flex-row items-center">
+      <div class="flex flex-col h-full lg:h-3/5 md:flex-row items-center">
         <div v-if="isUserPage" class="px-3 py-2 text-[#737373] text-xl">
           Toggle to:
         </div>
