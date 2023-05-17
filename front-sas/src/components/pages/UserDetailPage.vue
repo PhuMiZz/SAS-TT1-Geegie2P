@@ -65,9 +65,10 @@ watchEffect(async () => {
       </template>
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div class="ann-description text-lg">
-          {{ announcementDetail.announcementDescription }}
-        </div>
+        <div
+          class="ann-description text-lg"
+          :v-html="JSON.parse(announcementDetail.announcementDescription)"
+        ></div>
       </template>
     </AnnouncementCard>
   </PageTemplate>

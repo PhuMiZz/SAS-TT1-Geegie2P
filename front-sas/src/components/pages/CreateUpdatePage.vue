@@ -1,6 +1,7 @@
 <script setup>
 import TextDescription from "@/components/UI/molecules/TextDescription.vue";
 import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
+import TextEditor from "../UI/organisms/TextEditor.vue";
 import AnnouncementService from "@/lib/announcementService.js";
 import SuccessModal from "../UI/organisms/SuccessModal.vue";
 import OverlayTemplate from "../templates/OverlayTemplate.vue";
@@ -68,7 +69,9 @@ const fetchAnnouncement = async () => {
 
     Object.assign(originalAnnouncementData, {
       announcementTitle: announcement.value.announcementTitle,
-      announcementDescription: announcement.value.announcementDescription,
+      announcementDescription: JSON.parse(
+        announcement.value.announcementDescription
+      ),
       announcementCategory: categories.value.find(
         (e) => e.categoryName === announcement.value.announcementCategory
       ).id,
@@ -100,7 +103,7 @@ const submitAnnouncement = async () => {
       "Announcement title"
     ) ||
     !checkLength(
-      newAnnouncementData.announcementTitle,
+      newAnnouncementData.announcementDescription,
       10000,
       "Announcement description"
     ) ||
@@ -127,7 +130,15 @@ const submitAnnouncement = async () => {
     getISODateTime(
       newAnnouncementData.publishDate,
       newAnnouncementData.publishTime
-    ) >=
+    ) >
+      getISODateTime(
+        newAnnouncementData.closeDate,
+        newAnnouncementData.closeTime
+      ) &&
+    getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ) &&
     getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
   ) {
     alert("Publish date must be before close date");
@@ -136,7 +147,9 @@ const submitAnnouncement = async () => {
 
   const newAnnouncement = {
     announcementTitle: newAnnouncementData.announcementTitle,
-    announcementDescription: newAnnouncementData.announcementDescription,
+    announcementDescription: JSON.stringify(
+      newAnnouncementData.announcementDescription
+    ),
     categoryId: newAnnouncementData.announcementCategory,
     publishDate: getISODateTime(
       newAnnouncementData.publishDate,
@@ -170,6 +183,7 @@ const createOrUpdateAnnouncement = async (announcement) => {
 };
 const updateCheck = () => {
   checkUpdate.value;
+  console.log(newAnnouncementData.announcementDescription);
 };
 const toggleModal = () => {
   showModal.value = !showModal.value;
@@ -218,13 +232,13 @@ const setTimeDefault = (event) => {
             :class="
               newAnnouncementData.announcementTitle.length < 180
                 ? 'hidden'
-                : newAnnouncementData.announcementTitle.length === 200
+                : newAnnouncementData.announcementTitle.length >= 200
                 ? 'text-[#EF4444]'
                 : 'text-[#F59B0E]'
             "
           >
             {{
-              newAnnouncementData.announcementTitle.length === 200
+              newAnnouncementData.announcementTitle.length >= 200
                 ? "max length!!"
                 : `${newAnnouncementData.announcementTitle.length}/200`
             }}
@@ -248,19 +262,19 @@ const setTimeDefault = (event) => {
             :class="
               newAnnouncementData.announcementDescription.length < 9980
                 ? 'hidden'
-                : newAnnouncementData.announcementDescription.length === 10000
+                : newAnnouncementData.announcementDescription.length >= 10000
                 ? 'text-[#EF4444]'
                 : 'text-[#F59B0E]'
             "
           >
             {{
-              newAnnouncementData.announcementDescription.length === 10000
+              newAnnouncementData.announcementDescription.length >= 10000
                 ? "max length!!"
                 : `${newAnnouncementData.announcementDescription.length}/10000`
             }}
           </label>
         </div>
-        <textarea
+        <!-- <textarea
           @input="updateCheck"
           id="announcementDescription"
           v-model="newAnnouncementData.announcementDescription"
@@ -269,7 +283,14 @@ const setTimeDefault = (event) => {
           rows="4"
           cols="50"
           maxlength="10000"
-        ></textarea>
+        ></textarea> -->
+        <TextEditor
+          @input="updateCheck"
+          id="announcementDescription"
+          v-model:content="newAnnouncementData.announcementDescription"
+          placeholder="insert description here..."
+          class="ann-description w-full rounded-lg p-1 text-[#404040] h-52"
+        />
       </template>
       <template #detail>
         <TextDescription class="flex-wrap xl:flex-nowrap">

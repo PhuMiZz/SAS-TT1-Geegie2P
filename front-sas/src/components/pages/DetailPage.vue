@@ -1,13 +1,13 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import AnnouncementService from '@/lib/announcementService';
-import LoadingPage from '../UI/organisms/LoadingPage.vue';
-import AnnouncementCard from '../templates/AnnouncementCard.vue';
-import TextDescription from '../UI/molecules/TextDescription.vue';
-import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
-import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
-import PageTemplate from '../templates/PageTemplate.vue';
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import AnnouncementService from "@/lib/announcementService";
+import LoadingPage from "../UI/organisms/LoadingPage.vue";
+import AnnouncementCard from "../templates/AnnouncementCard.vue";
+import TextDescription from "../UI/molecules/TextDescription.vue";
+import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
+import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
+import PageTemplate from "../templates/PageTemplate.vue";
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -46,7 +46,7 @@ watchEffect(async () => {
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
         <div class="ann-description text-lg">
-          {{ announcementDetail.announcementDescription }}
+          {{ JSON.parse(announcementDetail.announcementDescription) }}
         </div>
       </template>
       <template #detail>
