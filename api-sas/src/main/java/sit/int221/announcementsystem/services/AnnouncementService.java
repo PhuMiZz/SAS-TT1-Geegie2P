@@ -28,12 +28,17 @@ public class AnnouncementService {
     private ModelMapper modelMapper;
     ZonedDateTime now = ZonedDateTime.now();
 
-    public Announcement getAnnouncementDetail(int announcementId) {
-        return announcementRepository.findById(announcementId).orElseThrow(
+    public Announcement getAnnouncementDetail(int announcementId, boolean incrementViewCount) {
+        Announcement announcement = announcementRepository.findById(announcementId).orElseThrow(
                 () -> new ItemNotFoundException("Announcement id: " + announcementId + " does not exist!.")
         );
-    }
+        if (incrementViewCount) {
+            announcement.setViewCount(announcement.getViewCount() != null ? announcement.getViewCount() + 1 : 1);
+            announcementRepository.save(announcement);
+        }
 
+        return announcement;
+    }
     public List<Announcement> getAnnouncementByCategory(int categoryId) {
         if (categoryId == 0) return announcementRepository.findAllByOrderById();
         Category category = categoryRepository.findById(categoryId).orElseThrow(
@@ -44,7 +49,9 @@ public class AnnouncementService {
 
     public AnnouncementCreateUpdateViewDto createAnnouncement(AnnouncementCreateUpdateDto newAnnouncement) {
         Announcement announcement = modelMapper.map(newAnnouncement, Announcement.class);
-
+        if (announcement.getViewCount() == null){
+            announcement.setViewCount(0);
+        }
         if (announcement.getAnnouncementDisplay() == null) {
             announcement.setAnnouncementDisplay(Announcement.DisplayStatus.N);
         } else if (announcement.getAnnouncementDisplay().describeConstable().isEmpty()) {
@@ -53,6 +60,7 @@ public class AnnouncementService {
 
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
+
 
 
     public void DeleteAnnouncement(int announcementId) {
@@ -71,6 +79,7 @@ public class AnnouncementService {
         Announcement announcement = modelMapper.map(oldAnnouncement, Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement), AnnouncementCreateUpdateViewDto.class);
     }
+
     public List<Announcement> getAnnouncementsByAdmin(String mode){
         return switch (mode.toLowerCase()){
             case "admin" -> announcementRepository.findAllByOrderById();

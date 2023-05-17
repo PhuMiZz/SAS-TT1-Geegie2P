@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import sit.int221.announcementsystem.dtos.*;
 import org.springframework.web.bind.annotation.*;
 import sit.int221.announcementsystem.entities.Announcement;
-import sit.int221.announcementsystem.exceptions.BadRequestException;
 import sit.int221.announcementsystem.services.AnnouncementService;
 import sit.int221.announcementsystem.utils.ListMapper;
 import java.util.List;
@@ -38,8 +37,9 @@ public class AnnouncementController {
     }
 
     @GetMapping("/{id}")
-    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id) {
-        return modelMapper.map(announcementService.getAnnouncementDetail(id), AnnouncementDetailDto.class);
+    public AnnouncementDetailDto getAnnouncementDetail(@PathVariable Integer id,
+                                                       @RequestParam(defaultValue = "false") boolean incrementViewCount) {
+        return modelMapper.map(announcementService.getAnnouncementDetail(id, incrementViewCount), AnnouncementDetailDto.class);
     }
 
     @PostMapping("")
@@ -52,8 +52,10 @@ public class AnnouncementController {
             announcementService.DeleteAnnouncement(id);
     }
     @PutMapping("/{id}")
-    public AnnouncementCreateUpdateViewDto updateAnnouncement(@PathVariable Integer id,@RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
-            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id),AnnouncementCreateUpdateDto.class);
+    public AnnouncementCreateUpdateViewDto updateAnnouncement(
+            @PathVariable Integer id,
+            @RequestBody @Valid AnnouncementCreateUpdateDto updateAnnouncement){
+            AnnouncementCreateUpdateDto oldAnnouncement = modelMapper.map(announcementService.getAnnouncementDetail(id,true),AnnouncementCreateUpdateDto.class);
             return announcementService.updateAnnouncement(updateAnnouncement, oldAnnouncement);
     }
 

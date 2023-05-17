@@ -16,10 +16,8 @@ public class Announcement {
     @Column(name = "announcementId", nullable = true )
     private Integer id;
 
-
     @Column(name = "announcementTitle", nullable = false ,length = 200)
     private String announcementTitle;
-
 
     @Column(name = "announcementDescription", nullable = false , length = 10000)
     private String announcementDescription;
@@ -34,6 +32,8 @@ public class Announcement {
     @Column(name = "closeDate", nullable = true)
     private ZonedDateTime closeDate;
 
+    @Column(name = "viewCount", nullable = true)
+    private Integer viewCount;
 
     @Column(name = "announcementDisplay", nullable = true)
     @Enumerated(EnumType.STRING)
