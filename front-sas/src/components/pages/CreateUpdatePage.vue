@@ -213,8 +213,8 @@ const checkDescriptionLength = (editor) => {
   const quill = editor.getQuill();
   // console.log(quill.getText()); //getOnlyInnerHTML
   descriptionLength.value = quill.getLength();
-  console.log(descriptionLength.value);
-  console.log(newAnnouncementData.announcementDescription.length);
+  // console.log(descriptionLength.value);
+  // console.log(newAnnouncementData.announcementDescription.length);
   if (newAnnouncementData.announcementDescription.length > maxLength.value) {
     quill.deleteText(maxLength.value - 1, descriptionLength.value);
   }
