@@ -284,7 +284,7 @@ const setTimeDefault = (event) => {
           maxlength="10000"
         ></textarea> -->
         <TextEditor
-          @input="updateCheck"
+          @textChange="updateCheck"
           id="announcementDescription"
           v-model:content="newAnnouncementData.announcementDescription"
           placeholder="insert description here..."
