@@ -28,9 +28,7 @@ watchEffect(async () => {
   );
   if (announcementDetail.value) {
     isLoading.value = false;
-    rawDescription.value = JSON.parse(
-      announcementDetail.value.announcementDescription
-    );
+    rawDescription.value = announcementDetail.value.announcementDescription;
   }
   isLoading.value = false;
 });

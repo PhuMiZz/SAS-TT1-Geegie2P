@@ -69,9 +69,7 @@ const fetchAnnouncement = async () => {
 
     Object.assign(originalAnnouncementData, {
       announcementTitle: announcement.value.announcementTitle,
-      announcementDescription: JSON.parse(
-        announcement.value.announcementDescription
-      ),
+      announcementDescription: announcement.value.announcementDescription,
       announcementCategory: categories.value.find(
         (e) => e.categoryName === announcement.value.announcementCategory
       ).id,
@@ -147,9 +145,7 @@ const submitAnnouncement = async () => {
 
   const newAnnouncement = {
     announcementTitle: newAnnouncementData.announcementTitle,
-    announcementDescription: JSON.stringify(
-      newAnnouncementData.announcementDescription
-    ),
+    announcementDescription: newAnnouncementData.announcementDescription,
     categoryId: newAnnouncementData.announcementCategory,
     publishDate: getISODateTime(
       newAnnouncementData.publishDate,
