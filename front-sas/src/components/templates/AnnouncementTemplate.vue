@@ -23,23 +23,23 @@ const props = defineProps({
       <slot name="announcementNo"></slot>
     </div>
     <div
-      class="flex w-full basis-full pt-3 px-3 gap-10 scrollbar-hide lg:overflow-auto lg:max-h-full lg:gap-0 lg:py-3 lg:w-1/3 text-lg lg:justify-start"
+      class="flex w-full basis-full pt-3 px-3 gap-10 scrollbar-hide lg:overflow-auto lg:max-h-full lg:gap-0 lg:py-3 lg:w-full text-lg lg:justify-start"
     >
       <slot name="title"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-1/3 lg:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-1/2 lg:justify-center"
     >
       <slot name="category"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-2/3 lg:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-full lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="publishDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-2/3 lg:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-full lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="closeDate"></slot>
@@ -51,7 +51,13 @@ const props = defineProps({
       <slot name="display"></slot>
     </div>
     <div
-      class="flex text-lg w-full pr-3 pb-3 gap-3 justify-end lg:gap-3 lg:p-5 lg:w-2/3 lg:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-2/5 lg:justify-center"
+      :class="props.header ? '' : 'text-[#737373]'"
+    >
+      <slot name="view"></slot>
+    </div>
+    <div
+      class="flex text-lg w-full pr-3 pb-3 gap-3 justify-end lg:gap-3 lg:p-0 lg:w-full lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="action"></slot>

@@ -27,8 +27,6 @@ const onClickDetailPageHandler = (id) => {
     name: 'UserDetailPage',
     params: { id: id },
   });
-
-  // currentStatus.value.isClicked = true;
 };
 onBeforeMount(() => {
   currentStatus.value.categoryId = 0;

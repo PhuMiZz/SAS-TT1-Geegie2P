@@ -62,7 +62,6 @@ const deleteAnnouncement = async () => {
         </p></BadgeCategories
       >
     </template>
-
     <template #publishDate>
       <div class="text-[#737373] w-1/3 lg:hidden block">Publish Date</div>
       <p class="ann-publish-date">
@@ -79,6 +78,10 @@ const deleteAnnouncement = async () => {
       <div class="text-[#737373] w-1/3 lg:hidden block">Display</div>
       <p class="ann-display">{{ announcementItem.announcementDisplay }}</p>
     </template>
+    <template #view>
+      <div class="text-[#737373] w-1/3 lg:hidden block">#Views</div>
+      <p class="ann-counter">{{ announcementItem.viewCount }}</p>
+    </template>
     <template #action>
       <button
         class="ann-button"
@@ -92,7 +95,7 @@ const deleteAnnouncement = async () => {
       </button>
       <button class="ann-button" @click="toggleModal(announcementItem.id)">
         <div
-          class="bg-[#EF4444] w-20 text-white active:bg-[#B91C1C] hover:bg-[#B91C1C] text-lg px-3 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
+          class="bg-[#EF4444] w-20 text-white active:bg-[#B91C1C] hover:bg-[#B91C1C] text-lg px-3 mr-3 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
         >
           delete
         </div>

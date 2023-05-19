@@ -1,15 +1,15 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
+import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
 
-import AnnouncementService from "@/lib/announcementService";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementCard from "../templates/AnnouncementCard.vue";
-import TextDescription from "../UI/molecules/TextDescription.vue";
-import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
-import PageTemplate from "../templates/PageTemplate.vue";
-import ViewCount from "../UI/molecules/ViewCount.vue";
+import AnnouncementService from '@/lib/announcementService';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementCard from '../templates/AnnouncementCard.vue';
+import TextDescription from '../UI/molecules/TextDescription.vue';
+import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import ViewCount from '../UI/molecules/ViewCount.vue';
 
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
@@ -18,7 +18,7 @@ const announcementId = params.id;
 // const foundAnnouncement = ref(false);
 const announcementDetail = ref({});
 const isLoading = ref(true);
-const rawDescription = ref("");
+const rawDescription = ref('');
 
 watchEffect(async () => {
   isLoading.value = true;
@@ -49,7 +49,10 @@ watchEffect(async () => {
             {{ announcementDetail.announcementTitle }}
           </div>
           <div>
-            <ViewCount :viewCount="announcementDetail.viewCount" />
+            <ViewCount
+              class="ann-counter"
+              :viewCount="announcementDetail.viewCount"
+            />
           </div>
         </div>
       </template>

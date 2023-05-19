@@ -16,5 +16,5 @@ public class AnnouncementsViewDto {
     private ZonedDateTime closeDate;
     private String announcementDisplay;
     private String announcementCategory;
-
+    private Integer viewCount;
 }
