@@ -1,28 +1,48 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import { getLocaleDateTime } from "@/lib/dateTimeManagement.js";
-import AnnouncementService from "@/lib/announcementService";
-import LoadingPage from "../UI/organisms/LoadingPage.vue";
-import AnnouncementCard from "../templates/AnnouncementCard.vue";
-import BadgeCategories from "../UI/molecules/BadgeCategories.vue";
-import PageTemplate from "../templates/PageTemplate.vue";
+import { ref, watchEffect, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { getLocaleDateTime } from '@/lib/dateTimeManagement.js';
+import AnnouncementService from '@/lib/announcementService';
+import LoadingPage from '../UI/organisms/LoadingPage.vue';
+import AnnouncementCard from '../templates/AnnouncementCard.vue';
+import BadgeCategories from '../UI/molecules/BadgeCategories.vue';
+import PageTemplate from '../templates/PageTemplate.vue';
+import { usePageStore } from '@/stores/pageStore.js';
+import { storeToRefs } from 'pinia';
 
+const props = defineProps({
+  isClicked: {
+    type: Boolean,
+  },
+});
+const pageStore = usePageStore();
+const { currentStatus } = storeToRefs(pageStore);
 const { params } = useRoute();
 const announcementService = new AnnouncementService();
-
 const announcementId = params.id;
 const announcementDetail = ref({});
+
 const isLoading = ref(true);
+const rawDescription = ref('');
 
 watchEffect(async () => {
   isLoading.value = true;
-  announcementDetail.value = await announcementService.getAnnouncementDetail(
-    announcementId,
-    "user"
-  );
+  if (props.isClicked) {
+    announcementDetail.value = await announcementService.getAnnouncementDetail(
+      announcementId,
+      'user',
+      props.isClicked
+    );
+  } else {
+    announcementDetail.value = await announcementService.getAnnouncementDetail(
+      announcementId,
+      'user',
+      props.isClicked
+    );
+  }
   if (announcementDetail.value) {
     isLoading.value = false;
+    rawDescription.value = announcementDetail.value.announcementDescription;
   }
   isLoading.value = false;
 });
@@ -49,7 +69,9 @@ watchEffect(async () => {
             >{{ announcementDetail.announcementCategory }}
           </BadgeCategories>
           <div
-            v-if="announcementDetail.closeDate !== null"
+            v-if="
+              announcementDetail.closeDate !== null && !currentStatus.isActive
+            "
             class="ann-close-date text-lg text-[#737373]"
           >
             <span class="text-red-500">Closed on:</span>
@@ -59,8 +81,8 @@ watchEffect(async () => {
       </template>
       <template #description>
         <div class="text-[#336699] text-xl">Description</div>
-        <div class="ann-description text-lg">
-          {{ announcementDetail.announcementDescription }}
+        <div class="ann-description text-lg ql-editor">
+          <div v-html="rawDescription"></div>
         </div>
       </template>
     </AnnouncementCard>

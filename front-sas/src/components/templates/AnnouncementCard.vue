@@ -63,17 +63,17 @@ defineEmits(['routerPage']);
   <!-- Detail -->
 
   <div
-    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-3 text-2xl items-center xl:h-full"
+    class="ann-item bg-[#F5F5F5] flex flex-col w-full h-full rounded-bl-lg rounded-r-lg p-5 md:p-10 gap-3 text-2xl items-center lg:h-full"
   >
-    <div class="w-full h-full flex flex-col gap-y-2 md:w-3/5">
+    <div class="w-full h-full flex flex-col gap-y-2 md:w-4/5">
       <slot name="title"></slot>
     </div>
-    <div class="w-full h-full flex flex-col gap-y-2 md:w-3/5 md:break-keep">
+    <div class="w-full h-full flex flex-col gap-y-2 md:w-4/5 md:break-keep">
       <slot name="description"></slot>
     </div>
     <div
       v-if="!userComponent || !viewComponent"
-      class="w-full md:w-3/5 xl:w-3/5 h-full p-5 my-7 rounded-xl bg-[#E5E5E5] xl:self-center"
+      class="w-full md:w-3/5 lg:w-4/5 h-full p-5 my-7 rounded-xl bg-[#E5E5E5] lg:self-center"
     >
       <slot name="detail"></slot>
     </div>

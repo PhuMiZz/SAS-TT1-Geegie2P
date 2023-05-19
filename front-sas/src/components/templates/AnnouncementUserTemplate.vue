@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div
-    class="flex flex-col items-center w-full gap-5 pb-5 my-2 xl:pb-0 xl:flex-row xl:justify-evenly xl:h-full"
+    class="flex flex-col items-center w-full gap-5 pb-5 my-2 lg:pb-0 lg:flex-row lg:justify-evenly lg:h-full"
     :class="props.header ? 'text-[#737373] ' : 'bg-gray-100 rounded-xl h-full'"
   >
     <div
@@ -18,22 +18,22 @@ const props = defineProps({
           ? 'bg-transparent text-lg '
           : 'bg-[#336699] text-white text-lg '
       "
-      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:max-w-[5rem] xl:rounded-none xl:rounded-l-xl"
+      class="flex w-full items-center justify-center h-full rounded-t-xl lg:aspect-square lg:max-w-[5rem] lg:rounded-none lg:rounded-l-xl"
     >
       <slot name="announcementNo"></slot>
     </div>
     <div
-      class="flex w-full basis-full px-3 gap-10 scrollbar-hide xl:overflow-auto xl:max-h-full xl:gap-0 xl:py-3 xl:w-1/3 text-lg xl:justify-start"
+      class="flex w-full basis-full px-3 gap-10 scrollbar-hide lg:overflow-auto lg:max-h-full lg:gap-0 lg:py-3 lg:w-1/3 text-lg lg:justify-start"
     >
       <slot name="title"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-lg gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-1/3 lg:justify-center"
     >
       <slot name="closeDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-lg gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-1/3 lg:justify-center"
     >
       <slot name="category"></slot>
     </div>

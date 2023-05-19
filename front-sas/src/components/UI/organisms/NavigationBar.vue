@@ -17,12 +17,12 @@ const onClickMenuHandler = () => {
 <template>
   <nav class="sticky top-0 w-full h-full bg-[#F5F5F5]">
     <div
-      class="max-w-screen flex flex-wrap items-center xl:justify-between mx-auto p-4"
+      class="max-w-screen flex flex-wrap items-center lg:justify-between mx-auto p-4"
     >
       <!-- Logo -->
       <RouterLink
         to="/admin/announcement"
-        class="flex items-center ml-10 grow xl:grow-0"
+        class="flex items-center ml-10 grow lg:grow-0"
       >
         <span
           class="self-center text-2xl font-semibold whitespace-nowrap text-[#336699]"
@@ -31,7 +31,7 @@ const onClickMenuHandler = () => {
       </RouterLink>
 
       <div
-        class="hidden xl:flex items-center justify-center space-x-16"
+        class="hidden lg:flex items-center justify-center space-x-16"
         id="navbar-default"
       >
         <RouterLink
@@ -49,10 +49,6 @@ const onClickMenuHandler = () => {
           <UserViewIcon class="icon" />
           <span class="text-page">User View</span>
         </RouterLink>
-        <RouterLink to="/aboutus" class="flex items-center text-xl gap-x-3">
-          <AboutUsIcon class="icon" />
-          <span class="text-page">About Us</span>
-        </RouterLink>
       </div>
 
       <div class="w-[10%] flex justify-center">
@@ -61,7 +57,7 @@ const onClickMenuHandler = () => {
       <button
         data-collapse-toggle="navbar-default"
         type="button"
-        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         aria-controls="navbar-default"
         aria-expanded="false"
         @click="onClickMenuHandler"
@@ -82,7 +78,7 @@ const onClickMenuHandler = () => {
       </button>
     </div>
     <div
-      class="w-full absolute flex z-50 bg-[#F5F5F5] xl:hidden flex-col items-center pb-3 gap-3"
+      class="w-full absolute flex z-50 bg-[#F5F5F5] lg:hidden flex-col items-center pb-3 gap-3"
       v-if="isOpenMenu"
     >
       <RouterLink to="/admin/announcement" class="flex items-center gap-2">
@@ -98,14 +94,6 @@ const onClickMenuHandler = () => {
         <span
           class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
           >User View</span
-        >
-      </RouterLink>
-
-      <RouterLink to="/aboutus" class="flex items-center gap-2">
-        <AboutUsIcon class="w-10 icon" />
-        <span
-          class="w-20 hover:text-[#336699] ease-linear transition-all duration-150"
-          >About Us</span
         >
       </RouterLink>
     </div>

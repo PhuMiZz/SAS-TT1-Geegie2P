@@ -9,49 +9,55 @@ const props = defineProps({
 
 <template>
   <div
-    class="flex flex-col items-center w-full gap-5 my-2 xl:flex-row xl:justify-evenly xl:h-24"
+    class="flex flex-col items-center w-full gap-5 my-2 lg:flex-row lg:justify-evenly lg:h-24"
     :class="props.header ? 'text-[#737373] ' : 'bg-gray-100 rounded-xl h-full'"
   >
     <div
       :class="
         props.header
-          ? 'bg-transparent text-xl'
-          : 'bg-[#336699] text-white text-xl'
+          ? 'bg-transparent text-lg'
+          : 'bg-[#336699] text-white text-lg'
       "
-      class="flex w-full items-center justify-center h-full rounded-t-xl xl:aspect-square xl:w-1/5 xl:rounded-none xl:rounded-l-xl"
+      class="flex w-full items-center justify-center h-full rounded-t-xl lg:aspect-square lg:w-1/5 lg:rounded-none lg:rounded-l-xl"
     >
       <slot name="announcementNo"></slot>
     </div>
     <div
-      class="flex w-full basis-full pt-3 px-3 gap-10 scrollbar-hide xl:overflow-auto xl:max-h-full xl:gap-0 xl:py-3 xl:w-1/3 text-lg xl:justify-start"
+      class="flex w-full basis-full pt-3 px-3 gap-10 scrollbar-hide lg:overflow-auto lg:max-h-full lg:gap-0 lg:py-3 lg:w-full text-lg lg:justify-start"
     >
       <slot name="title"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-1/3 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-1/2 lg:justify-center"
     >
       <slot name="category"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-full lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="publishDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-2/3 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-full lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="closeDate"></slot>
     </div>
     <div
-      class="flex w-full px-3 text-xl gap-10 xl:gap-0 xl:p-0 xl:w-1/5 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-1/5 lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="display"></slot>
     </div>
     <div
-      class="flex text-xl w-full pr-3 pb-3 gap-3 justify-end xl:gap-3 xl:p-0 xl:w-2/3 xl:justify-center"
+      class="flex w-full px-3 text-lg gap-10 lg:gap-0 lg:p-0 lg:w-2/5 lg:justify-center"
+      :class="props.header ? '' : 'text-[#737373]'"
+    >
+      <slot name="view"></slot>
+    </div>
+    <div
+      class="flex text-lg w-full pr-3 pb-3 gap-3 justify-end lg:gap-3 lg:p-0 lg:w-full lg:justify-center"
       :class="props.header ? '' : 'text-[#737373]'"
     >
       <slot name="action"></slot>

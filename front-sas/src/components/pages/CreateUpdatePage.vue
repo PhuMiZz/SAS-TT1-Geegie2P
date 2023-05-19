@@ -1,6 +1,7 @@
 <script setup>
 import TextDescription from "@/components/UI/molecules/TextDescription.vue";
 import AnnouncementCard from "@/components/templates/AnnouncementCard.vue";
+import TextEditor from "../UI/organisms/TextEditor.vue";
 import AnnouncementService from "@/lib/announcementService.js";
 import SuccessModal from "../UI/organisms/SuccessModal.vue";
 import OverlayTemplate from "../templates/OverlayTemplate.vue";
@@ -13,6 +14,8 @@ import {
   getISODateTime,
 } from "@/lib/dateTimeManagement.js";
 
+const emit = defineEmits(["userClick"]);
+const props = defineProps({ isClicked: { type: Boolean, required: false } });
 const announcementService = new AnnouncementService();
 const router = useRoute();
 const categories = ref([]);
@@ -100,7 +103,7 @@ const submitAnnouncement = async () => {
       "Announcement title"
     ) ||
     !checkLength(
-      newAnnouncementData.announcementTitle,
+      newAnnouncementData.announcementDescription,
       10000,
       "Announcement description"
     ) ||
@@ -127,7 +130,15 @@ const submitAnnouncement = async () => {
     getISODateTime(
       newAnnouncementData.publishDate,
       newAnnouncementData.publishTime
-    ) >=
+    ) >
+      getISODateTime(
+        newAnnouncementData.closeDate,
+        newAnnouncementData.closeTime
+      ) &&
+    getISODateTime(
+      newAnnouncementData.publishDate,
+      newAnnouncementData.publishTime
+    ) &&
     getISODateTime(newAnnouncementData.closeDate, newAnnouncementData.closeTime)
   ) {
     alert("Publish date must be before close date");
@@ -195,12 +206,26 @@ const setTimeDefault = (event) => {
 
   updateCheck();
 };
+
+const maxLength = ref(9000);
+const descriptionLength = ref(0);
+const checkDescriptionLength = (editor) => {
+  const quill = editor.getQuill();
+  // console.log(quill.getText()); //getOnlyInnerHTML
+  descriptionLength.value = quill.getLength();
+  // console.log(descriptionLength.value);
+  // console.log(newAnnouncementData.announcementDescription.length);
+  if (newAnnouncementData.announcementDescription.length > maxLength.value) {
+    quill.deleteText(maxLength.value - 1, descriptionLength.value);
+  }
+  updateCheck();
+};
 </script>
 
 <template>
   <!-- <pre>{{ newAnnouncementDataJSON }}</pre> -->
 
-  <PageTemplate class="my-10">
+  <PageTemplate class="mt-10">
     <AnnouncementCard
       :viewComponent="false"
       @routerPage="
@@ -218,13 +243,13 @@ const setTimeDefault = (event) => {
             :class="
               newAnnouncementData.announcementTitle.length < 180
                 ? 'hidden'
-                : newAnnouncementData.announcementTitle.length === 200
+                : newAnnouncementData.announcementTitle.length >= 200
                 ? 'text-[#EF4444]'
                 : 'text-[#F59B0E]'
             "
           >
             {{
-              newAnnouncementData.announcementTitle.length === 200
+              newAnnouncementData.announcementTitle.length >= 200
                 ? "max length!!"
                 : `${newAnnouncementData.announcementTitle.length}/200`
             }}
@@ -246,21 +271,21 @@ const setTimeDefault = (event) => {
             for="announcementDescription"
             class="text-lg text-[#404040] place-self-end"
             :class="
-              newAnnouncementData.announcementDescription.length < 9980
+              descriptionLength < maxLength - 20
                 ? 'hidden'
-                : newAnnouncementData.announcementDescription.length === 10000
+                : descriptionLength >= maxLength
                 ? 'text-[#EF4444]'
                 : 'text-[#F59B0E]'
             "
           >
             {{
-              newAnnouncementData.announcementDescription.length === 10000
+              descriptionLength >= maxLength
                 ? "max length!!"
-                : `${newAnnouncementData.announcementDescription.length}/10000`
+                : `${descriptionLength}/${maxLength}`
             }}
           </label>
         </div>
-        <textarea
+        <!-- <textarea
           @input="updateCheck"
           id="announcementDescription"
           v-model="newAnnouncementData.announcementDescription"
@@ -269,10 +294,17 @@ const setTimeDefault = (event) => {
           rows="4"
           cols="50"
           maxlength="10000"
-        ></textarea>
+        ></textarea> -->
+        <TextEditor
+          @checkDescriptionLength="checkDescriptionLength"
+          id="announcementDescription"
+          v-model:content="newAnnouncementData.announcementDescription"
+          placeholder="insert description here..."
+          class="ann-description w-full rounded-lg p-1 text-[#404040] h-52"
+        />
       </template>
       <template #detail>
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Category</template>
           <template #default>
             <select
@@ -287,10 +319,10 @@ const setTimeDefault = (event) => {
           >
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Publish Date</template>
           <template #default>
-            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+            <div class="flex gap-5 flex-col lg:flex-row lg:w-full">
               <input
                 @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.publishDate"
@@ -317,10 +349,10 @@ const setTimeDefault = (event) => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Close Date</template>
           <template #default>
-            <div class="flex gap-5 flex-col xl:flex-row xl:w-full">
+            <div class="flex gap-5 flex-col lg:flex-row lg:w-full">
               <input
                 @change="setTimeDefault($event)"
                 v-model="newAnnouncementData.closeDate"
@@ -346,7 +378,7 @@ const setTimeDefault = (event) => {
           ></template>
         </TextDescription>
 
-        <TextDescription class="flex-wrap xl:flex-nowrap">
+        <TextDescription class="flex-wrap lg:flex-nowrap">
           <template #header>Display</template>
           <template #default
             ><div class="flex gap-x-2">
@@ -370,7 +402,7 @@ const setTimeDefault = (event) => {
       </template>
     </AnnouncementCard>
 
-    <div class="flex row gap-5 justify-end mt-10">
+    <div class="flex gap-5 justify-end py-5">
       <button
         class="ann-button w-48 bg-[#EF4444] hover:bg-[#B91C1C] active:bg-[#B91C1C] text-white text-xl p-3 rounded ease-linear transition-all duration-150"
         @click="
