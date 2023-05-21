@@ -23,6 +23,9 @@ const currentDate = ref();
 const currentTime = ref();
 const announcement = ref();
 const showModal = ref(false);
+const maxLength = ref(9500);
+const descriptionLength = ref(0);
+const descriptionContent = ref("");
 const newAnnouncementData = reactive({
   announcementTitle: "",
   announcementDescription: "",
@@ -40,12 +43,12 @@ const checkUpdate = computed(() => {
       JSON.stringify(newAnnouncementData) !==
         JSON.stringify(originalAnnouncementData) &&
       newAnnouncementData.announcementTitle.trim().length > 0 &&
-      newAnnouncementData.announcementDescription.trim().length > 0
+      descriptionContent.value.trim().length > 0
     );
   } else {
     return (
       newAnnouncementData.announcementTitle.trim().length > 0 &&
-      newAnnouncementData.announcementDescription.trim().length > 0
+      descriptionContent.value.trim().length > 0
     );
   }
 });
@@ -207,11 +210,10 @@ const setTimeDefault = (event) => {
   updateCheck();
 };
 
-const maxLength = ref(9000);
-const descriptionLength = ref(0);
 const checkDescriptionLength = (editor) => {
   const quill = editor.getQuill();
-  // console.log(quill.getText()); //getOnlyInnerHTML
+  descriptionContent.value = quill.getText();
+  // console.log(descriptionContent.value); //getOnlyInnerHTML
   descriptionLength.value = quill.getLength();
   // console.log(descriptionLength.value);
   // console.log(newAnnouncementData.announcementDescription.length);
