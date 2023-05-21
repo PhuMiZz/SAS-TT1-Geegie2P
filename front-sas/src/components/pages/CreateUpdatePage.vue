@@ -213,7 +213,7 @@ const setTimeDefault = (event) => {
 const checkDescriptionLength = (editor) => {
   const quill = editor.getQuill();
   descriptionContent.value = quill.getText();
-  console.log(descriptionContent.value); //getOnlyInnerHTML
+  // console.log(descriptionContent.value); //getOnlyInnerHTML
   descriptionLength.value = quill.getLength();
   // console.log(descriptionLength.value);
   // console.log(newAnnouncementData.announcementDescription.length);
