@@ -14,6 +14,8 @@ import sit.int221.announcementsystem.exceptions.ItemNotFoundException;
 import sit.int221.announcementsystem.repositories.AnnouncementRepository;
 import sit.int221.announcementsystem.repositories.CategoryRepository;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class AnnouncementService {
     private CategoryRepository categoryRepository;
     @Autowired
     private ModelMapper modelMapper;
-    ZonedDateTime now = ZonedDateTime.now();
+    ZonedDateTime now = ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("UTC"));
 
     public Announcement getAnnouncementDetail(int announcementId, boolean incrementViewCount) {
         Announcement announcement = announcementRepository.findById(announcementId).orElseThrow(
